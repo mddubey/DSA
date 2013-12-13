@@ -17,8 +17,14 @@ Stack* create(int length, int elementSize){
 }
 
 int push(Stack* stack,void* element){
-	if(isFull(stack))
-		return 0;
+	void* temp;
+	if(isFull(stack)){
+		temp = realloc(stack->elements, stack->length * 2 * stack->elementSize);
+		if(!temp)
+			return 0;
+		stack->elements = temp;
+		stack->length *= 2;
+	}
 	memcpy(getElement(stack,stack->top++),element,stack->elementSize);
 	return 1;
 }
