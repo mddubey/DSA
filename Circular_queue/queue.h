@@ -1,10 +1,10 @@
 typedef struct{
-    void** elements;
-    struct QueueInfo{
-            int length;
-            int rear;
-            int front;
-    }info;
+	void** elements;
+	struct QueueInfo{
+		int length;
+		int rear;
+		int front;
+	}info;
 }Queue;
 
 typedef char String_256[256];
