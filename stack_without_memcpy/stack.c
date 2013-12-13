@@ -32,19 +32,18 @@ int push(Stack* stack,void* element){
 	return 1;
 }
 
-// void* pop(Stack* stack){
-// 	if(isEmpty(stack)) return NULL;
-// 	return getElement(stack,--(stack->top));
-// };
+int isEmpty(Stack* stack){
+	return stack->top == 0;
+}
 
-// void* peek(Stack* stack){
-// 	if(isEmpty(stack)) return NULL;
-// 	return getElement(stack,(stack->top-1));
-// }
+void* pop(Stack* stack){
+	if(isEmpty(stack)) return NULL;
+	return *(getElement(stack,--(stack->top)));
+};
 
-// int isEmpty(Stack* stack){
-// 	if(stack->top)
-// 		return 0;
-// 	return 1;
-// }
+void* peek(Stack* stack){
+	if(isEmpty(stack)) return NULL;
+	return *(getElement(stack, (stack->top-1)));
+}
+
 

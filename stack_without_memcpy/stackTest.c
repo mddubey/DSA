@@ -108,137 +108,182 @@ void test_doubles_the_length_of_stack_if_stack_is_full(){
 
 // //***************************pop***********************************************
 
-// void test_10_removes_the_top_most_element_from_the_stack_integers(){
-// 	int _4_nums[4] = {12,14,45,78};
-// 	int *result;
-// 	stack = create(4, sizeof(int));
-// 	memcpy(stack->elements,_4_nums,4*sizeof(int));
-// 	stack->top = 4;
-// 	result = (int*)(pop(stack));
-// 	ASSERT(78==*result);
-// 	ASSERT(3==stack->top);
-// };
+void test_removes_the_top_most_element_from_the_stack_integers(){
+	int *nums = malloc(sizeof(int)*4);
+	int* result;
+	nums[0] = 10;nums[1] = 12;nums[2] = 15;nums[3] = 20;
+	stack = create(3);
+	push(stack, &nums[0]);
+	push(stack, &nums[2]);
+	push(stack, &nums[1]);
+	push(stack, &nums[3]);
+	result = pop(stack);
+	ASSERT(20==*result);
+	ASSERT(3==stack->top);
+};
 
-// void test_11_removes_the_top_most_element_from_the_stack_doubles(){
-// 	double _4_nums[4] = {12.14,14.96,45.25,4478.14};
-// 	double *result;
-// 	stack = create(4, sizeof(double));
-// 	memcpy(stack->elements,_4_nums,4*sizeof(double));
-// 	stack->top = 4;
-// 	result = (double*)(pop(stack));
-// 	ASSERT(4478.14==*result);
-// 	ASSERT(3==stack->top);
-// };
+void test_removes_the_top_most_element_from_the_stack_doubles(){
+	double* nums = malloc(sizeof(double)*4);
+	double* result;
+	nums[0] = 10.0;nums[1] = 12.0;nums[2] = 15.0;nums[3] = 20.0;
+	stack = create(3);
+	push(stack, &nums[0]);
+	push(stack, &nums[2]);
+	push(stack, &nums[1]);
+	push(stack, &nums[3]);
+	result = pop(stack);
+	ASSERT(20.0 == *result);
+	ASSERT(3 == stack->top);
+};
 
-// void test_12_removes_the_top_most_element_from_the_stack_characters(){
-// 	char _4_chars[4] = {'m','d','a','k'};
-// 	char *result;
-// 	stack = create(4, sizeof(char));
-// 	memcpy(stack->elements,_4_chars,4*sizeof(char));
-// 	stack->top = 4;
-// 	result = (char*)(pop(stack));
-// 	ASSERT('k'==*result);
-// 	ASSERT(3==stack->top);
-// };
+void test_removes_the_top_most_element_from_the_stack_characters(){
+	char* chars = malloc(sizeof(char)*4);
+	char* result;
+	chars[0] = 'a';chars[1] = 'm';chars[2] = 'd';chars[3] = 'k';
+	stack = create(3);
+	push(stack, &chars[0]);
+	push(stack, &chars[2]);
+	push(stack, &chars[1]);
+	push(stack, &chars[3]);
+	result = pop(stack);
+	ASSERT('k' == *result);
+	ASSERT(3 == stack->top);
+};
 
-// void test_13_removes_the_top_most_element_from_the_stack_Strings(){
-// 	String_256 _4_chars[4] = {"mritunjay","dubey","aniket","kartik"};
-// 	char* result;
-// 	String_256 expected = "kartik";
-// 	stack = create(4, sizeof(String_256));
-// 	memcpy(stack->elements,_4_chars,4*sizeof(String_256));
-// 	stack->top = 4;
-// 	result = (char*)(pop(stack));
-// 	ASSERT(0==strcmp(result, expected));
-// 	ASSERT(3==stack->top);
-// };
+void test_removes_the_top_most_element_from_the_stack_Strings(){
+	String_256* nums = malloc(sizeof(String_256)*2);
+	char* result;
+	strcpy(nums[0], "Mritunjay");
+	strcpy(nums[1], "kartik");
+	stack = create(2);
+	push(stack, &nums[0]);
+	push(stack, &nums[1]);
+	result = pop(stack);
+	ASSERT(0 == strcmp("kartik", result));
+	ASSERT(1 == stack->top);
+};
 
-// void test_14_removes_the_top_most_element_and_adds_one_more_element_at_top(){
-// 	int _3_nums[3] = {12,14,45};
-// 	int _4_nums[4] = {12,14,45,78};
-// 	int _res_4_nums[4] = {12,14,45,1000};
-// 	int _1000 = 1000;
-// 	int *result;
-// 	Stack expected = {_res_4_nums,4,4,sizeof(int)};
-// 	stack = create(4, sizeof(int));
-// 	memcpy(stack->elements,_4_nums,4*sizeof(int));
-// 	stack->top = 4;
-// 	result = (int*)(pop(stack));
-// 	ASSERT(78==*result);
-// 	push(stack, &_1000);
-// 	ASSERT(areEqual(expected, *stack));
-// 	ASSERT(4==stack->top);
-// };
+void test_removes_structures_on_the_top_of_stacks(){
+	Account* account = malloc(sizeof(Account));
+	Account* result;
+	account->accNo = 100;account->balance = 1000;
+	stack = create(3);
+	push(stack, account);
+	ASSERT(areAccountsEqual(*account, **(Account**)getElement(stack, 0)));
+	result = pop(stack);
+	ASSERT(areAccountsEqual(*result, *account));
+	ASSERT(0 == stack->top && 3 == stack->length);
+}
 
-// void test_15_prevents_to_delete_the_element_if_top_is_zero(){
-// 	void* result;
-// 	stack = create(5, sizeof(int));
-// 	result = pop(stack);
-// 	ASSERT(NULL == result);
-// }
+void test_removes_the_top_most_element_and_adds_one_more_element_at_top(){
+	int *nums = malloc(sizeof(int)*4);
+	int* result;
+	nums[0] = 10;nums[1] = 12;nums[2] = 15;nums[3] = 20;
+	stack = create(4);
+	push(stack, &nums[0]);
+	push(stack, &nums[2]);
+	push(stack, &nums[1]);
+	push(stack, &nums[3]);
+	ASSERT(20 == **(int**)getElement(stack, 3));
+	result = (int*)(pop(stack));
+	ASSERT(20 == *result);
+	push(stack, &nums[1]);
+	ASSERT(4==stack->top);
+	ASSERT(12 == **(int**)getElement(stack, 3));
+};
+
+void test_prevents_to_delete_the_element_if_top_is_zero(){
+	void* result;
+	stack = create(5);
+	result = pop(stack);
+	ASSERT(NULL == result);
+}
 
 // //******************************************peek******************************
 
-// void test_16_gives_the_top_most_element_of_stack_integers(){
-// 	int *result;
-// 	int _3_nums[3] = {14,58,17};
-// 	stack = create(5, sizeof(int));
-// 	stack->top = 3;
-// 	memcpy(stack->elements, _3_nums, 3*stack->elementSize);
-// 	result = (int*)peek(stack);
-// 	ASSERT(17==*result);
-// 	ASSERT(3==stack->top);
-// };
+void test_gives_the_top_most_element_from_the_stack_integers(){
+	int *nums = malloc(sizeof(int)*4);
+	int* result;
+	nums[0] = 10;nums[1] = 12;nums[2] = 15;nums[3] = 20;
+	stack = create(3);
+	push(stack, &nums[0]);
+	push(stack, &nums[2]);
+	push(stack, &nums[1]);
+	push(stack, &nums[3]);
+	result = peek(stack);
+	ASSERT(20 == *result);
+	ASSERT(4 == stack->top);
+};
 
-// void test_17_gives_the_top_most_element_of_stack_doubles(){
-// 	double *result;
-// 	double _3_nums[3] = {14.25,58.4,17.0458};
-// 	stack = create(5, sizeof(double));
-// 	stack->top = 3;
-// 	memcpy(stack->elements, _3_nums, 3*stack->elementSize);
-// 	result = (double*)peek(stack);
-// 	ASSERT(17.0458==*result);
-// 	ASSERT(3==stack->top);
-// };
+void test_gives_the_top_most_element_from_the_stack_doubles(){
+	double* nums = malloc(sizeof(double)*4);
+	double* result;
+	nums[0] = 10.0;nums[1] = 12.0;nums[2] = 15.0;nums[3] = 20.0;
+	stack = create(3);
+	push(stack, &nums[0]);
+	push(stack, &nums[2]);
+	push(stack, &nums[1]);
+	push(stack, &nums[3]);
+	result = peek(stack);
+	ASSERT(20.0 == *result);
+	ASSERT(4 == stack->top);
+};
 
-// void test_18_gives_the_top_most_element_of_stack_characters(){
-// 	char *result;
-// 	char _3_chars[3] = {'m','m','p'};
-// 	stack = create(5, sizeof(char));
-// 	stack->top = 3;
-// 	memcpy(stack->elements, _3_chars, 3*stack->elementSize);
-// 	result = (char*)peek(stack);
-// 	ASSERT('p'==*result);
-// 	ASSERT(3==stack->top);
-// };
+void test_gives_the_top_most_element_from_the_stack_characters(){
+	char* chars = malloc(sizeof(char)*4);
+	char* result;
+	chars[0] = 'a';chars[1] = 'm';chars[2] = 'd';chars[3] = 'k';
+	stack = create(3);
+	push(stack, &chars[0]);
+	push(stack, &chars[2]);
+	push(stack, &chars[1]);
+	push(stack, &chars[3]);
+	result = peek(stack);
+	ASSERT('k' == *result);
+	ASSERT(4 == stack->top);
+};
 
-// void test_19_gives_the_top_most_element_of_stack_String(){
-// 	char* result;
-// 	String_256 _3_names[3] = {"manish","mritunjay","prateek"};
-// 	String_256 expected = "prateek";
-// 	stack = create(5, sizeof(String_256));
-// 	stack->top = 3;
-// 	memcpy(stack->elements, _3_names, 3*stack->elementSize);
-// 	result = (char*)peek(stack);
-// 	ASSERT(0==strcmp(expected, result));
-// 	ASSERT(3==stack->top);
-// };
+void test_gives_the_top_most_element_from_the_stack_Strings(){
+	String_256* nums = malloc(sizeof(String_256)*2);
+	char* result;
+	strcpy(nums[0], "Mritunjay");
+	strcpy(nums[1], "kartik");
+	stack = create(2);
+	push(stack, &nums[0]);
+	push(stack, &nums[1]);
+	result = peek(stack);
+	ASSERT(0 == strcmp("kartik", result));
+	ASSERT(2 == stack->top);
+};
 
-// void test_20_prevents_to_search_the_top_element_if_top_is_zero(){
-// 	void* result;
-// 	stack = create(5, sizeof(int));
-// 	result = peek(stack);
-// 	ASSERT(NULL == result);
-// }
+void test_gives_structures_on_the_top_of_stacks(){
+	Account* account = malloc(sizeof(Account));
+	Account* result;
+	account->accNo = 100;account->balance = 1000;
+	stack = create(3);
+	push(stack, account);
+	ASSERT(areAccountsEqual(*account, **(Account**)getElement(stack, 0)));
+	result = peek(stack);
+	ASSERT(areAccountsEqual(*result, *account));
+	ASSERT(1 == stack->top && 3 == stack->length);
+}
+
+void test_prevents_to_access_the_element_if_top_is_zero(){
+	void* result;
+	stack = create(5);
+	result = peek(stack);
+	ASSERT(NULL == result);
+}
 
 // //***********************************isEmpty*****************
 
-// void test_21_tells_the_stack_is_empty_integers(){
-// 	int result;
-// 	stack = create(5, sizeof(int));
-// 	result = isEmpty(stack);
-// 	ASSERT(1==result);
-// }
+void test_21_tells_the_stack_is_empty_integers(){
+	int result;
+	stack = create(5);
+	result = isEmpty(stack);
+	ASSERT(1==result);
+}
+
 // void test_22_tells_the_stack_is_empty_strings(){
 // 	int result;
 // 	stack = create(5, sizeof(String_256));
@@ -308,7 +353,7 @@ void test_doubles_the_length_of_stack_if_stack_is_full(){
 // 	ASSERT(areEqual(expected, *stack));
 // };
 
-// void test_29_removes_the_top_most_structure_from_stack(){
+// void test_29_gives_the_top_most_structure_from_stack(){
 // 	Class studs[2] = {{1,"Raj"},{2,"Digs"}};
 // 	Class* result;
 // 	Class rajStud = {1,"Raj"};
