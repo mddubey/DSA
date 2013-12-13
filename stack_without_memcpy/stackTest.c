@@ -106,7 +106,7 @@ void test_doubles_the_length_of_stack_if_stack_is_full(){
 	ASSERT(10 == **(int**)getElement(stack, 3));
 }
 
-// //***************************pop***********************************************
+//***************************pop***********************************************
 
 void test_removes_the_top_most_element_from_the_stack_integers(){
 	int *nums = malloc(sizeof(int)*4);
@@ -199,7 +199,7 @@ void test_prevents_to_delete_the_element_if_top_is_zero(){
 	ASSERT(NULL == result);
 }
 
-// //******************************************peek******************************
+//******************************************peek******************************
 
 void test_gives_the_top_most_element_from_the_stack_integers(){
 	int *nums = malloc(sizeof(int)*4);
@@ -275,112 +275,39 @@ void test_prevents_to_access_the_element_if_top_is_zero(){
 	ASSERT(NULL == result);
 }
 
-// //***********************************isEmpty*****************
+//***********************************isEmpty*****************
 
-void test_21_tells_the_stack_is_empty_integers(){
+void test_tells_the_stack_is_empty_integers(){
 	int result;
 	stack = create(5);
 	result = isEmpty(stack);
 	ASSERT(1==result);
 }
 
-// void test_22_tells_the_stack_is_empty_strings(){
-// 	int result;
-// 	stack = create(5, sizeof(String_256));
-// 	result = isEmpty(stack);
-// 	ASSERT(1==result);
-// }
-// void test_23_tells_the_stack_is_not_empty(){
-// 	int result;
-// 	stack = create(5, sizeof(int));
-// 	*(int*)stack->elements = 15;
-// 	stack->top = 1;
-// 	result = isEmpty(stack);
-// 	ASSERT(0==result);
-// }
+void test_tells_the_stack_is_not_empty(){
+	int result;
+	stack = create(5);
+	*(int*)stack->elements = 15;
+	stack->top = 1;
+	result = isEmpty(stack);
+	ASSERT(0==result);
+}
 
-// //****************************isFull**********************
+//****************************isFull**********************
 
-// void test_24_tells_the_stack_is_full_integers(){
-// 	int result;
-// 	stack = create(1, sizeof(int));
-// 	*(int*)stack->elements = 15;
-// 	stack->top = 1;
-// 	result = isFull(stack);
-// 	ASSERT(1==result);
-// }
+void test_tells_the_stack_is_full_integers(){
+	int* num = malloc(sizeof(int));
+	int result;
+	stack = create(1);
+	*num = 15;
+	push(stack, num);
+	result = isFull(stack);
+	ASSERT(1==result);
+}
 
-// void test_25_tells_the_stack_is_full_Strings(){
-// 	int result;
-// 	stack = create(1, sizeof(String_256));
-// 	strcpy(stack->elements, "Mritunjay");
-// 	stack->top = 1;
-// 	result = isFull(stack);
-// 	ASSERT(1==result);
-// }
-
-// void test_26_tells_the_stack_is_not_full_Strings(){
-// 	int result;
-// 	stack = create(4, sizeof(String_256));
-// 	strcpy(stack->elements, "Mritunjay");
-// 	stack->top = 1;
-// 	result = isFull(stack);
-// 	ASSERT(0==result);
-// }
-
-// //*****************************Structure*******************************
-// typedef struct{
-// 	int roll;
-// 	char name[18];
-// }Class;
-
-// void test_27_creates_a_stack_for_structure(){
-// 	Class studs[1] = {{0,""}};
-// 	Stack expected = {studs,0,1,sizeof(Class)};
-// 	stack = create(1, sizeof(Class));
-// 	ASSERT(areEqual(expected, *stack));
-
-// };
-
-// void test_28_adds_structure_on_top_of_stack(){
-// 	Class studs[2] = {{1,"Raj"},{2,"Digs"}};
-// 	Class rajStud = {1,"Raj"};
-// 	Class digStud = {2,"Digs"};
-// 	Stack expected = {studs,2,2,sizeof(Class)};
-// 	stack = create(2, sizeof(Class));
-// 	push(stack, &rajStud);
-// 	push(stack, &digStud);
-// 	ASSERT(areEqual(expected, *stack));
-// };
-
-// void test_29_gives_the_top_most_structure_from_stack(){
-// 	Class studs[2] = {{1,"Raj"},{2,"Digs"}};
-// 	Class* result;
-// 	Class rajStud = {1,"Raj"};
-// 	Class digStud = {2,"Digs"};
-// 	stack = create(2, sizeof(Class));
-// 	memcpy(stack->elements, studs, sizeof(Class)*2);
-// 	stack->top = 2;
-// 	result = pop(stack);
-// 	ASSERT(0==memcmp(&digStud, result, sizeof(Class)));
-// 	ASSERT(1==stack->top);
-// 	result = pop(stack);
-// 	ASSERT(0==memcmp(&rajStud, result, sizeof(Class)));
-// 	ASSERT(0==stack->top);
-// 	result = pop(stack);
-// 	ASSERT(NULL == result);
-// 	ASSERT(0==stack->top);
-// };
-
-// void test_30_gives_the_top_most_element_of_the_stack(){
-// 	Class studs[2] = {{1,"Raj"},{2,"Digs"}};
-// 	Class* result;
-// 	Class rajStud = {1,"Raj"};
-// 	Class digStud = {2,"Digs"};
-// 	stack = create(2, sizeof(Class));
-// 	memcpy(stack->elements, studs, sizeof(Class)*2);
-// 	stack->top = 2;
-// 	result = peek(stack);
-// 	ASSERT(0==memcmp(&digStud, result, sizeof(Class)));
-// 	ASSERT(2==stack->top);
-// };
+void test_tells_the_stack_is_not_full(){
+	int result;
+	stack = create(4);
+	result = isFull(stack);
+	ASSERT(0==result);
+}
