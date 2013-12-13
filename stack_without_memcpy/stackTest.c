@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include <memory.h>
 #include <stdlib.h>
 #include "stack.h"
@@ -78,24 +77,34 @@ void test_adds_the_given_Strings_at_the_top_of_the_stack(){
 	stack = create(2);
 	push(stack, &names[0]);
 	push(stack, &names[1]);
-	printf("%s\n", *(char**)getElement(stack, 0));
 	ASSERT(0 == strcmp(names[0], *(char**)getElement(stack, 0)));
 	ASSERT(0 == strcmp(names[1], *(char**)getElement(stack, 1)));
 }
 
-// void test_9_prevents_to_add_new_element_if_top_and_stack_length_are_equal(){
-// 	int _5_nums[5] = {23,12,56,34,789};
-// 	Stack expected = {_5_nums,5,5,sizeof(int)};
-// 	int _12 = 12;
-// 	int result;
-// 	stack = create(5, sizeof(int));
-// 	memcpy(stack->elements, _5_nums, sizeof(_5_nums));
-// 	stack->top = 5;
-// 	ASSERT(areEqual(expected, *stack));
-// 	result = push(stack, &_12);
-// 	ASSERT(0==result);
-// 	ASSERT(areEqual(expected, *stack));
-// }
+void test_adds_structures_on_the_top_of_stacks(){
+	Account* account = malloc(sizeof(Account));
+	account->accNo = 100;account->balance = 1000;
+	stack = create(3);
+	push(stack, account);
+	ASSERT(areAccountsEqual(*account, **(Account**)getElement(stack, 0)));
+	ASSERT(1 == stack->top && 3 == stack->length);
+}
+
+void test_doubles_the_length_of_stack_if_stack_is_full(){
+	int *nums = malloc(sizeof(int)*3);
+	int result;
+	nums[0] = 10;nums[1] = 12;nums[2] = 15;
+	stack = create(3);
+	push(stack, &nums[0]);
+	push(stack, &nums[2]);
+	push(stack, &nums[1]);
+	ASSERT(3 == stack->length);
+	result = push(stack, &nums[0]);
+	ASSERT(1 == result);
+	ASSERT(6 == stack->length);
+	ASSERT(4 == stack->top);
+	ASSERT(10 == **(int**)getElement(stack, 3));
+}
 
 // //***************************pop***********************************************
 

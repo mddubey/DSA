@@ -20,8 +20,14 @@ int isFull(Stack* stack){
 }
 
 int push(Stack* stack,void* element){
-	if(isFull(stack))
-		return 0;
+	void* temp;
+	if(isFull(stack)){
+		temp = realloc(stack->elements, stack->length * 2 * sizeof(void*));
+		if(!temp)
+			return 0;
+		stack->elements = temp;
+		stack->length *= 2;
+	}
 	*(getElement(stack, stack->top++)) = element;
 	return 1;
 }
