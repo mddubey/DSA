@@ -16,13 +16,16 @@ void isort(void* base, size_t numberOfElements, size_t elementSize,
             elementToCompare = base + j * elementSize;
             comparisonResult = comp(temp, elementToCompare);
 
-            if (comparisonResult < 0) {
-                memcpy(elementToCompare + elementSize, 
-                        elementToCompare, elementSize);                                     
-                memcpy(elementToCompare, temp, elementSize);                                                                
+            if (comparisonResult >= 0) {
+                break; 
             }
+
+            memcpy(elementToCompare + elementSize, 
+                        elementToCompare, elementSize);                                     
             
-        }       
+        } 
+        
+        memcpy(base + (j + 1) * elementSize, temp, elementSize);                                                
     }
     
     free(temp);

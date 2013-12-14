@@ -16,13 +16,6 @@ void test_gives_an_Doubly_link_list_with_head_NULL(){
 	ASSERT(0 == list->length);
 }
 
-void test_create_node(){
-    Node expected = {NULL,NULL,NULL};
-    Node *actual = createNode(NULL,NULL);
-    ASSERT(expected.next == actual->next);
-    ASSERT(expected.prev == actual->prev);
-}
-
 void test_inserts_an_element_as_the_head_of_linklist_for_integer(){
 	int* num = malloc(sizeof(int));
 	list = create();
