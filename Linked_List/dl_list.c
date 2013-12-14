@@ -16,6 +16,26 @@ Node* createNode(Node *prevAddress, Node *nextAddress){
     return element;
 }
 
+int insertBegening(DLList* list,Node* head,void* data){
+	Node* newNode = createNode(NULL, head);
+    if(NULL != head)
+    	head->prev = newNode;
+    list->head = newNode;
+    newNode->data = data;
+    list->length++;
+    return 1;
+}
+
+int insertAtSpecificPlace(DLList* list,Node* head,void* data){
+	Node* newNode = createNode(head, head->next);
+    if(head->next != NULL)
+    	head->next->prev = newNode;
+    head->next = newNode;
+    newNode->data = data;
+    list->length++;
+    return 1;
+}
+
 int insert(DLList *list, void *data, int index){
 	Node *head,*newNode;
 	int i = 1;
@@ -26,23 +46,26 @@ int insert(DLList *list, void *data, int index){
 		head = head->next;
 		i++;
 	}
-    if(index == 0){				//insert First Element
-	    newNode = createNode(NULL, head);
-	    if(NULL != head)
-	    	head->prev = newNode;
-	    list->head = newNode;
-	    newNode->data = data;
-	    list->length++;
-	    return 1;
-    }
-    newNode = createNode(head, head->next);	// insert at specified place
-    if(head->next != NULL)
-    	head->next->prev = newNode;
-    head->next = newNode;
-    newNode->data = data;
-    list->length++;
-    return 1;
+    if(index == 0)				//insert First Element
+    	return insertBegening(list, head, data);
+    return insertAtSpecificPlace(list, head, data);
 };
+
+int deleteFirst(DLList* list,Node* head){
+	list->head = list->head->next;
+	free(head);
+	list->length--;
+	return 1;
+}
+
+int deleteAtSpecificPlace(DLList* list,Node* head){
+	head->prev->next = head->next;		//delete from middle of list
+	if(head->next != NULL)
+    	head->next->prev = head->prev;
+    free(head);
+    list->length--;
+    return 1;
+}
 
 int deleteNode(DLList* list,int index){
 	int i;
@@ -53,18 +76,9 @@ int deleteNode(DLList* list,int index){
 	for(i=0;i<index;i++){
 		head = head->next;
 	}
-	if(i==0){		//delete first node
-		list->head = list->head->next;
-		free(head);
-		list->length--;
-		return 1;
-	}
-	head->prev->next = head->next;		//delete from middle of list
-	if(head->next != NULL)
-    	head->next->prev = head->prev;
-    free(head);
-    list->length--;
-    return 1;
+	if(i==0)
+		return deleteFirst(list, head);
+	return deleteAtSpecificPlace(list, head);
 };
 
 void dispose(DLList* list){
