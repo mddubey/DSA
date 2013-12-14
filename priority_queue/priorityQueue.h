@@ -7,3 +7,4 @@ typedef struct {
 
 DLList* create_queue();
 int enqueue(DLList* queue, Queue_element* element);
+int dequeue(DLList* queue);

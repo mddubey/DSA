@@ -9,7 +9,7 @@ DLList* create_queue(){
 }
 
 int enqueue(DLList *queue, Queue_element *element){
-	int index;
+	int index = 1;
 	Node* head = queue->head;
 	Queue_element* head_data;
 	if(NULL == queue->head)
@@ -17,7 +17,6 @@ int enqueue(DLList *queue, Queue_element *element){
 	head_data = head->data;
 	if(head_data->priority>element->priority)
 		return insert(queue, element, 0);
-	index = 1;
 	while(head->next != NULL){
 		head = head->next;
 		head_data = head->data;
@@ -27,4 +26,8 @@ int enqueue(DLList *queue, Queue_element *element){
 		index++;
 	}
 	return insert(queue, element, index);
+}
+
+int dequeue(DLList* queue){
+	return deleteNode(queue, 0);
 }
