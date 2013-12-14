@@ -18,34 +18,27 @@ Node* createNode(Node *prevAddress, Node *nextAddress){
 
 int insert(DLList *list, void *data, int index){
 	Node *head,*newNode;
-	int i;
+	int i = 1;
 	if(index <= -1 || index > list->length)
 		return 0;
 	head = list->head;
-    for (i = 0; i < index ; ++i){
-        if(head->next != NULL)
-                head = head->next;
-    }
+	while(i<index && head->next != NULL){
+		head = head->next;
+		i++;
+	}
     if(index == 0){				//insert First Element
-	    newNode = createNode(NULL, NULL);
-	    if(NULL != head){
-	    	newNode->next = head;
+	    newNode = createNode(NULL, head);
+	    if(NULL != head)
 	    	head->prev = newNode;
-	    }
 	    list->head = newNode;
 	    newNode->data = data;
 	    list->length++;
 	    return 1;
     }
-    if(index == list->length){		//insert last
-        newNode = createNode(head, NULL);
-        head->next = newNode;
-        newNode->data = data;
-        list->length++;
-        return 1;
-    }
-    newNode = createNode(head->prev, head);	// insert middle
-    head->prev->next = newNode;
+    newNode = createNode(head, head->next);	// insert at specified place
+    if(head->next != NULL)
+    	head->next->prev = newNode;
+    head->next = newNode;
     newNode->data = data;
     list->length++;
     return 1;
@@ -53,7 +46,7 @@ int insert(DLList *list, void *data, int index){
 
 int deleteNode(DLList* list,int index){
 	int i;
-	Node *head, *deletedNode;
+	Node *head;
 	if(index <= -1 || index >= list->length)
 		return 0;
 	head = list->head;
@@ -66,14 +59,9 @@ int deleteNode(DLList* list,int index){
 		list->length--;
 		return 1;
 	}
-	if(i==list->length-1){	//delete the last node
-		head->prev->next = NULL;
-		free(head);
-		list->length--;
-		return 1;
-	}
-	head->prev->next = head->next;
-    head->next->prev = head->prev;
+	head->prev->next = head->next;		//delete from middle of list
+	if(head->next != NULL)
+    	head->next->prev = head->prev;
     free(head);
     list->length--;
     return 1;
