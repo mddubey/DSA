@@ -8,7 +8,7 @@
 DLList* list;
 
 void tearDown(){
-	free(list);
+	dispose(list);
 }
 void test_gives_an_Doubly_link_list_with_head_NULL(){
 	list = create();
@@ -63,16 +63,16 @@ void test_inserts_elements_at_the_end_of_linkList_for_integer(){
 
 void test_adds_element_in_middle_of_linkList_integer(){
     Node *second,*third,*fourth;
-    int* nums = malloc(sizeof(int)*3);
+    int* nums = malloc(sizeof(int)*4);
     nums[0] = 12;nums[1] = 14;nums[2] = 15;nums[3] = 20;
     list = create();
-    insert(list, nums+0, 0);
+    insert(list, &nums[0], 0);
     ASSERT(1 == list->length);
-    insert(list, nums+2, 1);
+    insert(list, &nums[2], 1);
     ASSERT(2 == list->length);
-    insert(list, nums+3, 2);
+    insert(list, &nums[3], 2);
     ASSERT(3 == list->length);
-    insert(list, nums+1, 1);
+    insert(list, &nums[1], 1);
     ASSERT(4 == list->length);
     second = list->head->next;
     third = second->next;

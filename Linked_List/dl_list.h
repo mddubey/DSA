@@ -13,3 +13,4 @@ DLList* create();
 Node* createNode(Node *prevAddress, Node *nextAddress);
 int insert(DLList* list,void* data,int index);
 int deleteNode(DLList* list,int index);
+void dispose(DLList* list);

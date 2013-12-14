@@ -66,3 +66,15 @@ int deleteNode(DLList* list,int index){
     list->length--;
     return 1;
 };
+
+void dispose(DLList* list){
+	Node *head;
+	head = list->head;
+	while(head!=NULL){
+		list->head = head->next;
+		head->next = head->prev = NULL;
+		free(head);
+		head = list->head;
+	}
+	list->head = NULL;
+}
