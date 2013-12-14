@@ -121,25 +121,23 @@ void test_adds_the_element_end_of_the_queue_characters(){
 	ASSERT(areElementsEqual(*element2, *(Queue_element*)result->data));
 }
 
-// typedef char String[256];
-
-// void test_adds_the_element_end_of_the_queue_Strings(){
-// 	Node* result;
-// 	String * names = malloc(sizeof(String)*3);
-// 	Queue_element* element1 = createQueueElement(&names[0], 2);
-// 	Queue_element* element2 = createQueueElement(&names[1], 3);
-// 	Queue_element* element3 = createQueueElement(&names[2], 2);
-// 	names[0] = "afads";names[1] = 'e';names[2] = 'b';
-// 	queue = create_queue();
-// 	enqueue(queue, element1);
-// 	enqueue(queue, element3);
-// 	enqueue(queue, element2);
-// 	result = queue->head->next;
-// 	ASSERT(areElementsEqual(*element1, *(Queue_element*)queue->head->data));
-// 	ASSERT(areElementsEqual(*element3, *(Queue_element*)result->data));
-// 	result = result->next;
-// 	ASSERT(areElementsEqual(*element2, *(Queue_element*)result->data));
-// }
+void test_to_enqueue_three_elements_with_complex_priority(){
+    int* arr = malloc(3*sizeof(int));
+    Node* result;
+    Queue_element* element1 = createQueueElement(&arr[0], 5);
+	Queue_element* element2 = createQueueElement(&arr[1], 2);
+	Queue_element* element3 = createQueueElement(&arr[2], 3);
+    arr[0]=1;arr[1]=2;arr[2]=3;
+    queue = create_queue();
+    enqueue(queue, element1);
+    enqueue(queue, element2);
+    enqueue(queue, element3);
+    result = queue->head->next;
+	ASSERT(areElementsEqual(*element2, *(Queue_element*)queue->head->data));
+	ASSERT(areElementsEqual(*element3, *(Queue_element*)result->data));
+	result = result->next;
+	ASSERT(areElementsEqual(*element1, *(Queue_element*)result->data));
+}
 
 void test_removes_the_element_from_starting_of_the_queue(){
 	Node* result;
