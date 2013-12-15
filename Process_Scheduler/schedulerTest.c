@@ -70,6 +70,7 @@ void test_adds_three_new_process_into_Scheduler_according_to_their_priority(){
 	ASSERT(areProcessEqual(*process3, *(Process*)element->data));
 	element = (Queue_element*)scheduler->head->next->next->data;
 	ASSERT(areProcessEqual(*process1, *(Process*)element->data));
+	scheduler = createScheduler();
 }
 
 void test_executes_processes_of_available_in_scheduler(){
