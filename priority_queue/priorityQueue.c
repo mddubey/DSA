@@ -15,7 +15,7 @@ int enqueue(DLList *queue, Queue_element *element){
 	if(NULL == queue->head)
 		return insert(queue, element, 0);
 	head_data = head->data;
-	if(head_data->priority>element->priority)
+	if(head_data->priority > element->priority)
 		return insert(queue, element, 0);
 	while(head->next != NULL){
 		head = head->next;
