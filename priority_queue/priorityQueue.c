@@ -1,12 +1,12 @@
 #include <stdlib.h>
 #include "priorityQueue.h"
 
-DLList* create_queue(){
-	DLList* queue = calloc(1, sizeof(DLList));
+PQueue* create_queue(){
+	PQueue* queue = calloc(1, sizeof(PQueue));
 	return queue;
 }
 
-int enqueue(DLList *queue, Queue_element *element){
+int enqueue(PQueue *queue, Queue_element *element){
 	int index = 1;
 	Node* head = queue->head;
 	Queue_element* head_data;
@@ -26,6 +26,10 @@ int enqueue(DLList *queue, Queue_element *element){
 	return insert(queue, element, index);
 }
 
-int dequeue(DLList* queue){
+int dequeue(PQueue* queue){
 	return deleteNode(queue, 0);
+}
+
+void dispose_queue(PQueue* queue){
+	dispose(queue);
 }

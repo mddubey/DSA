@@ -4,9 +4,9 @@
 
 //create setup, tearDown, fixtureSetup, fixtureTearDown methods if needed
 
-DLList* queue;
+PQueue* queue;
 void tearDown(){
-	dispose(queue);
+	dispose_queue(queue);
 }
 
 int areElementsEqual(Queue_element expected, Queue_element actual){
