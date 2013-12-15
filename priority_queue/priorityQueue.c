@@ -3,8 +3,6 @@
 
 DLList* create_queue(){
 	DLList* queue = calloc(1, sizeof(DLList));
-	queue->head = NULL;
-	queue->length = 0;
 	return queue;
 }
 
