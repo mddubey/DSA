@@ -251,3 +251,24 @@ void test_gives_the_top_element_from_stack_Structure(){
 	ASSERT(areAccountsEqual(accounts[1], *result));
 	ASSERT(2 == stack->list->length);
 }
+
+//********************************* isEmpty**********************
+
+void test_tells_the_stack_is_not_empty(){
+	int* nums = malloc(sizeof(int));
+	int res;
+	*nums = 10;
+	stack = createStack();
+	push(stack, nums);
+	res = isEmpty(stack);
+	ASSERT(res == 0);
+	ASSERT(1 == stack->list->length);
+}
+
+void test_tells_the_stack_is_empty(){
+	int res;
+	stack = createStack();
+	res = isEmpty(stack);
+	ASSERT(res == 1);
+	ASSERT(0 == stack->list->length);
+}
