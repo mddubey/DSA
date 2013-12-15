@@ -21,3 +21,25 @@ int addProcess(PScheduler* scheduler, Process* process){
 	element->priority = process->priority;
 	return enqueue(scheduler, element);
 }
+
+void executeProcess(PScheduler* scheduler, int timeSlice){
+	int processFinished = 0;
+	Node* node;
+	Queue_element* queue; 
+	Process* currentProcess;
+	if(0 == scheduler->length)
+		return;
+	node = scheduler->head;
+	while(processFinished != scheduler->length){
+		queue = node->data;
+		currentProcess = queue->data;
+		if(currentProcess->runTime > 0){
+			currentProcess->runTime -= timeSlice;
+			if(currentProcess->runTime<=0)
+				processFinished++;
+			if(node->next == NULL)
+				node->next = scheduler->head;
+		}		
+		node = node->next;
+	}
+}

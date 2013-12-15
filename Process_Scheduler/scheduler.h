@@ -11,3 +11,4 @@ typedef PQueue PScheduler;
 PScheduler* createScheduler();
 Process* generateProcess(char* name,int runTime,int priority);
 int addProcess(PScheduler* scheduler, Process* process);
+void executeProcess(PScheduler* scheduler, int timeSlice);
