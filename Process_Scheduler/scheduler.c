@@ -43,3 +43,7 @@ void executeProcess(PScheduler* scheduler, int timeSlice){
 		node = node->next;
 	}
 }
+
+void disposeScheduler(PScheduler* scheduler){
+	dispose_queue(scheduler);
+}
