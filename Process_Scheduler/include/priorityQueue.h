@@ -1,4 +1,4 @@
-#include "./include/dl_list.h"
+#include "dl_list.h"
 
 typedef struct {
 	void* data;

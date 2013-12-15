@@ -6,6 +6,8 @@ typedef struct {
 	int priority;
 }Process;
 
-DLList* createScheduler();
+typedef PQueue PScheduler;
+
+PScheduler* createScheduler();
 Process* generateProcess(char* name,int runTime,int priority);
-int addProcess(DLList* scheduler, Process* process);
+int addProcess(PScheduler* scheduler, Process* process);

@@ -5,7 +5,7 @@
 
 //create setup, tearDown, fixtureSetup, fixtureTearDown methods if needed
 
-DLList* scheduler;
+PScheduler* scheduler;
 
 void tearDown(){
 	dispose(scheduler);
@@ -52,5 +52,22 @@ void test_adds_a_new_process_into_Scheduler_according_to_its_priority(){
 	element = (Queue_element*)scheduler->head->data;
 	ASSERT(areProcessEqual(*process2, *(Process*)element->data));
 	element = (Queue_element*)scheduler->head->next->data;
+	ASSERT(areProcessEqual(*process1, *(Process*)element->data));
+}
+
+void test_adds_three_new_process_into_Scheduler_according_to_their_priority(){
+	Process* process1 = generateProcess("Mozila", 50, 5);
+	Process* process2 = generateProcess("chrome", 100, 3);
+	Process* process3 = generateProcess("Task", 100, 4);
+	Queue_element* element;
+	scheduler = createScheduler();
+	addProcess(scheduler, process1);
+	addProcess(scheduler, process2);
+	addProcess(scheduler, process3);
+	element = (Queue_element*)scheduler->head->data;
+	ASSERT(areProcessEqual(*process2, *(Process*)element->data));
+	element = (Queue_element*)scheduler->head->next->data;
+	ASSERT(areProcessEqual(*process3, *(Process*)element->data));
+	element = (Queue_element*)scheduler->head->next->next->data;
 	ASSERT(areProcessEqual(*process1, *(Process*)element->data));
 }
