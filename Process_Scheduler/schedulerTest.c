@@ -45,13 +45,10 @@ void test_adds_a_new_process_into_Scheduler(){
 void test_adds_a_new_process_into_Scheduler_according_to_its_priority(){
 	Process* process1 = generateProcess("Mozila", 50, 2);
 	Process* process2 = generateProcess("chrome", 100, 1);
-	int result;
 	Queue_element* element;
 	scheduler = createScheduler();
-	result = addProcess(scheduler, process1);
-	ASSERT(1 == result);
-	result = addProcess(scheduler, process2);
-	ASSERT(1 == result);
+	addProcess(scheduler, process1);
+	addProcess(scheduler, process2);
 	element = (Queue_element*)scheduler->head->data;
 	ASSERT(areProcessEqual(*process2, *(Process*)element->data));
 	element = (Queue_element*)scheduler->head->next->data;
