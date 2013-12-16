@@ -4,6 +4,23 @@
 
 //create setup, tearDown, fixtureSetup, fixtureTearDown methods if needed
 
+typedef struct {
+	int accountNumber;
+	int balance;
+} Account;
+
+int compareAccountsByAccountNumber(void* first, void* second) {
+	Account* firstAccount = (Account*)first;
+	Account* secondAccount = (Account*)second;
+	return firstAccount->accountNumber - secondAccount->accountNumber;
+}
+
+int compareAccountsByBalance(void* first, void* second) {
+	Account* firstAccount = (Account*)first;
+	Account* secondAccount = (Account*)second;
+	return firstAccount->balance - secondAccount->balance;
+}
+
 int compareInt (void* a, void* b){
 	return (*(int*)a - *(int*)b);
 }
@@ -39,13 +56,13 @@ void test_sorts_collections_of_Integers(){
 	ASSERT(areArrayEqual(ptrs, expected, 5));
 }
 
-// void test_sorts_collections_of_Doubles(){
-// 	double nums[5] = {1.0,2.0,5.0,1.5,1.7};
-// 	double expected[5] = {1.0,1.5,1.7,2.0,5.0};
-// 	isort(nums, 5, sizeof(double), compareDoubles);
-// 	printf("%lf\n", nums[1]);
-// 	ASSERT(areArrayEqual(nums, expected, 5, sizeof(double)));
-// }
+void test_sorts_collections_of_Doubles_(){
+	double nums[5] = {1.0,1.5,1.7,2.0,5.0};
+	void* ptrs[5] = {(nums+3),(nums+1),(nums+4),(nums+2),(nums)};
+	void* expected[5] = {(nums+0),(nums+1),(nums+2),(nums+3),(nums+4)};
+	isort(ptrs, 5, sizeof(double), compareDoubles);
+	ASSERT(areArrayEqual(ptrs, expected, 5));
+}
 
 void test_sorts_collections_of_Doubles(){
 	double nums[5] = {1.0,2.0,3.0,5.0,7.0};
@@ -63,12 +80,29 @@ void test_sorts_collections_of_Characters(){
 	ASSERT(areArrayEqual(ptrs, expected, 5));
 }
 
-// typedef char String[256];
-// void test_sorts_collections_of_String(){
-// 	String names[5] = {"Raaj","Raaz","Raam","Rahul","Rajan"};
-// 	String expected[5] = {"Raaj","Raam","Raaz","Rahul","Rajan"};
-// 	isort(names, 5, sizeof(String), compareStrings);
-// 	ASSERT(areArrayEqual(names, expected, 5, sizeof(String)));
-// }
+typedef char String[256];
+void test_sorts_collections_of_String(){
+	String names[5] = {"Raaj","Raam","Raaz","Rahul","Rajan"};
+	void* ptrs[5] = {(names+3),(names+1),(names+4),(names+2),(names)};
+	void* expected[5] = {(names+0),(names+1),(names+2),(names+3),(names+4)};
+	isort(ptrs, 5, sizeof(String), compareStrings);
+	ASSERT(areArrayEqual(ptrs, expected, 5));
+}
+
+void test_sorts_collection_of_Accounts_according_to_account_number(){
+	Account accounts[] = {{12, 10} , {23,1200}, {33, 10000}, {40, 3}, {100, 100}};
+	void* ptrs[5] = {(accounts+3),(accounts+1),(accounts+4),(accounts+2),(accounts)};
+	void* expected[5] = {(accounts+0),(accounts+1),(accounts+2),(accounts+3),(accounts+4)};
+	isort(ptrs, 5, sizeof(String), compareStrings);
+	ASSERT(areArrayEqual(ptrs, expected, 5));
+}
+
+void test_sorts_collection_of_Accounts_according_to_balance(){
+	Account accounts[] = {{40, 3}, {12, 10}, {100, 100} , {23,1200}, {33, 10000}};
+	void* ptrs[5] = {(accounts+3),(accounts+1),(accounts+4),(accounts+2),(accounts)};
+	void* expected[5] = {(accounts+0),(accounts+1),(accounts+2),(accounts+3),(accounts+4)};
+	isort(ptrs, 5, sizeof(String), compareStrings);
+	ASSERT(areArrayEqual(ptrs, expected, 5));
+}
 
 
