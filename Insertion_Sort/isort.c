@@ -2,30 +2,28 @@
 #include <memory.h>
 #include "isort.h"
 
-void isort(void* base, size_t numberOfElements, size_t elementSize,
+void isort(void** base, size_t totalElements, size_t elementSize,
             compare comp) {
     int i, j;
-    void* temp = calloc(1, elementSize);
-    void* elementToCompare;
-    int comparisonResult;
-    
-    for (i = 1; i < numberOfElements; i++) {
-        memcpy(temp, base + (i * elementSize), elementSize);
-
+    void** temp = malloc(sizeof(void*));
+    void** elementToCompare = malloc(sizeof(void*));
+    int result;
+    for (i = 1; i < totalElements; i++) {
+        *temp = base[i];//*(base + (i * sizeof(void*)));
         for (j = i - 1; j >= 0; j--) {
-            elementToCompare = base + j * elementSize;
-            comparisonResult = comp(temp, elementToCompare);
-
-            if (comparisonResult >= 0) {
+            *elementToCompare = base[j];//*(base + j * sizeof(void*));
+            result = comp(*temp, *elementToCompare);
+            if (result >= 0) {
                 break; 
             }
-
-            memcpy(elementToCompare + elementSize, 
-                        elementToCompare, elementSize);                                     
+            *(elementToCompare + 1) = *elementToCompare;
+            // memcpy(elementToCompare + elementSize, 
+            //             elementToCompare, elementSize);                                     
             
         } 
-        
-        memcpy(base + (j + 1) * elementSize, temp, elementSize);                                                
+    // printf("result\n");    
+        /**(base + (j + 1) * sizeof(void*))*/ base[j+1] = *temp;
+        // memcpy(base + (j + 1) * elementSize, temp, elementSize);                                                
     }
     
     free(temp);

@@ -20,17 +20,23 @@ int compareStrings(void* a, void* b){
 	return strcmp((char*)a, (char*)b);
 }
 
-int areArrayEqual(void* a,void* b, int length, int size){
-	return 0 == memcmp(a, b, length*size);
+int areArrayEqual(void** a,void** b, int length){
+	int i;
+	for(i = 0;i<length;i++){
+		if(a[i] != b[i])
+			return 1;
+	}
+	return 0;
 }
 
 //************************************************************************************
 
 void test_sorts_collections_of_Integers(){
-	int nums[5] = {25,20,12,10,5};
-	int expected[5] = {5,10,12,20,25};
-	isort(nums, 5, sizeof(int), compareInt);
-	ASSERT(areArrayEqual(nums, expected, 5, sizeof(int)));
+	int nums[5] = {5,10,12,20,25};
+	void* ptrs[5] = {(nums+4),(nums+3),(nums+2),(nums+1),(nums+0)};
+	void* expected[5] = {(nums+0),(nums+1),(nums+2),(nums+3),(nums+4)};
+	isort(ptrs, 5, sizeof(int), compareInt);
+	ASSERT(areArrayEqual(ptrs, expected, 5));
 }
 
 // void test_sorts_collections_of_Doubles(){
@@ -42,25 +48,27 @@ void test_sorts_collections_of_Integers(){
 // }
 
 void test_sorts_collections_of_Doubles(){
-	double nums[5] = {1.0,2.0,5.0,3.0,7.0};
-	double expected[5] = {1.0,2.0,3.0,5.0,7.0};
-	isort(nums, 5, sizeof(double), compareDoubles);
-	ASSERT(areArrayEqual(nums, expected, 5, sizeof(double)));
+	double nums[5] = {1.0,2.0,3.0,5.0,7.0};
+	void* ptrs[5] = {(nums+3),(nums+1),(nums+4),(nums+2),(nums)};
+	void* expected[5] = {(nums+0),(nums+1),(nums+2),(nums+3),(nums+4)};
+	isort(ptrs, 5, sizeof(double), compareDoubles);
+	ASSERT(areArrayEqual(ptrs, expected, 5));
 }
 
 void test_sorts_collections_of_Characters(){
-	char chars[5] = {'r','a','u','z','b'};
-	char expected[5] = {'a','b','r','u','z'};
-	isort(chars, 5, sizeof(char), compareChars);
-	ASSERT(areArrayEqual(chars, expected, 5, sizeof(char)));
+	char chars[5] = {'a','b','r','u','z'};
+	void* ptrs[5] = {(chars+3),(chars+1),(chars+4),(chars+2),(chars)};
+	void* expected[5] = {(chars+0),(chars+1),(chars+2),(chars+3),(chars+4)};
+	isort(ptrs, 5, sizeof(char), compareChars);
+	ASSERT(areArrayEqual(ptrs, expected, 5));
 }
 
-typedef char String[256];
-void test_sorts_collections_of_String(){
-	String names[5] = {"Raaj","Raaz","Raam","Rahul","Rajan"};
-	String expected[5] = {"Raaj","Raam","Raaz","Rahul","Rajan"};
-	isort(names, 5, sizeof(String), compareStrings);
-	ASSERT(areArrayEqual(names, expected, 5, sizeof(String)));
-}
+// typedef char String[256];
+// void test_sorts_collections_of_String(){
+// 	String names[5] = {"Raaj","Raaz","Raam","Rahul","Rajan"};
+// 	String expected[5] = {"Raaj","Raam","Raaz","Rahul","Rajan"};
+// 	isort(names, 5, sizeof(String), compareStrings);
+// 	ASSERT(areArrayEqual(names, expected, 5, sizeof(String)));
+// }
 
 
