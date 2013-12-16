@@ -3,7 +3,7 @@
 #include <memory.h>
 
 void** getElement(Stack* stack,int top){
-	return stack->elements + top * sizeof(void*);
+	return stack->elements + top;
 };
 
 Stack* create(int length){

@@ -281,7 +281,7 @@ void test_tells_the_stack_is_empty_integers(){
 	int result;
 	stack = create(5);
 	result = isEmpty(stack);
-	ASSERT(1==result);
+	ASSERT(1 == result);
 }
 
 void test_tells_the_stack_is_not_empty(){
@@ -290,7 +290,7 @@ void test_tells_the_stack_is_not_empty(){
 	*(int*)stack->elements = 15;
 	stack->top = 1;
 	result = isEmpty(stack);
-	ASSERT(0==result);
+	ASSERT(0 == result);
 }
 
 //****************************isFull**********************
@@ -309,5 +309,5 @@ void test_tells_the_stack_is_not_full(){
 	int result;
 	stack = create(4);
 	result = isFull(stack);
-	ASSERT(0==result);
+	ASSERT(0 == result);
 }
