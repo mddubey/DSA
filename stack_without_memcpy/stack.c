@@ -33,6 +33,7 @@ int push(void* stack,void* element){
 		newStack->length *= 2;
 	}
 	*(newStack->elements + newStack->top) = element;
+	newStack->top++;
 	return 1;
 }
 
