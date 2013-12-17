@@ -20,8 +20,7 @@ char getOpeningBracket(char letter){
     return '\0';
 };
 
-ErrorMsg startMatch(const char* input)
-{
+ErrorMsg areBracketsMatching(const char* input){
     Stack* stack;
     int index,limit;
     ErrorMsg result;
