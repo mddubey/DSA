@@ -42,17 +42,20 @@ int isEmpty(void* stack){
 	return newStack->top == 0;
 }
 
-// void* pop(void* stack){
-// 	Stack* newStack = stack;
-// 	if(isEmpty(newStack)) return NULL;
-// 	return *(getElement(newStack,--(newStack->top)));
-// };
 
 void* peek(void* stack){
 	Stack* newStack = stack;
 	if(isEmpty(newStack)) return NULL;
 	return *(newStack->elements + (newStack->top - 1));
 }
+
+void* pop(void* stack){
+	Stack* newStack = stack;
+	void* result;
+	result = peek(stack);
+	newStack->top--;
+	return result;
+};
 
 void disposeStack(void* stack){
 	Stack* newStack = stack;

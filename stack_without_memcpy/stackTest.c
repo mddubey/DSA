@@ -156,7 +156,7 @@ void test_gives_structures_on_the_top_of_stacks(){
 	ASSERT(areAccountsEqual(*result, accounts[1]));
 }
 
-void test_prevents_to_access_the_element_if_top_is_zero(){
+void test_prevents_to_access_the_element_if_stack_is_empty(){
 	void* result;
 	stack = create(5);
 	result = peek(stack);
@@ -165,130 +165,86 @@ void test_prevents_to_access_the_element_if_top_is_zero(){
 
 // //***************************pop***********************************************
 
-// void test_removes_the_top_most_element_from_the_stack_integers(){
-// 	int *nums = malloc(sizeof(int)*4);
-// 	int* result;
-// 	nums[0] = 10;nums[1] = 12;nums[2] = 15;nums[3] = 20;
-// 	stack = create(3);
-// 	push(stack, &nums[0]);
-// 	push(stack, &nums[2]);
-// 	push(stack, &nums[1]);
-// 	push(stack, &nums[3]);
-// 	result = pop(stack);
-// 	ASSERT(20==*result);
-// 	ASSERT(3==stack->top);
-// };
+void test_removes_the_top_most_element_from_the_stack_integers(){
+	int nums[1] = {20};
+	int* result;
+	stack = create(1);
+	push(stack, &nums[0]);
+	result = pop(stack);
+	ASSERT(20 == *result);
+	result = pop(stack);
+	ASSERT(NULL == result);
+};
 
-// void test_removes_the_top_most_element_from_the_stack_doubles(){
-// 	double* nums = malloc(sizeof(double)*4);
-// 	double* result;
-// 	nums[0] = 10.0;nums[1] = 12.0;nums[2] = 15.0;nums[3] = 20.0;
-// 	stack = create(3);
-// 	push(stack, &nums[0]);
-// 	push(stack, &nums[2]);
-// 	push(stack, &nums[1]);
-// 	push(stack, &nums[3]);
-// 	result = pop(stack);
-// 	ASSERT(20.0 == *result);
-// 	ASSERT(3 == stack->top);
-// };
+void test_removes_the_top_most_element_from_the_stack_doubles(){
+	double nums[3] = {10.0,12.0};
+	double* result;
+	stack = create(3);
+	push(stack, &nums[0]);
+	push(stack, &nums[1]);
+	result = pop(stack);
+	ASSERT(12.0 == *result);
+	result = pop(stack);
+	ASSERT(10.0 == *result);
+	result = pop(stack);
+	ASSERT(NULL == result);
+};
 
-// void test_removes_the_top_most_element_from_the_stack_characters(){
-// 	char* chars = malloc(sizeof(char)*4);
-// 	char* result;
-// 	chars[0] = 'a';chars[1] = 'm';chars[2] = 'd';chars[3] = 'k';
-// 	stack = create(3);
-// 	push(stack, &chars[0]);
-// 	push(stack, &chars[2]);
-// 	push(stack, &chars[1]);
-// 	push(stack, &chars[3]);
-// 	result = pop(stack);
-// 	ASSERT('k' == *result);
-// 	ASSERT(3 == stack->top);
-// };
+void test_removes_the_top_most_element_from_the_stack_characters(){
+	char chars[2] = {'a','m'};
+	char* result;
+	stack = create(3);
+	push(stack, &chars[0]);
+	push(stack, &chars[1]);
+	result = pop(stack);
+	ASSERT('m' == *result);
+	result = pop(stack);
+	ASSERT('a' == *result);
+	result = pop(stack);
+	ASSERT(NULL == result);
+};
 
-// void test_removes_the_top_most_element_from_the_stack_Strings(){
-// 	String_256* nums = malloc(sizeof(String_256)*2);
-// 	char* result;
-// 	strcpy(nums[0], "Mritunjay");
-// 	strcpy(nums[1], "kartik");
-// 	stack = create(2);
-// 	push(stack, &nums[0]);
-// 	push(stack, &nums[1]);
-// 	result = pop(stack);
-// 	ASSERT(0 == strcmp("kartik", result));
-// 	ASSERT(1 == stack->top);
-// };
+void test_removes_the_top_most_element_from_the_stack_Strings(){
+	String_256 names[2] = {"Mritunjay","kartik"};
+	char* result;
+	stack = create(2);
+	push(stack, &names[0]);
+	push(stack, &names[1]);
+	result = pop(stack);
+	ASSERT(0 == strcmp("kartik", result));
+	result = pop(stack);
+	ASSERT(0 == strcmp("Mritunjay", result));
+	result = pop(stack);
+	ASSERT(NULL == result);
+};
 
-// void test_removes_structures_on_the_top_of_stacks(){
-// 	Account* account = malloc(sizeof(Account));
-// 	Account* result;
-// 	account->accNo = 100;account->balance = 1000;
-// 	stack = create(3);
-// 	push(stack, account);
-// 	ASSERT(areAccountsEqual(*account, **(Account**)getElement(stack, 0)));
-// 	result = pop(stack);
-// 	ASSERT(areAccountsEqual(*result, *account));
-// 	ASSERT(0 == stack->top && 3 == stack->length);
-// }
+void test_removes_structures_on_the_top_of_stacks(){
+	Account account = {100,1000};
+	Account* result;
+	stack = create(3);
+	push(stack, &account);
+	result = pop(stack);
+	ASSERT(areAccountsEqual(account, *result));
+	result = pop(stack);
+	ASSERT(NULL == result);
+}
 
-// void test_removes_the_top_most_element_and_adds_one_more_element_at_top(){
-// 	int *nums = malloc(sizeof(int)*4);
-// 	int* result;
-// 	nums[0] = 10;nums[1] = 12;nums[2] = 15;nums[3] = 20;
-// 	stack = create(4);
-// 	push(stack, &nums[0]);
-// 	push(stack, &nums[2]);
-// 	push(stack, &nums[1]);
-// 	push(stack, &nums[3]);
-// 	ASSERT(20 == **(int**)getElement(stack, 3));
-// 	result = (int*)(pop(stack));
-// 	ASSERT(20 == *result);
-// 	push(stack, &nums[1]);
-// 	ASSERT(4==stack->top);
-// 	ASSERT(12 == **(int**)getElement(stack, 3));
-// };
+void test_removes_the_top_most_element_and_adds_one_more_element_at_top(){
+	int nums[2] = {10,12};
+	int* result;
+	stack = create(2);
+	push(stack, &nums[0]);
+	push(stack, &nums[1]);
+	result = (int*)(pop(stack));
+	ASSERT(12 == *result);
+	push(stack, &nums[0]);
+	result = (int*)(pop(stack));
+	ASSERT(10 == *result);
+};
 
-// void test_prevents_to_delete_the_element_if_top_is_zero(){
-// 	void* result;
-// 	stack = create(5);
-// 	result = pop(stack);
-// 	ASSERT(NULL == result);
-// }
-
-// //***********************************isEmpty*****************
-
-// void test_tells_the_stack_is_empty_integers(){
-// 	int result;
-// 	stack = create(5);
-// 	result = isEmpty(stack);
-// 	ASSERT(1 == result);
-// }
-
-// void test_tells_the_stack_is_not_empty(){
-// 	int result;
-// 	stack = create(5);
-// 	*(int*)stack->elements = 15;
-// 	stack->top = 1;
-// 	result = isEmpty(stack);
-// 	ASSERT(0 == result);
-// }
-
-// //****************************isFull**********************
-
-// void test_tells_the_stack_is_full_integers(){
-// 	int* num = malloc(sizeof(int));
-// 	int result;
-// 	stack = create(1);
-// 	*num = 15;
-// 	push(stack, num);
-// 	result = isFull(stack);
-// 	ASSERT(1==result);
-// }
-
-// void test_tells_the_stack_is_not_full(){
-// 	int result;
-// 	stack = create(4);
-// 	result = isFull(stack);
-// 	ASSERT(0 == result);
-// }
+void test_prevents_to_delete_the_element_if_stack_is_empty(){
+	void* result;
+	stack = create(5);
+	result = pop(stack);
+	ASSERT(NULL == result);
+}
