@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "testUtils.h"
+#include "../customTypes.h"
 
 //create setup, tearDown, fixtureSetup, fixtureTearDown methods if needed
 
@@ -35,16 +36,11 @@ void test_inserts_elements_at_the_end_of_linkList_for_integer(){
 
 	insert(list, &nums[0], 0);
 	ASSERT(10 == *(int*)list->head->data);
-	ASSERT(NULL == list->head->prev);
-	ASSERT(NULL == list->head->next);
-	ASSERT(1 == list->length);
 
 	insert(list, &nums[1], 1);
 	result1 = list->head->next;
 	ASSERT(12 == *(int*)result1->data);
 	ASSERT(list->head == result1->prev);
-	ASSERT(NULL == result1->next);
-	ASSERT(2 == list->length);
 
 	insert(list, &nums[2], 2);
 	result2 = result1->next;
@@ -121,7 +117,6 @@ void test_inserts_the_chars_in_the_linklist(){
 	ASSERT(3 == list->length);
 }
 
-typedef char String_256[256];
 typedef struct 
 {
 	int accNo;
@@ -133,7 +128,7 @@ int areAccountsEqual(Account expected,Account actual){
 }
 
 void test_inserts_the_strings_in_the_linklist(){
-	String_256* names = malloc(sizeof(String_256)*3);
+	String* names = malloc(sizeof(String)*3);
 	list = create();
 	strcpy(names[0], "prateek");
 	strcpy(names[1], "Manish");

@@ -1,8 +1,8 @@
-#include <stdio.h>
 #include <memory.h>
 #include <stdlib.h>
 #include "stack.h"
 #include "testUtils.h"
+#include "../customTypes.h"
 
 //create setup, tearDown, fixtureSetup, fixtureTearDown methods if needed
 
@@ -42,9 +42,9 @@ void test_creates_a_stack_for_Chars_elements_with_default_value_Null (){
 	ASSERT(areEqual(expected, *stack));
 };
 void test_creates_a_stack_for_Strings_elements_with_default_value_blank (){
-	String_256 name[3] = {"","",""};
-	Stack expected = {name,0,3,sizeof(String_256)};
-	stack = create(3, sizeof(String_256));
+	String name[3] = {"","",""};
+	Stack expected = {name,0,3,sizeof(String)};
+	stack = create(3, sizeof(String));
 	ASSERT(areEqual(expected, *stack));
 };
 
@@ -82,11 +82,11 @@ void test_adds_the_given_characters_at_the_top_of_the_stack(){
 }
 
 void test_adds_the_given_Strings_at_the_top_of_the_stack(){
-	String_256 names[2] = {"Digs","Raj"};
-	String_256 digs_nm = "Digs";
-	String_256 raj_nm = "Raj";
-	Stack expected = {names,2,2,sizeof(String_256)};
-	stack = create(2, sizeof(String_256));
+	String names[2] = {"Digs","Raj"};
+	String digs_nm = "Digs";
+	String raj_nm = "Raj";
+	Stack expected = {names,2,2,sizeof(String)};
+	stack = create(2, sizeof(String));
 	push(stack, digs_nm);
 	push(stack, raj_nm);
 	ASSERT(areEqual(expected, *stack));
@@ -143,11 +143,11 @@ void test_removes_the_top_most_element_from_the_stack_characters(){
 };
 
 void test_removes_the_top_most_element_from_the_stack_Strings(){
-	String_256 _4_chars[4] = {"mritunjay","dubey","aniket","kartik"};
+	String _4_chars[4] = {"mritunjay","dubey","aniket","kartik"};
 	char* result;
-	String_256 expected = "kartik";
-	stack = create(4, sizeof(String_256));
-	memcpy(stack->elements,_4_chars,4*sizeof(String_256));
+	String expected = "kartik";
+	stack = create(4, sizeof(String));
+	memcpy(stack->elements,_4_chars,4*sizeof(String));
 	stack->top = 4;
 	result = (char*)(pop(stack));
 	ASSERT(0==strcmp(result, expected));
@@ -215,9 +215,9 @@ void test_gives_the_top_most_element_of_stack_characters(){
 
 void test_gives_the_top_most_element_of_stack_String(){
 	char* result;
-	String_256 _3_names[3] = {"manish","mritunjay","prateek"};
-	String_256 expected = "prateek";
-	stack = create(5, sizeof(String_256));
+	String _3_names[3] = {"manish","mritunjay","prateek"};
+	String expected = "prateek";
+	stack = create(5, sizeof(String));
 	stack->top = 3;
 	memcpy(stack->elements, _3_names, 3*stack->elementSize);
 	result = (char*)peek(stack);
@@ -242,7 +242,7 @@ void test_tells_the_stack_is_empty_integers(){
 }
 void test_tells_the_stack_is_empty_strings(){
 	int result;
-	stack = create(5, sizeof(String_256));
+	stack = create(5, sizeof(String));
 	result = isEmpty(stack);
 	ASSERT(1==result);
 }
@@ -268,7 +268,7 @@ void test_tells_the_stack_is_full_integers(){
 
 void test_tells_the_stack_is_full_Strings(){
 	int result;
-	stack = create(1, sizeof(String_256));
+	stack = create(1, sizeof(String));
 	strcpy(stack->elements, "Mritunjay");
 	stack->top = 1;
 	result = isFull(stack);
@@ -277,7 +277,7 @@ void test_tells_the_stack_is_full_Strings(){
 
 void test_tells_the_stack_is_not_full_Strings(){
 	int result;
-	stack = create(4, sizeof(String_256));
+	stack = create(4, sizeof(String));
 	strcpy(stack->elements, "Mritunjay");
 	stack->top = 1;
 	result = isFull(stack);

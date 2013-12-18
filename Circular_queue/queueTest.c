@@ -2,6 +2,7 @@
 #include <memory.h>
 #include <stdlib.h>
 #include "testUtils.h"
+#include "../customTypes.h"
 
 //create setup, tearDown, fixtureSetup, fixtureTearDown methods if needed
 
@@ -166,7 +167,7 @@ void test_11_deletes_the_last_element_of_queue_and_sets_front_and_rear_minus_1()
 };
 
 void test_12_set_front_to_zero_if_front_is_at_the_end_of_queue(){
-	String_256* names = malloc(sizeof(String_256)*2);
+	String* names = malloc(sizeof(String)*2);
 	char* delete_name_1;
 	char* delete_name_2;
 	strcpy(names[0], "Rajesh");

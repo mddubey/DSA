@@ -1,6 +1,8 @@
 #include "testUtils.h"
 #include "matchBracket.h"
 #include <stdlib.h>
+#include "./include/stack.h"
+
 //create setup, tearDown, fixtureSetup, fixtureTearDown methods if needed
 
 void test_matchs_all_brackets_of_input_string(){

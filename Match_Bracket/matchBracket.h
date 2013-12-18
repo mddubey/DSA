@@ -1,5 +1,3 @@
-#include "./include/stack.h"
-
 typedef struct{
 	int isError;
 	int index;

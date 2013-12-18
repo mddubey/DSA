@@ -2,6 +2,7 @@
 #include <memory.h>
 #include <stdlib.h>
 #include "testUtils.h"
+#include "../customTypes.h"
 
 //create setup, tearDown, fixtureSetup, fixtureTearDown methods if needed
 
@@ -177,7 +178,7 @@ void test_12_shift_left_remaining_elements_after_deletion(){
 }
 
 void test_13_delete_a_string_from_a_queue(){
-        String_256* names = malloc(sizeof(String_256)*2);
+        String* names = malloc(sizeof(String)*2);
         char* delete_name;
         char** rem_name;
         queue = create(2);

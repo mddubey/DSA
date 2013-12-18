@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include "./include/stack.h"
+
 
 ErrorMsg createResult(int isError,int index,char bracket,Stack* stack){
     ErrorMsg result;

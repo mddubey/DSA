@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "testUtils.h"
+#include "../customTypes.h"
 
 //create setup, tearDown, fixtureSetup, fixtureTearDown methods if needed
 Stack* stack;
@@ -65,8 +66,6 @@ void test_adds_a_new_element_in_the_stack_chars(){
 	ASSERT('a' == *(char*)node->data);
 	ASSERT(2 == stack->list->length);
 }
-
-typedef char String[256];
 
 void test_adds_a_new_element_in_the_stack_String(){
 	String* names = malloc(sizeof(String)*2);

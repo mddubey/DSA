@@ -1,6 +1,7 @@
 #include "isort.h"
 #include <string.h>
 #include "testUtils.h"
+#include "../customTypes.h"
 
 //create setup, tearDown, fixtureSetup, fixtureTearDown methods if needed
 
@@ -80,7 +81,6 @@ void test_sorts_collections_of_Characters(){
 	ASSERT(areArrayEqual(ptrs, expected, 5));
 }
 
-typedef char String[256];
 void test_sorts_collections_of_String(){
 	String names[5] = {"Raaj","Raam","Raaz","Rahul","Rajan"};
 	void* ptrs[5] = {(names+3),(names+1),(names+4),(names+2),(names)};

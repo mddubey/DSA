@@ -1,5 +1,6 @@
 #include "b_search.h"
 #include <string.h>
+#include "../customTypes.h"
 #include "testUtils.h"
 
 //create setup, tearDown, fixtureSetup, fixtureTearDown methods if needed
@@ -143,40 +144,39 @@ void test_15_gives_NULL_if_element_is_not_present_Chars(){
 }
 
 //********************************Strings*******************************
-typedef char String_256[256];
 
 void test_16_search_element_from_the_sorted_collection_Strings(){
-	String_256 elements[5] = {"Ajay","Mahesh","Ramesh","Suresh","Zuresh"};
+	String elements[5] = {"Ajay","Mahesh","Ramesh","Suresh","Zuresh"};
 	char* key = "Suresh";
-	char* result = binarySearch(key, elements, 5, sizeof(String_256), compareStrings);
+	char* result = binarySearch(key, elements, 5, sizeof(String), compareStrings);
 	ASSERT(0 == strcmp("Suresh", result));
 };
 
 void test_17_search_element_from_the_sorted_collection_only_2_elements_for_first_Strings(){
-	String_256 elements[2] = {"Digs","Raaz"};
+	String elements[2] = {"Digs","Raaz"};
 	char* key = "Digs";
-	char* result = binarySearch(key, elements, 2, sizeof(String_256), compareStrings);
+	char* result = binarySearch(key, elements, 2, sizeof(String), compareStrings);
 	ASSERT(0 == strcmp("Digs", result));
 };
 
 void test_18_search_element_from_the_sorted_collection_only_2_elements_for_second_Strings(){
-	String_256 elements[2] = {"Digs","Raaz"};
+	String elements[2] = {"Digs","Raaz"};
 	char* key = "Raaz";
-	char* result = binarySearch(key, elements, 2, sizeof(String_256), compareStrings);
+	char* result = binarySearch(key, elements, 2, sizeof(String), compareStrings);
 	ASSERT(0 == strcmp("Raaz", result));
 };
 
 void test_19_search_last_element_in_collection_Strings(){
-	String_256 elements[7] = {"Aniket","Assert","Arora","Mahesh","Queen","aap","ppo"};
+	String elements[7] = {"Aniket","Assert","Arora","Mahesh","Queen","aap","ppo"};
 	char* key = "ppo";
-	char* result = binarySearch(key, elements, 7, sizeof(String_256), compareStrings);
+	char* result = binarySearch(key, elements, 7, sizeof(String), compareStrings);
 	ASSERT(0 == strcmp("ppo", result));
 }
 
 void test_20_gives_NULL_if_element_is_not_present_Strings(){
-	String_256 elements[7] = {"Arm","Barm","Darm","Farm","Garm","Harm","Warm"};
+	String elements[7] = {"Arm","Barm","Darm","Farm","Garm","Harm","Warm"};
 	char* key = "Diff";
-	char* result = binarySearch(key, elements, 7, sizeof(String_256), compareStrings);
+	char* result = binarySearch(key, elements, 7, sizeof(String), compareStrings);
 	ASSERT(NULL == result);
 }
 
@@ -213,8 +213,8 @@ void test_23_sorts_the_elements_in_the_collection_chars(){
 	ASSERT(areArraysEqual(expected, chars, sizeof(chars)));
 }
 // void test_22_sorts_the_elements_in_the_collection_String(){
-// 	String_256 names[5] = {12,45,23,56,24};
-// 	String_256 expected[5] = {12,23,24,45,56};
-// 	sortElements(names, 5, sizeof(String_256), compareInt);
+// 	String names[5] = {12,45,23,56,24};
+// 	String expected[5] = {12,23,24,45,56};
+// 	sortElements(names, 5, sizeof(String), compareInt);
 // 	ASSERT(areArraysEqual(expected, names, sizeof(names)));
 // }
