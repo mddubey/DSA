@@ -90,5 +90,6 @@ void dispose(DLList* list){
 		free(head);
 		head = list->head;
 	}
+	free(list);
 	list->head = NULL;
 }
