@@ -91,20 +91,34 @@ int delete_node(DoubleList* list,int index){
 	return deleteAtSpecificPlace(list, head);
 };
 
-ListIterator iterator(DoubleList *dList){
-	ListIterator it = {dList->head,dList};
-	return it;
+int hasNextInList(Iterator *it){
+	DoubleList dList;
+	// Node *head;
+	dList = *(DoubleList*)it->list;
+	// head = dList.head;
+	if(it->position == dList.length) return 0;
+	return 1;
 }
 
-void* next(ListIterator it){
-	if(hasNext(it))
-		it.currentNode = 
-	return it.currentNode->data;
+void* nextInList(Iterator* it){
+	int i;
+	Node* head;
+	if(!hasNextInList(it)) return NULL;
+	head = ((DoubleList*)(it->list))->head;
+	for(i = 0; i<it->position; i++){
+		head = head->next;
+	};
+	it->position++;
+	return head->data;
 }
 
-int hasNext(ListIterator it){
-	if(it.list->head == NULL) return 0;
-	return it.currentNode->next != NULL;
+Iterator getIterator(DoubleList *dList){
+	Iterator listIterator;
+	listIterator.position = 0;
+	listIterator.list = dList;
+	listIterator.hasNext = &hasNextInList;
+	listIterator.next = &nextInList;
+	return listIterator;
 }
 
 void dispose(DoubleList dList){

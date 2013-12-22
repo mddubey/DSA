@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "../customTypes.h"
+#include "../iterator.h"
 
 //create setup, tearDown, fixtureSetup, fixtureTearDown methods if needed
 
@@ -135,4 +136,34 @@ void test_deletes_element_in_between(){
 
 void test_deletion_failed_when_list_is_empty(){
 	ASSERT(0 == delete_node(&list, 1));
+}
+
+void test_tells_that_next_is_not_null(){
+	DoubleList dList = create();
+	Iterator it;
+	int number1 = 5,number2 = 9,number3 = 65;
+	insert(&dList, 0, &number1);
+	// insert(&dList, 1, &number2);
+	// insert(&dList, 2, &number3);
+	it = getIterator(&dList);
+	ASSERT(1 == it.hasNext(&it));
+}
+
+void test_tells_that_next_is_not_available(){
+	DoubleList dList = create();
+	Iterator it;
+	it = getIterator(&dList);
+	ASSERT(0 == it.hasNext(&it));
+}
+
+void test_gives_the_data_of_first_node(){
+	DoubleList dList = create();
+	Iterator it;
+	int number1 = 5,number2 = 9;
+	insert(&dList, 0, &number1);
+	insert(&dList, 1, &number2);
+	it = getIterator(&dList);
+	ASSERT(5 == *(int*)it.next(&it));
+	ASSERT(9 == *(int*)it.next(&it));
+	ASSERT(NULL == it.next(&it));
 }
