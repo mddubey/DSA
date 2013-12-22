@@ -51,6 +51,18 @@ int insert(DLList *list, void *data, int index){
     return insertAtSpecificPlace(list, head, data);
 };
 
+void* getNodeData(DLList* list, int index){
+	int i = 0;
+	Node* head = list->head;
+	if(index<0 || index >= list->length)
+		return NULL;
+	while(i < index){
+		head = head->next;
+		i++;
+	}
+	return head->data;
+}
+
 int deleteFirst(DLList* list,Node* head){
 	list->head = list->head->next;
 	free(head);
@@ -90,5 +102,5 @@ void dispose(DLList* list){
 		free(head);
 		head = list->head;
 	}
-	list->head = NULL;
+	free(list->head);
 }

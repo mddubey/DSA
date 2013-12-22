@@ -11,5 +11,6 @@ typedef struct list{
 
 DLList* create();
 int insert(DLList* list,void* data,int index);
+void* getNodeData(DLList* list, int index);
 int deleteNode(DLList* list,int index);
 void dispose(DLList* list);
