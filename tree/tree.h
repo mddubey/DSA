@@ -9,4 +9,4 @@ typedef struct{
 
 Tree createTree(Comparator* areNodesEqual);
 int insertInTree(Tree* ptree, void* parentData, void* dataToInsert);
-void getChildren(Tree tree, void* data, DoubleList* list);
+Iterator getChildren(Tree tree, void* parentData);
