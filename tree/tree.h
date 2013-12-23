@@ -1,4 +1,4 @@
-#include "./include/dl_list.h"
+#include "../iterator.h"
 typedef int Comparator(void* nodeData, void* parentData);
 
 
@@ -10,3 +10,4 @@ typedef struct{
 Tree createTree(Comparator* areNodesEqual);
 int insertInTree(Tree* ptree, void* parentData, void* dataToInsert);
 Iterator getChildren(Tree tree, void* parentData);
+void* getNextChildData(Iterator* it);

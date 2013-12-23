@@ -1,13 +1,15 @@
 #include "tree.h"
 #include <stdlib.h>
+#include "./include/dList.h"
 
 typedef struct Tree_Node{
 	struct Tree_Node* parent;
 	DoubleList child;
 	void* data;
 }Tree_Node;
-Tree_Node* getChildByIndex(Tree_Node tNode, int index);
-Tree_Node* checkEachNodes(Tree_Node* tNode, Comparator* areEqual,
+
+Tree_Node* getChildByIndex(Tree_Node *tNode, int index);
+Tree_Node* checkEachNodes(DoubleList* list, Comparator* areEqual,
 		 void* parentData);
 Tree_Node* searchParentNode(Tree tree, void *parentData);
 
@@ -26,14 +28,16 @@ Tree_Node* createTreeNode(Tree_Node* parent, void* data){
 };
 
 int insertInTree(Tree* ptree, void *parentData, void *dataToInsert){
-	Tree_Node* parentNode;
+	Tree_Node *parentNode, *nodeToInsert;
 	if(NULL == parentData){
 		ptree->root = createTreeNode(NULL, dataToInsert);
 		return 1;
 	}
 	parentNode = searchParentNode(*ptree, parentData);
-	return insert(&parentNode->child, parentNode->child.length,
-	 dataToInsert);
+	if(!parentNode) return 0;
+	nodeToInsert = createTreeNode(parentNode, dataToInsert);
+	return insert(&(parentNode->child), parentNode->child.length,
+	 nodeToInsert);
 };
 
 Iterator getChildren(Tree tree, void *parentData){
@@ -42,31 +46,23 @@ Iterator getChildren(Tree tree, void *parentData){
 	return it;
 }
 
-Tree_Node* getChildByIndex(Tree_Node tNode, int index){
-	int i;
-	Iterator it = getIterator(&tNode.child);
-	Tree_Node* child;
-	if(tNode.child.length == index)
-		return NULL;
-	for(i = 0; i < index; i++){
-		child = it.next(&it);
-	}
-	return child;
+void* getNextChildData(Iterator* it){
+	Tree_Node* tNode = it->next(it);
+	if(NULL == tNode) return NULL;
+	return tNode->data;
 }
 
-Tree_Node* checkEachNodes(Tree_Node* tNode, Comparator* areEqual, void* parentData){
-	int totalChildren = tNode->child.length;
-	int i;
-	void* data = tNode->data;
-	Tree_Node *child;
-	int result = areEqual(data, parentData);
-	if(result)
-		return tNode;
-	if(totalChildren > 0){
-		for(i = 0;i < totalChildren;i++){
-			child = getChildByIndex(*tNode, i);
-			return checkEachNodes(child, areEqual, parentData);
-		}
+Tree_Node* checkEachNodes(DoubleList *list, Comparator* areEqual, void* parentData){
+	Iterator it = getIterator(list);
+	Tree_Node *tNode;
+	int result;
+	while(it.hasNext(&it)){
+		tNode = (Tree_Node*)it.next(&it);
+		result = areEqual(tNode->data,parentData);
+		if(result)
+			return tNode;
+		if(tNode->child.length)
+			checkEachNodes(&tNode->child, areEqual, parentData);
 	}
 	return NULL;
 };
@@ -75,5 +71,6 @@ Tree_Node* searchParentNode(Tree tree, void *parentData){
 	Tree_Node* root = tree.root;
 	if(NULL == parentData)
 		return NULL;
-	return checkEachNodes(root, tree.areEqual, parentData);
+	if(tree.areEqual(root->data,parentData)) return root;
+	return checkEachNodes(&root->child, tree.areEqual, parentData);
 }
