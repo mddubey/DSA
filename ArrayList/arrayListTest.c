@@ -123,3 +123,30 @@ void test_iterator_gives_the_data_of_next_index(){
 	ASSERT(&prateek == it.next(&it));
 	ASSERT(NULL == it.next(&it));
 }
+
+void test_adds_the_data_at_the_last_of_arrayList(){
+	Iterator it;
+	ASSERT(SUCCESS == add(internsPtr, &ji));
+	it = getIterator(internsPtr);
+	ASSERT(&ji == it.next(&it));
+	ASSERT(0 == it.hasNext(&it));
+}
+
+void test_add_fails_when_list_is_null(){
+	Iterator it;
+	ASSERT(FAILURE == add(NULL, &ji));
+}
+
+int areInternsEqual(void* first, void* second){
+	Intern firstIntern = *(Intern*)first;
+	Intern secondIntern = *(Intern*)second;
+	return firstIntern.id == firstIntern.id;
+}
+
+void test_search_given_data_into_List_and_tells_the_index(){
+	int result;
+	add(internsPtr, &prateek);
+	add(internsPtr, &ji);
+	result = getIndex(interns, &ji, areInternsEqual);
+	ASSERT(1 == result);
+}

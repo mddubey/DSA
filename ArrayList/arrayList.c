@@ -42,6 +42,11 @@ int insert(ArrayList *list, int index, void* data) {
 	return 1;
 }
 
+int add(ArrayList *list, void *data){
+	if(!list) return 0;
+	return insert(list, list->length, data);
+}
+
 void* get(ArrayList list, int index) {
 	if (index < 0 || index >= list.length) return NULL;
 	return list.base[index];
