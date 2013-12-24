@@ -60,3 +60,15 @@ void test_inserts_children_to_different_level(){
 	ASSERT(NULL == getNextChildData(&it));
 }
 
+void test_gives_iterator_to_get_children_data_of_a_parent(){
+	Tree tree = createTree(areNodesEqualInt);
+	int nums[3] = {12,25,14};
+	Iterator it;
+	ASSERT(insertInTree(&tree, NULL, &nums[0]));
+	ASSERT(insertInTree(&tree, &nums[0], &nums[1]));
+	ASSERT(insertInTree(&tree, &nums[0], &nums[2]));
+	it = getChildren(tree, &nums[0]);
+	ASSERT(25 == *(int*)getNextChildData(&it));
+	ASSERT(14 == *(int*)getNextChildData(&it));
+}
+

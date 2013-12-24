@@ -42,7 +42,12 @@ int insertInTree(Tree* ptree, void *parentData, void *dataToInsert){
 
 Iterator getChildren(Tree tree, void *parentData){
 	Tree_Node* parentNode = searchParentNode(tree, parentData);
-	Iterator it = getIterator(&parentNode->child);
+	Iterator it;
+	if(!parentNode) {
+		it = getIterator(NULL);
+		return it;
+	}
+	it = getIterator(&parentNode->child);
 	return it;
 }
 
