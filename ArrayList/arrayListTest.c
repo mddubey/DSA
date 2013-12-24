@@ -147,13 +147,13 @@ void test_search_given_data_into_List_and_tells_the_index(){
 	int result;
 	add(internsPtr, &prateek);
 	add(internsPtr, &ji);
-	result = getIndex(interns, &prateek, areInternsEqual);
+	result = search(interns, &prateek, areInternsEqual);
 	ASSERT(0 == result);
-	result = getIndex(interns, &ji, areInternsEqual);
+	result = search(interns, &ji, areInternsEqual);
 	ASSERT(1 == result);
 }
 
 void test_search_gives_minus_one_when_data_is_not_present(){
-	int result = getIndex(interns, &prateek, areInternsEqual);
+	int result = search(interns, &prateek, areInternsEqual);
 	ASSERT(-1 == result);
 }

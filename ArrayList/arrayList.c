@@ -89,7 +89,7 @@ Iterator getIterator(ArrayList* list){
 	return it;
 }
 
-int getIndex(ArrayList list, void *data, Comparator *areEqual){
+int search(ArrayList list, void *data, Comparator *areEqual){
 	Iterator it = getIterator(&list);
 	void* currentData;
 	int result;

@@ -13,6 +13,6 @@ int insert(ArrayList *list, int index, void* data);
 void* get(ArrayList list, int index);
 int remove(ArrayList* list, int index);
 int add(ArrayList* list, void* data);
-int getIndex(ArrayList list, void* data, Comparator* areEqual);
+int search(ArrayList list, void* data, Comparator* areEqual);
 Iterator getIterator(ArrayList* list);
 void dispose(ArrayList *list);
