@@ -89,6 +89,26 @@ Iterator getIterator(ArrayList* list){
 	return it;
 }
 
+int getIndex(ArrayList list, void *data, Comparator *areEqual){
+	Iterator it = getIterator(&list);
+	void* currentData;
+	int result;
+	while(it.hasNext(&it)){
+		currentData = it.next(&it);
+		result = areEqual(currentData, data);
+		if(result) return it.position - 1;
+	}
+	return -1;
+	// void* currentData;
+	// int result,index;
+	// for(index = 0;index < list.length ;index++){
+	// 	currentData = list.base[index];
+	// 	result = areEqual(currentData, data);
+	// 	if(result) return index;
+	// }
+	// return -1;
+}
+
 void dispose(ArrayList *list) {
 	free(list->base);
 }

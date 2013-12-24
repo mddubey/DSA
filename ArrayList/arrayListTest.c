@@ -140,13 +140,20 @@ void test_add_fails_when_list_is_null(){
 int areInternsEqual(void* first, void* second){
 	Intern firstIntern = *(Intern*)first;
 	Intern secondIntern = *(Intern*)second;
-	return firstIntern.id == firstIntern.id;
+	return firstIntern.id == secondIntern.id;
 }
 
 void test_search_given_data_into_List_and_tells_the_index(){
 	int result;
 	add(internsPtr, &prateek);
 	add(internsPtr, &ji);
+	result = getIndex(interns, &prateek, areInternsEqual);
+	ASSERT(0 == result);
 	result = getIndex(interns, &ji, areInternsEqual);
 	ASSERT(1 == result);
+}
+
+void test_search_gives_minus_one_when_data_is_not_present(){
+	int result = getIndex(interns, &prateek, areInternsEqual);
+	ASSERT(-1 == result);
 }
