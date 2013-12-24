@@ -157,3 +157,14 @@ void test_search_gives_minus_one_when_data_is_not_present(){
 	int result = search(interns, &prateek, areInternsEqual);
 	ASSERT(-1 == result);
 }
+
+void printId(void* data){
+	Intern intern = *(Intern*)data;
+	printf("%d\n", intern.id);
+}
+
+void test_prints_data_of_each_element(){
+	add(internsPtr, &prateek);
+	add(internsPtr, &ji);
+	iterate(interns, printId);
+}

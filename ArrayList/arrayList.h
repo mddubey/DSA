@@ -6,6 +6,7 @@ typedef struct {
 } ArrayList;
 
 typedef int Comparator (void* first,void* second);
+typedef void ForEach(void* data);
 
 ArrayList create(int capacity);
 
@@ -16,3 +17,4 @@ int add(ArrayList* list, void* data);
 int search(ArrayList list, void* data, Comparator* areEqual);
 Iterator getIterator(ArrayList* list);
 void dispose(ArrayList *list);
+void iterate(ArrayList list, ForEach* forEach);

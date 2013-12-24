@@ -67,11 +67,16 @@ Tree_Node* searchParentNode(Tree tree, void *parentData){
 	return checkEachNodes(&root->child, tree.areEqual, parentData);
 }
 
+int hasChildren(Tree_Node tNode){
+	return tNode.child.head != NULL;
+}
+
 int deleteFromTree(Tree *ptree, void *data){
-	Tree_Node *tNode = searchParentNode(*ptree, data);
-	if(!tNode) return 0;
-	dispose(tNode->child);
-	tNode->parent = NULL;
-	free(tNode);
+	Tree_Node *ptNode = searchParentNode(*ptree, data);
+	if(!ptNode) return 0;
+	if(hasChildren(*ptNode)) return 0;
+	dispose(ptNode->child);
+	ptNode->parent = NULL;
+	free(ptNode);
 	return 1;
 }

@@ -99,14 +99,13 @@ int search(ArrayList list, void *data, Comparator *areEqual){
 		if(result) return it.position - 1;
 	}
 	return -1;
-	// void* currentData;
-	// int result,index;
-	// for(index = 0;index < list.length ;index++){
-	// 	currentData = list.base[index];
-	// 	result = areEqual(currentData, data);
-	// 	if(result) return index;
-	// }
-	// return -1;
+}
+
+void iterate(ArrayList list, ForEach* forEach){
+	int result,index;
+	for(index = 0;index < list.length ;index++){
+		forEach(list.base[index]);
+	}
 }
 
 void dispose(ArrayList *list) {
