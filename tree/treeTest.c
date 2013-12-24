@@ -60,7 +60,7 @@ void test_inserts_children_to_different_level(){
 	ASSERT(NULL == getNextChildData(&it));
 }
 
-void test_gives_iterator_to_get_children_data_of_a_parent(){
+void test_gives_iterator_to_check_children_data_of_a_parent(){
 	Tree tree = createTree(areNodesEqualInt);
 	int nums[3] = {12,25,14};
 	Iterator it;
@@ -70,5 +70,12 @@ void test_gives_iterator_to_get_children_data_of_a_parent(){
 	it = getChildren(tree, &nums[0]);
 	ASSERT(25 == *(int*)getNextChildData(&it));
 	ASSERT(14 == *(int*)getNextChildData(&it));
+}
+
+void test_deletes_the_root_from_the_tree(){
+	Tree tree = createTree(areNodesEqualInt);
+	int number = 12;
+	insertInTree(&tree, NULL, &number);
+	ASSERT(1 == deleteFromTree(&tree, &number));
 }
 

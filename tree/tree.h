@@ -9,5 +9,6 @@ typedef struct{
 
 Tree createTree(Comparator* areNodesEqual);
 int insertInTree(Tree* ptree, void* parentData, void* dataToInsert);
+int deleteFromTree(Tree* ptree, void* data);
 Iterator getChildren(Tree tree, void* parentData);
 void* getNextChildData(Iterator* it);

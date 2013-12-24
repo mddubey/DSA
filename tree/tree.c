@@ -74,8 +74,17 @@ Tree_Node* checkEachNodes(DoubleList *list, Comparator* areEqual, void* parentDa
 
 Tree_Node* searchParentNode(Tree tree, void *parentData){
 	Tree_Node* root = tree.root;
-	if(NULL == parentData)
+	if(NULL == parentData || NULL == root)
 		return NULL;
 	if(tree.areEqual(root->data,parentData)) return root;
 	return checkEachNodes(&root->child, tree.areEqual, parentData);
+}
+
+int deleteFromTree(Tree *ptree, void *data){
+	Tree_Node *tNode = searchParentNode(*ptree, data);
+	if(!tNode) return 0;
+	dispose(tNode->child);
+	tNode->parent = NULL;
+	free(tNode);
+	return 1;
 }
