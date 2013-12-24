@@ -93,6 +93,7 @@ int delete_node(DoubleList* list,int index){
 
 int hasNextInList(Iterator *it){
 	DoubleList dList;
+	if(NULL == it->list) return 0;
 	dList = *(DoubleList*)it->list;
 	if(it->position == dList.length) return 0;
 	return 1;

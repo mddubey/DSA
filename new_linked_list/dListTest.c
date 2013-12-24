@@ -143,8 +143,6 @@ void test_tells_that_next_is_not_null(){
 	Iterator it;
 	int number1 = 5,number2 = 9,number3 = 65;
 	insert(&dList, 0, &number1);
-	// insert(&dList, 1, &number2);
-	// insert(&dList, 2, &number3);
 	it = getIterator(&dList);
 	ASSERT(1 == it.hasNext(&it));
 }
@@ -165,5 +163,10 @@ void test_gives_the_data_of_first_node(){
 	it = getIterator(&dList);
 	ASSERT(5 == *(int*)it.next(&it));
 	ASSERT(9 == *(int*)it.next(&it));
+	ASSERT(NULL == it.next(&it));
+}
+
+void test_gives_null_if_list_is_NULL(){
+	Iterator it = getIterator(NULL);
 	ASSERT(NULL == it.next(&it));
 }
