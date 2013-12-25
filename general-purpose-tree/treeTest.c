@@ -29,6 +29,7 @@ void test_inserts_a_root_node_into_tree(){
 	ASSERT(insertInTree(&tree, NULL, &number));
 	it = getChildren(tree, &number);
 	ASSERT(NULL == it.next(&it));
+
 }
 
 void test_inserts_a_child_of_root_into_tree(){
@@ -39,6 +40,7 @@ void test_inserts_a_child_of_root_into_tree(){
 	ASSERT(insertInTree(&tree, &nums[0], &nums[1]));
 	it = getChildren(tree, &nums[0]);
 	ASSERT(25 == *(int*)it.next(&it));
+	// disposeTree(&tree);
 }
 
 void test_inserts_two_children_of_root_into_tree(){
@@ -51,6 +53,7 @@ void test_inserts_two_children_of_root_into_tree(){
 	it = getChildren(tree, &nums[0]);
 	ASSERT(25 == *(int*)it.next(&it));
 	ASSERT(14 == *(int*)it.next(&it));
+	// disposeTree(&tree);
 }
 
 void test_inserts_children_to_different_level(){
@@ -68,6 +71,7 @@ void test_inserts_children_to_different_level(){
 	it = getChildren(tree, &nums[2]);
 	ASSERT(10.4 == *(double*)it.next(&it));
 	ASSERT(NULL == it.next(&it));
+	// disposeTree(&tree);
 }
 
 void test_gives_iterator_to_check_children_data_of_a_parent(){

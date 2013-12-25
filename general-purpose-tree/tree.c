@@ -64,14 +64,14 @@ Tree_Node* checkEachNodes(DoubleList *list, Comparator* areEqual, void* nodeData
 	while(it.hasNext(&it)){
 		ptNode = (Tree_Node*)it.next(&it);
 		if(areEqual(ptNode->data,nodeData)){
-			dispose(tempList);
+			dispose(&tempList);
 			return ptNode;
 		}
 		collectChildren(ptNode, &tempList);
 	}
 	if(tempList.length)
 		return checkEachNodes(&tempList, areEqual, nodeData);
-	dispose(tempList);
+	dispose(&tempList);
 	return NULL;
 };
 
@@ -105,7 +105,7 @@ int deleteFromTree(Tree *ptree, void *data){
 	int index;
 	if(!ptNode) return 0;
 	if(hasChildren(*ptNode)) return 0;
-	dispose(ptNode->child);
+	dispose(&ptNode->child);
 	parentNode = ptNode->parent;
 	if(!parentNode){
 		free(ptNode);
@@ -117,4 +117,20 @@ int deleteFromTree(Tree *ptree, void *data){
 
 int searchInTree(Tree tree, void *data){
 	return getTreeNode(tree, data)!=NULL;
+}
+
+void freeNode(Tree_Node* ptNode){
+	Iterator it = getIterator(&ptNode->child);
+	while(it.hasNext(&it)){
+		ptNode = it.next(&it);
+		freeNode(ptNode);
+	}
+	dispose(&ptNode->child);
+	ptNode->parent = NULL;
+	free(ptNode);
+}
+
+void disposeTree(Tree* tree){
+	Tree_Node* root = tree->root;
+	freeNode(root);
 }
