@@ -120,12 +120,12 @@ Iterator getIterator(DoubleList *dList){
 	return listIterator;
 }
 
-void dispose(DoubleList dList){
+void dispose(DoubleList *dList){
 	Node *temp;
-	if(dList.head == NULL)
+	if(dList->head == NULL)
 		return;
-	temp = dList.head;
-	dList.head = temp->next;
+	temp = dList->head;
+	dList->head = temp->next;
 	free(temp);
 	dispose(dList);
 }

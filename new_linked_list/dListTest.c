@@ -14,7 +14,7 @@ void setup(){
 }
 
 void tearDown(){
-	dispose(list);
+	dispose(&list);
 }
 void test_gives_an_Doubly_link_list_with_head_NULL(){
 	ASSERT(NULL == list.head);
