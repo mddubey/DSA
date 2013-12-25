@@ -138,7 +138,7 @@ int areNodesEqualAccount(void* first, void* second){
 void test_deletes_nodes_from_different_level(){
 	Tree tree = createTree(areNodesEqualAccount);
 	Iterator it;
-	Account accounts[7] = {{1,10},{2,12},{3,30},{4,45},{5,50},{6,60},{7,70}};
+	Account accounts[5] = {{1,10},{2,12},{3,30},{4,45}};
 	insertInTree(&tree, NULL, &accounts[0]);
 	insertInTree(&tree, &accounts[0], &accounts[1]);
 	insertInTree(&tree, &accounts[0], &accounts[2]);
@@ -148,6 +148,28 @@ void test_deletes_nodes_from_different_level(){
 	it = getChildren(tree, &accounts[0]);
 	ASSERT(&accounts[1] == getNextChildData(&it));
 	ASSERT(&accounts[3] == getNextChildData(&it));
+	ASSERT(NULL == getNextChildData(&it));
+}
+
+void test_deletes__nodes_from_different_level(){
+	Tree tree = createTree(areNodesEqualAccount);
+	Iterator it;
+	Account accounts[7] = {{1,10},{2,12},{3,30},{4,45},{5,50},{6,60},{7,70}};
+	insertInTree(&tree, NULL, &accounts[0]);
+	insertInTree(&tree, &accounts[0], &accounts[1]);
+	insertInTree(&tree, &accounts[0], &accounts[2]);
+	insertInTree(&tree, &accounts[0], &accounts[3]);
+	insertInTree(&tree, &accounts[1], &accounts[4]);
+	insertInTree(&tree, &accounts[3], &accounts[5]);
+	ASSERT(insertInTree(&tree, &accounts[3], &accounts[6]));
+	ASSERT(1 == deleteFromTree(&tree, &accounts[2]));
+	it = getChildren(tree, &accounts[0]);
+	ASSERT(&accounts[1] == getNextChildData(&it));
+	ASSERT(&accounts[3] == getNextChildData(&it));
+	ASSERT(NULL == getNextChildData(&it));
+	ASSERT(1 == deleteFromTree(&tree, &accounts[6]));
+	it = getChildren(tree, &accounts[3]);
+	ASSERT(&accounts[5] == getNextChildData(&it));
 	ASSERT(NULL == getNextChildData(&it));
 }
 
