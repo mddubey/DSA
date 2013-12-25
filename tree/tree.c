@@ -27,6 +27,16 @@ int insertInTree(Tree* ptree, void *parentData, void *dataToInsert){
 	 nodeToInsert);
 };
 
+void* getNextChildData(Iterator* it){
+	Tree_Node *node;
+    Iterator treeIterator = getIterator(it->list);
+    treeIterator.position = it->position;
+    node = treeIterator.next(&treeIterator);
+    if(!node) return node;
+    it->position++;
+    return node->data;
+}
+
 Iterator getChildren(Tree tree, void *parentData){
 	Tree_Node* parentNode = getTreeNode(tree, parentData);
 	Iterator it;
@@ -35,13 +45,8 @@ Iterator getChildren(Tree tree, void *parentData){
 		return it;
 	}
 	it = getIterator(&parentNode->child);
+	it.next = &getNextChildData;
 	return it;
-}
-
-void* getNextChildData(Iterator* it){
-	Tree_Node* ptNode = it->next(it);
-	if(NULL == ptNode) return NULL;
-	return ptNode->data;
 }
 
 void collectChildren(Tree_Node* ptNode, DoubleList *list){

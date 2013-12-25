@@ -34,7 +34,7 @@ void test_inserts_a_child_of_root_into_tree(){
 	ASSERT(insertInTree(&tree, NULL, &nums[0]));
 	ASSERT(insertInTree(&tree, &nums[0], &nums[1]));
 	it = getChildren(tree, &nums[0]);
-	ASSERT(25 == *(int*)getNextChildData(&it));
+	ASSERT(25 == *(int*)it.next(&it));
 }
 
 void test_inserts_two_children_of_root_into_tree(){
@@ -45,8 +45,8 @@ void test_inserts_two_children_of_root_into_tree(){
 	ASSERT(insertInTree(&tree, &nums[0], &nums[1]));
 	ASSERT(insertInTree(&tree, &nums[0], &nums[2]));
 	it = getChildren(tree, &nums[0]);
-	ASSERT(25 == *(int*)getNextChildData(&it));
-	ASSERT(14 == *(int*)getNextChildData(&it));
+	ASSERT(25 == *(int*)it.next(&it));
+	ASSERT(14 == *(int*)it.next(&it));
 }
 
 void test_inserts_children_to_different_level(){
@@ -59,11 +59,11 @@ void test_inserts_children_to_different_level(){
 	ASSERT(insertInTree(&tree, &nums[1], &nums[3]));
 	ASSERT(insertInTree(&tree, &nums[2], &nums[4]));
 	it = getChildren(tree, &nums[1]);
-	ASSERT(10.3 == *(double*)getNextChildData(&it));
-	ASSERT(NULL == getNextChildData(&it));
+	ASSERT(10.3 == *(double*)it.next(&it));
+	ASSERT(NULL == it.next(&it));
 	it = getChildren(tree, &nums[2]);
-	ASSERT(10.4 == *(double*)getNextChildData(&it));
-	ASSERT(NULL == getNextChildData(&it));
+	ASSERT(10.4 == *(double*)it.next(&it));
+	ASSERT(NULL == it.next(&it));
 }
 
 void test_gives_iterator_to_check_children_data_of_a_parent(){
@@ -74,8 +74,8 @@ void test_gives_iterator_to_check_children_data_of_a_parent(){
 	ASSERT(insertInTree(&tree, &nums[0], &nums[1]));
 	ASSERT(insertInTree(&tree, &nums[0], &nums[2]));
 	it = getChildren(tree, &nums[0]);
-	ASSERT(25 == *(int*)getNextChildData(&it));
-	ASSERT(14 == *(int*)getNextChildData(&it));
+	ASSERT(25 == *(int*)it.next(&it));
+	ASSERT(14 == *(int*)it.next(&it));
 }
 
 void test_deletes_the_root_from_the_tree(){
@@ -103,16 +103,16 @@ void test_deletes_first_child_of_root(){
 	Tree tree = createTree(areNodesEqualStrings);
 	Iterator it;
 	String names[3];
-	strcpy(names[0], "Raaz");
-	strcpy(names[1], "Digs");
+	strcpy(names[0], "Shital");
+	strcpy(names[1], "Manali");
 	strcpy(names[2], "shweta");
 	insertInTree(&tree, NULL, &names[0]);
 	insertInTree(&tree, &names[0], &names[1]);
 	insertInTree(&tree, &names[0], &names[2]);
 	ASSERT(1 == deleteFromTree(&tree, &names[1]));
 	it = getChildren(tree, &names[0]);
-	ASSERT(&names[2] == getNextChildData(&it));
-	ASSERT(NULL == getNextChildData(&it));
+	ASSERT(&names[2] == it.next(&it));
+	ASSERT(NULL == it.next(&it));
 }
 
 void test_deletes_second_child_of_root(){
@@ -121,14 +121,14 @@ void test_deletes_second_child_of_root(){
 	String names[3];
 	strcpy(names[0], "Raaz");
 	strcpy(names[1], "Digs");
-	strcpy(names[2], "shweta");
+	strcpy(names[2], "Manish");
 	insertInTree(&tree, NULL, &names[0]);
 	insertInTree(&tree, &names[0], &names[1]);
 	insertInTree(&tree, &names[0], &names[2]);
 	ASSERT(1 == deleteFromTree(&tree, &names[2]));
 	it = getChildren(tree, &names[0]);
-	ASSERT(&names[1] == getNextChildData(&it));
-	ASSERT(NULL == getNextChildData(&it));
+	ASSERT(&names[1] == it.next(&it));
+	ASSERT(NULL == it.next(&it));
 }
 
 int areNodesEqualAccount(void* first, void* second){
@@ -146,9 +146,9 @@ void test_deletes_nodes_from_different_level(){
 	insertInTree(&tree, &accounts[1], &accounts[4]);
 	ASSERT(1 == deleteFromTree(&tree, &accounts[2]));
 	it = getChildren(tree, &accounts[0]);
-	ASSERT(&accounts[1] == getNextChildData(&it));
-	ASSERT(&accounts[3] == getNextChildData(&it));
-	ASSERT(NULL == getNextChildData(&it));
+	ASSERT(&accounts[1] == it.next(&it));
+	ASSERT(&accounts[3] == it.next(&it));
+	ASSERT(NULL == it.next(&it));
 }
 
 void test_deletes__nodes_from_different_level(){
@@ -164,12 +164,12 @@ void test_deletes__nodes_from_different_level(){
 	ASSERT(insertInTree(&tree, &accounts[3], &accounts[6]));
 	ASSERT(1 == deleteFromTree(&tree, &accounts[2]));
 	it = getChildren(tree, &accounts[0]);
-	ASSERT(&accounts[1] == getNextChildData(&it));
-	ASSERT(&accounts[3] == getNextChildData(&it));
-	ASSERT(NULL == getNextChildData(&it));
+	ASSERT(&accounts[1] == it.next(&it));
+	ASSERT(&accounts[3] == it.next(&it));
+	ASSERT(NULL == it.next(&it));
 	ASSERT(1 == deleteFromTree(&tree, &accounts[6]));
 	it = getChildren(tree, &accounts[3]);
-	ASSERT(&accounts[5] == getNextChildData(&it));
-	ASSERT(NULL == getNextChildData(&it));
+	ASSERT(&accounts[5] == it.next(&it));
+	ASSERT(NULL == it.next(&it));
 }
 
