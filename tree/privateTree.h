@@ -10,4 +10,4 @@ typedef struct Tree_Node{
 Tree_Node* getChildByIndex(Tree_Node *tNode, int index);
 Tree_Node* checkEachNodes(DoubleList* list, Comparator* areEqual,
 		 void* parentData);
-Tree_Node* searchParentNode(Tree tree, void *parentData);
+Tree_Node* getTreeNode(Tree tree, void *parentData);

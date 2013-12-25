@@ -99,13 +99,13 @@ void test_deletion_failed_when_Node_has_children(){
 	ASSERT(0 == deleteFromTree(&tree, &nums[0]));
 }
 
-void test_deletes_node_from_different_level(){
-	Tree tree = createTree(areNodesEqualStrings);
-	String names[2];
-	strcpy(names[0], "Raaz");
-	strcpy(names[1], "Digs");
-	insertInTree(&tree, NULL, &names[0]);
-	insertInTree(&tree, &names[0], &names[1]);
-	ASSERT(1 == deleteFromTree(&tree, &names[1]));
-}
+// void test_deletes_node_from_different_level(){
+// 	Tree tree = createTree(areNodesEqualStrings);
+// 	String names[2];
+// 	strcpy(names[0], "Raaz");
+// 	strcpy(names[1], "Digs");
+// 	insertInTree(&tree, NULL, &names[0]);
+// 	insertInTree(&tree, &names[0], &names[1]);
+// 	ASSERT(1 == deleteFromTree(&tree, &names[1]));
+// }
 

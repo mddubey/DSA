@@ -20,7 +20,7 @@ int insertInTree(Tree* ptree, void *parentData, void *dataToInsert){
 		ptree->root = createTreeNode(NULL, dataToInsert);
 		return 1;
 	}
-	parentNode = searchParentNode(*ptree, parentData);
+	parentNode = getTreeNode(*ptree, parentData);
 	if(!parentNode) return 0;
 	nodeToInsert = createTreeNode(parentNode, dataToInsert);
 	return insert(&(parentNode->child), parentNode->child.length,
@@ -28,7 +28,7 @@ int insertInTree(Tree* ptree, void *parentData, void *dataToInsert){
 };
 
 Iterator getChildren(Tree tree, void *parentData){
-	Tree_Node* parentNode = searchParentNode(tree, parentData);
+	Tree_Node* parentNode = getTreeNode(tree, parentData);
 	Iterator it;
 	if(!parentNode) {
 		it = getIterator(NULL);
@@ -39,27 +39,27 @@ Iterator getChildren(Tree tree, void *parentData){
 }
 
 void* getNextChildData(Iterator* it){
-	Tree_Node* tNode = it->next(it);
-	if(NULL == tNode) return NULL;
-	return tNode->data;
+	Tree_Node* ptNode = it->next(it);
+	if(NULL == ptNode) return NULL;
+	return ptNode->data;
 }
 
 Tree_Node* checkEachNodes(DoubleList *list, Comparator* areEqual, void* parentData){
 	Iterator it = getIterator(list);
-	Tree_Node *tNode;
+	Tree_Node *ptNode;
 	int result;
 	while(it.hasNext(&it)){
-		tNode = (Tree_Node*)it.next(&it);
-		result = areEqual(tNode->data,parentData);
+		ptNode = (Tree_Node*)it.next(&it);
+		result = areEqual(ptNode->data,parentData);
 		if(result)
-			return tNode;
-		if(tNode->child.length)
-			checkEachNodes(&tNode->child, areEqual, parentData);
+			return ptNode;
+		if(ptNode->child.length)
+			checkEachNodes(&ptNode->child, areEqual, parentData);
 	}
 	return NULL;
 };
 
-Tree_Node* searchParentNode(Tree tree, void *parentData){
+Tree_Node* getTreeNode(Tree tree, void *parentData){
 	Tree_Node* root = tree.root;
 	if(NULL == parentData || NULL == root)
 		return NULL;
@@ -67,16 +67,34 @@ Tree_Node* searchParentNode(Tree tree, void *parentData){
 	return checkEachNodes(&root->child, tree.areEqual, parentData);
 }
 
+int getChildIndex(DoubleList list,void* childData, Comparator* areEqual){
+	Iterator it = getIterator(&list);
+	Tree_Node *ptNode;
+	int result;
+	while(it.hasNext(&it)){
+		ptNode = it.next(&it);
+		result = areEqual(ptNode->data, childData);
+		if(result) return it.position - 1;
+	}
+	return -1;
+}
+
 int hasChildren(Tree_Node tNode){
 	return tNode.child.head != NULL;
 }
 
 int deleteFromTree(Tree *ptree, void *data){
-	Tree_Node *ptNode = searchParentNode(*ptree, data);
+	Tree_Node *ptNode = getTreeNode(*ptree, data);
+	Tree_Node *parentNode;
+	int index;
 	if(!ptNode) return 0;
 	if(hasChildren(*ptNode)) return 0;
 	dispose(ptNode->child);
-	ptNode->parent = NULL;
-	free(ptNode);
-	return 1;
+	parentNode = ptNode->parent;
+	if(!parentNode){
+		free(ptNode);
+		return 1;		
+	}
+	index = getChildIndex(parentNode->child, ptNode->data, ptree->areEqual);
+	return delete_node(&parentNode->child, index);
 }
