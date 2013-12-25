@@ -114,3 +114,7 @@ int deleteFromTree(Tree *ptree, void *data){
 	index = getChildIndex(parentNode->child, ptNode->data, ptree->areEqual);
 	return delete_node(&parentNode->child, index);
 }
+
+int searchInTree(Tree tree, void *data){
+	return getTreeNode(tree, data)!=NULL;
+}
