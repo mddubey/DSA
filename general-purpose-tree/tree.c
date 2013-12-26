@@ -132,12 +132,11 @@ void freeNode(Tree_Node* ptNode){
 	Iterator it = getIterator(&ptNode->child);
 	while(it.hasNext(&it)){
 		ptNode = it.next(&it);
-		printf("%d\n", *(int*)ptNode->data);
 		freeNode(ptNode);
 	}
 	dispose(&ptNode->child);
 	ptNode->parent = NULL;
-	free(ptNode);// This is the line which causing problem
+	// free(ptNode);// This is the line which causing problem
 }
 
 void disposeTree(Tree* tree){

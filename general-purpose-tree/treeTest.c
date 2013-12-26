@@ -75,7 +75,7 @@ void test_inserts_children_to_different_level(){
 	it = getChildren(tree, &nums[2]);
 	ASSERT(10.4 == *(double*)it.next(&it));
 	ASSERT(NULL == it.next(&it));
-	// disposeTree(&tree);
+	disposeTree(&tree);
 }
 
 void test_gives_iterator_to_check_children_data_of_a_parent(){
@@ -88,6 +88,7 @@ void test_gives_iterator_to_check_children_data_of_a_parent(){
 	it = getChildren(tree, &nums[0]);
 	ASSERT(25 == *(int*)it.next(&it));
 	ASSERT(14 == *(int*)it.next(&it));
+	disposeTree(&tree);
 }
 
 void test_searchs_the_given_data_in_list(){
@@ -99,6 +100,7 @@ void test_searchs_the_given_data_in_list(){
 	insertInTree(&tree, &names[0], &names[1]);
 	ASSERT(searchInTree(tree, &names[0]));
 	ASSERT(searchInTree(tree, &names[1]));
+	disposeTree(&tree);
 }
 
 void test_search_fails_when_data_is_not_present(){
@@ -118,6 +120,7 @@ void test_search_a_Account_in_tree(){
 	insertInTree(&tree, &accounts[1], &accounts[4]);
 	ASSERT(searchInTree(tree, &accounts[3]));
 	ASSERT(searchInTree(tree, &accounts[4]));
+	disposeTree(&tree);
 }
 
 void test_deletes_the_root_from_the_tree(){
@@ -126,6 +129,7 @@ void test_deletes_the_root_from_the_tree(){
 	insertInTree(&tree, NULL, &number);
 	ASSERT(searchInTree(tree, &number));
 	ASSERT(1 == deleteFromTree(&tree, &number));
+	disposeTree(&tree);
 }
 
 void test_deletion_failed_when_data_is_not_in_tree(){
@@ -140,6 +144,7 @@ void test_deletion_failed_when_Node_has_children(){
 	insertInTree(&tree, NULL, &nums[0]);
 	insertInTree(&tree, &nums[0], &nums[1]);
 	ASSERT(0 == deleteFromTree(&tree, &nums[0]));
+	disposeTree(&tree);
 }
 
 void test_deletes_first_child_of_root(){
@@ -154,6 +159,7 @@ void test_deletes_first_child_of_root(){
 	ASSERT(1 == searchInTree(tree, "Manali"));
 	ASSERT(1 == deleteFromTree(&tree, &names[1]));
 	ASSERT(0 == searchInTree(tree, "Manali"));
+	disposeTree(&tree);
 }
 
 void test_deletes_second_child_of_root(){
@@ -168,6 +174,7 @@ void test_deletes_second_child_of_root(){
 	ASSERT(1 == searchInTree(tree, "Manish"));
 	ASSERT(1 == deleteFromTree(&tree, &names[2]));
 	ASSERT(0 == searchInTree(tree, "Manish"));
+	disposeTree(&tree);
 }
 
 void test_deletes_nodes_from_different_level(){
@@ -181,6 +188,7 @@ void test_deletes_nodes_from_different_level(){
 	ASSERT(1 == searchInTree(tree, &accounts[2]));
 	ASSERT(1 == deleteFromTree(&tree, &accounts[2]));
 	ASSERT(0 == searchInTree(tree, &accounts[2]));
+	disposeTree(&tree);
 }
 
 void test_deletes__nodes_from_different_level(){
@@ -199,6 +207,7 @@ void test_deletes__nodes_from_different_level(){
 	ASSERT(1 == searchInTree(tree, &accounts[6]));
 	ASSERT(1 == deleteFromTree(&tree, &accounts[6]));
 	ASSERT(0 == searchInTree(tree, &accounts[6]));
+	disposeTree(&tree);
 }
 
 void test_checking_dispose_for_each_node(){
