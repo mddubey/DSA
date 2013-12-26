@@ -28,6 +28,8 @@ void test_inserts_a_root_node_into_tree(){
 	Iterator it;
 	ASSERT(insertInTree(&tree, NULL, &number));
 	it = getChildren(tree, &number);
+	ASSERT(0 == it.hasNext(&it));
+	ASSERT(&number == getRootData(tree));
 	ASSERT(NULL == it.next(&it));
 
 }
@@ -39,7 +41,9 @@ void test_inserts_a_child_of_root_into_tree(){
 	ASSERT(insertInTree(&tree, NULL, &nums[0]));
 	ASSERT(insertInTree(&tree, &nums[0], &nums[1]));
 	it = getChildren(tree, &nums[0]);
+	ASSERT(1 == it.hasNext(&it));
 	ASSERT(25 == *(int*)it.next(&it));
+	ASSERT(0 == it.hasNext(&it));
 	// disposeTree(&tree);
 }
 
@@ -195,6 +199,19 @@ void test_deletes__nodes_from_different_level(){
 	ASSERT(1 == searchInTree(tree, &accounts[6]));
 	ASSERT(1 == deleteFromTree(&tree, &accounts[6]));
 	ASSERT(0 == searchInTree(tree, &accounts[6]));
+}
+
+void test_checking_dispose_for_each_node(){
+	Tree tree = createTree(areNodesEqualAccount);
+	int nums[7] = {1,2,3,4,5,6,7};
+	insertInTree(&tree, NULL, &nums[0]);
+	insertInTree(&tree, &nums[0], &nums[1]);
+	insertInTree(&tree, &nums[0], &nums[2]);
+	insertInTree(&tree, &nums[0], &nums[3]);
+	insertInTree(&tree, &nums[1], &nums[4]);
+	insertInTree(&tree, &nums[3], &nums[5]);
+	insertInTree(&tree, &nums[3], &nums[6]);
+	disposeTree(&tree);
 }
 
 

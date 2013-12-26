@@ -57,6 +57,13 @@ void collectChildren(Tree_Node* ptNode, DoubleList *list){
 	}
 }
 
+Tree_Node* performNext(DoubleList* list, Comparator* areEqual, void* nodeData){
+	if(list->length)
+		return checkEachNodes(list, areEqual, nodeData);
+	dispose(list);
+	return NULL;
+}
+
 Tree_Node* checkEachNodes(DoubleList *list, Comparator* areEqual, void* nodeData){
 	Iterator it = getIterator(list);
 	DoubleList tempList = create();
@@ -69,10 +76,7 @@ Tree_Node* checkEachNodes(DoubleList *list, Comparator* areEqual, void* nodeData
 		}
 		collectChildren(ptNode, &tempList);
 	}
-	if(tempList.length)
-		return checkEachNodes(&tempList, areEqual, nodeData);
-	dispose(&tempList);
-	return NULL;
+	return performNext(&tempList, areEqual, nodeData);
 };
 
 Tree_Node* getTreeNode(Tree tree, void *nodeData){
@@ -119,10 +123,16 @@ int searchInTree(Tree tree, void *data){
 	return getTreeNode(tree, data)!=NULL;
 }
 
+void* getRootData(Tree tree){
+	Tree_Node root = *(Tree_Node*)tree.root;
+	return root.data;
+}
+
 void freeNode(Tree_Node* ptNode){
 	Iterator it = getIterator(&ptNode->child);
 	while(it.hasNext(&it)){
 		ptNode = it.next(&it);
+		printf("%d\n", *(int*)ptNode->data);
 		freeNode(ptNode);
 	}
 	dispose(&ptNode->child);
