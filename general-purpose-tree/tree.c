@@ -137,7 +137,7 @@ void freeNode(Tree_Node* ptNode){
 	}
 	dispose(&ptNode->child);
 	ptNode->parent = NULL;
-	free(ptNode);
+	free(ptNode);// This is the line which causing problem
 }
 
 void disposeTree(Tree* tree){
