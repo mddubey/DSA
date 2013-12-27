@@ -116,7 +116,7 @@ void test_gives_iterator_that_tells_the_next_key_is_present_or_not(){
 	ASSERT(1 == it.hasNext(&it));
 }
 
-void test_provides_an_itesrator_of_all_keys_present_in_Hash(){
+void test_iterator_gives_the_key_of_next_element(){
 	Intern shweta = {15, "shweta"};
 	int key1 = 15;
 	Iterator it;
@@ -124,5 +124,28 @@ void test_provides_an_itesrator_of_all_keys_present_in_Hash(){
 	put(&hash, &key1, &shweta);
 	it = getAllKeys(hash);
 	ASSERT(&key1 == it.next(&it));
+}
+
+void test_iterotar_gives_null_when_the_next_data_is_not_present(){
+	HashMap hash = createHash(getKeyAsCode, areInternsKeyEqual);
+	Iterator it = getAllKeys(hash);
 	ASSERT(NULL == it.next(&it));
+}
+
+void test_iterator_gives_the_itearator_to_get_all_keys_of_hash(){
+	Intern interns[5] = {{14, "Prateek"},{15,"Manish"},{18,"Uday"},{20,"Manali"},{12,"Raaz"}};
+	int keys[5] = {14,15,18,20,12};
+	HashMap hash = createHash(getKeyAsCode, areInternsKeyEqual);
+	Iterator it;
+	put(&hash, &keys[0], &interns[0]);
+	put(&hash, &keys[1], &interns[1]);
+	put(&hash, &keys[2], &interns[2]);
+	put(&hash, &keys[3], &interns[3]);
+	put(&hash, &keys[4], &interns[4]);
+	it = getAllKeys(hash);
+	ASSERT(&keys[3] == it.next(&it));
+	ASSERT(&keys[4] == it.next(&it));
+	ASSERT(&keys[0] == it.next(&it));
+	ASSERT(&keys[1] == it.next(&it));
+	ASSERT(&keys[2] == it.next(&it));
 }
