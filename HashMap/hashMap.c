@@ -11,6 +11,11 @@ typedef struct{
 	void* data;
 }Hash_Element;
 
+typedef struct {
+	void* data;
+	int index;
+}Matched_Data;
+
 Slot* createSlot(){
 	Slot* slot = malloc(sizeof(Slot));
 	slot->elements = create();
@@ -42,27 +47,42 @@ int getSlotIndex(int key_val, int capacity){
 	return key_val % capacity;
 }
 
-int put(HashMap *hash, void *key, void *value){
-	int key_value = hash->getHashCode(key);
-	int bucket_index = getSlotIndex(key_value, hash->bucket.capacity);
-	Slot* slot = hash->bucket.base[bucket_index];
-	DoubleList *list = &slot->elements;
-	Hash_Element *elementToInsert = createHashElement(key, value);
-	// printf("%d\n", bucket_index);
-	return insert(list, list->length, elementToInsert);
-}
-
-void* HashMap_get(HashMap hash, void* key){
+DoubleList* getSlotList(HashMap hash, void* key){
 	int key_value = hash.getHashCode(key);
 	int bucket_index = getSlotIndex(key_value, hash.bucket.capacity);
 	Slot* slot = hash.bucket.base[bucket_index];
 	DoubleList *list = &slot->elements;
+	return list;
+};
+
+int put(HashMap *hash, void *key, void *value){
+	DoubleList* list = getSlotList(*hash, key);
+	Hash_Element *elementToInsert = createHashElement(key, value);
+	return insert(list, list->length, elementToInsert);
+}
+
+Matched_Data doesKeyMatch(HashMap hash, void* key){
+	Matched_Data result = {NULL,-1};
+	DoubleList* list = getSlotList(hash, key);
 	Iterator it = getIterator(list);
 	Hash_Element *currentElement = NULL;
 	while(it.hasNext(&it)){
 		currentElement = it.next(&it);
-		if(hash.areEqual(currentElement->key, key))
-			return currentElement->data;
+		if(hash.areEqual(currentElement->key, key)){
+			result.data = currentElement->data;
+			result.index = it.position - 1;
+		}
 	}
-	return NULL;
+	return result;
 }
+
+void* HashMap_get(HashMap hash, void* key){
+	Matched_Data elementFound = doesKeyMatch(hash, key);
+	return elementFound.data;
+}
+
+int HashMap_remove(HashMap* hash, void* key){
+	Matched_Data elementFound = doesKeyMatch(*hash, key);
+	DoubleList *list = getSlotList(*hash, key);
+	return delete_node(list, elementFound.index);
+};
