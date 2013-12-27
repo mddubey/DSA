@@ -42,8 +42,13 @@ DoubleList* getSlotList(HashMap hash, void* key){
 };
 
 int put(HashMap *hash, void *key, void *value){
-	DoubleList* list = getSlotList(*hash, key);
-	Hash_Element *elementToInsert = createHashElement(key, value);
+	Matched_Data dataFound = doesKeyMatch(*hash, key);
+	DoubleList* list;
+	Hash_Element *elementToInsert;
+	if(dataFound.index > -1)
+		HashMap_remove(hash, key);
+	list = getSlotList(*hash, key);
+	elementToInsert = createHashElement(key, value);
 	return insert(list, list->length, elementToInsert);
 }
 

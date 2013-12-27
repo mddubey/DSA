@@ -149,3 +149,18 @@ void test_iterator_gives_the_itearator_to_get_all_keys_of_hash(){
 	ASSERT(&keys[1] == it.next(&it));
 	ASSERT(&keys[2] == it.next(&it));
 }
+
+void test_updates_the_value_of_key_if_is_already_present(){
+	Intern shweta = {15, "shweta"};
+	Intern shwetha = {15, "shwetha"};
+	int key1 = 15;
+	Iterator it;
+	HashMap hash = createHash(getKeyAsCode, areInternsKeyEqual);
+	put(&hash, &key1, &shweta);
+	ASSERT(&shweta == HashMap_getData(hash, &key1));
+	put(&hash, &key1, &shwetha);
+	ASSERT(&shwetha == HashMap_getData(hash, &key1));
+	it = getAllKeys(hash);
+	ASSERT(&key1 == it.next(&it));
+	ASSERT(0 == it.hasNext(&it));
+}
