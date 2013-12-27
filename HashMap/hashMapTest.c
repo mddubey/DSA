@@ -26,5 +26,6 @@ void test_inserts_first_data_in_hash_map(){
 	HashMap hash = createHash(getKey, areInternsEqual);
 	ASSERT(put(&hash, &key1, &prateek));
 	ASSERT(put(&hash, &key2, &shweta));
+	ASSERT(&shweta == HashMap_get(hash, &key2));
 	ASSERT(&prateek == HashMap_get(hash, &key1));
 }

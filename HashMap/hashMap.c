@@ -61,6 +61,8 @@ void* HashMap_get(HashMap hash, void* key){
 	Hash_Element *currentElement = NULL;
 	while(it.hasNext(&it)){
 		currentElement = it.next(&it);
+		if(hash.areEqual(currentElement->key, key))
+			return currentElement->data;
 	}
-	return currentElement?currentElement->data:NULL;
+	return NULL;
 }
