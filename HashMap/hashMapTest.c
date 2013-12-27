@@ -96,3 +96,12 @@ void test_deletion_failed_when_key_is_not_present(){
 	ASSERT(0 == HashMap_remove(&hash, &key1));
 	ASSERT(NULL == HashMap_get(hash, &key1));	
 }
+
+void test_deletion_of_an_element_having_key_as_alphabet(){
+	Word rich = {"Rich","Wealthy","Poor"};
+	String key = "Rich";
+	HashMap hash = createHash(getAsciiTotal, areWordsEqual);
+	ASSERT(put(&hash, &key, &rich));
+	ASSERT(HashMap_remove(&hash, &key));
+	ASSERT(NULL == HashMap_get(hash, &key));
+}
