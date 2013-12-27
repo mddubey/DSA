@@ -19,70 +19,70 @@ ArrayList *internsPtr;
 
 void setup() {
 	int noOfElements = 2;	
-	interns = create(noOfElements);
+	interns = create_array(noOfElements);
 	internsPtr = &interns;
 }
 
 void tearDown() {
-	dispose(internsPtr);	
+	disposeArray(internsPtr);	
 }
 
 void test_insert_element(){
-	int result = insert(internsPtr, 0, &prateek);
+	int result = insertInArray(internsPtr, 0, &prateek);
 	Intern *actual = (Intern*)get(interns, 0);
 	ASSERT(result == SUCCESS);
 	ASSERT(prateek.id == actual->id);
 }
 
 void test_insert_multiple_elements() {
-	insert(internsPtr, 0, &prateek);
-	insert(internsPtr, 1, &ji);
+	insertInArray(internsPtr, 0, &prateek);
+	insertInArray(internsPtr, 1, &ji);
 	ASSERT(&prateek == get(interns, 0));
 	ASSERT(&ji == get(interns, 1));
 }
 
 void test_interns_grows_beyond_capacity() {
 	int noOfElements = 1;
-	ArrayList list = create(noOfElements);
+	ArrayList list = create_array(noOfElements);
 	ArrayList *listPtr = &list;
-	insert(listPtr, 0, &prateek);
-	insert(listPtr, 1, &ji);
+	insertInArray(listPtr, 0, &prateek);
+	insertInArray(listPtr, 1, &ji);
 	ASSERT(&prateek == get(list, 0));
 	ASSERT(&ji == get(list, 1));
 
-	dispose(listPtr);		
+	disposeArray(listPtr);		
 }
 
 void test_should_not_insert_at_index_beyond_length() {
 	int result = FAILURE;
-	result = insert(internsPtr, 2, &prateek);
+	result = insertInArray(internsPtr, 2, &prateek);
 	ASSERT(result == FAILURE);
 }
 
 void test_should_not_insert_at_negative_index() {
 	int result = FAILURE;
-	result = insert(internsPtr, -1, &prateek);
+	result = insertInArray(internsPtr, -1, &prateek);
 	ASSERT(result == FAILURE);
 }
 
 void test_insert_at_middle_should_shift_the_elements() {
 	Intern tanbirka = {43343, "Tanbir Ka"};
-	insert(internsPtr, 0, &prateek);
-	insert(internsPtr, 1, &ji);
-	insert(internsPtr, 1, &tanbirka);	
+	insertInArray(internsPtr, 0, &prateek);
+	insertInArray(internsPtr, 1, &ji);
+	insertInArray(internsPtr, 1, &tanbirka);	
 	ASSERT(&prateek == get(interns, 0));
 	ASSERT(&tanbirka == get(interns, 1));
 	ASSERT(&ji == get(interns, 2));
 }
 
 void test_should_not_insert_when_list_is_null() {
-	int result = insert(NULL, 1, &prateek);
+	int result = insertInArray(NULL, 1, &prateek);
 	ASSERT(result == FAILURE);
 }
 
 void test_deletes_single_element_from_list(){
 	int result;
-	insert(internsPtr, 0, &prateek);
+	insertInArray(internsPtr, 0, &prateek);
 	ASSERT(1 == interns.length);
 	result = remove(internsPtr, 0);
 	ASSERT(NULL == get(interns, 0));
@@ -92,8 +92,8 @@ void test_deletes_single_element_from_list(){
 
 void test_deletes_and_shifts_elements_left(){
 	int result;
-	insert(internsPtr, 0, &prateek);
-	insert(internsPtr, 0, &ji);
+	insertInArray(internsPtr, 0, &prateek);
+	insertInArray(internsPtr, 0, &ji);
 	ASSERT(2 == interns.length);
 	result = remove(internsPtr, 0);
 	ASSERT(&prateek == get(interns, 0));
@@ -103,22 +103,22 @@ void test_deletes_and_shifts_elements_left(){
 
 void test_iterator_tells_that_next_data_is_present(){
 	Iterator it;
-	insert(internsPtr, 0, &prateek);
-	it = getIterator(internsPtr);
+	insertInArray(internsPtr, 0, &prateek);
+	it = getIteratorArray(internsPtr);
 	ASSERT(1 == it.hasNext(&it));
 }
 
 void test_iterator_tells_that_next_data_is_not_present(){
 	Iterator it;
-	it = getIterator(internsPtr);
+	it = getIteratorArray(internsPtr);
 	ASSERT(0 == it.hasNext(&it));
 }
 
 void test_iterator_gives_the_data_of_next_index(){
 	Iterator it;
-	insert(internsPtr, 0, &prateek);
-	insert(internsPtr, 0, &ji);
-	it = getIterator(internsPtr);
+	insertInArray(internsPtr, 0, &prateek);
+	insertInArray(internsPtr, 0, &ji);
+	it = getIteratorArray(internsPtr);
 	ASSERT(&ji == it.next(&it));
 	ASSERT(&prateek == it.next(&it));
 	ASSERT(NULL == it.next(&it));
@@ -127,7 +127,7 @@ void test_iterator_gives_the_data_of_next_index(){
 void test_adds_the_data_at_the_last_of_arrayList(){
 	Iterator it;
 	ASSERT(SUCCESS == add(internsPtr, &ji));
-	it = getIterator(internsPtr);
+	it = getIteratorArray(internsPtr);
 	ASSERT(&ji == it.next(&it));
 	ASSERT(0 == it.hasNext(&it));
 }

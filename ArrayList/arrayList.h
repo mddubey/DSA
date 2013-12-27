@@ -8,13 +8,13 @@ typedef struct {
 typedef int Comparator (void* first,void* second);
 typedef void ForEach(void* data);
 
-ArrayList create(int capacity);
+ArrayList create_array(int capacity);
 
-int insert(ArrayList *list, int index, void* data);
+int insertInArray(ArrayList *list, int index, void* data);
 void* get(ArrayList list, int index);
 int remove(ArrayList* list, int index);
 int add(ArrayList* list, void* data);
 int search(ArrayList list, void* data, Comparator* areEqual);
-Iterator getIterator(ArrayList* list);
-void dispose(ArrayList *list);
+Iterator getIteratorArray(ArrayList* list);
+void disposeArray(ArrayList *list);
 void iterate(ArrayList list, ForEach* forEach);

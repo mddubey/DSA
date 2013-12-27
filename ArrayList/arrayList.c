@@ -1,7 +1,7 @@
 #include "arrayList.h"
 #include <stdlib.h>
 
-ArrayList create(int capacity) {
+ArrayList create_array(int capacity) {
 	ArrayList list;
 	list.base = (void*)malloc(sizeof(void*) * capacity);
 	list.capacity = capacity;
@@ -31,7 +31,7 @@ void increaseCapacity(ArrayList *list) {
 	}	
 }
 
-int insert(ArrayList *list, int index, void* data) {
+int insertInArray(ArrayList *list, int index, void* data) {
 	if (list == NULL) return 0;
 	if (index < 0 || index > list->length) return 0;
 
@@ -44,7 +44,7 @@ int insert(ArrayList *list, int index, void* data) {
 
 int add(ArrayList *list, void *data){
 	if(!list) return 0;
-	return insert(list, list->length, data);
+	return insertInArray(list, list->length, data);
 }
 
 void* get(ArrayList list, int index) {
@@ -80,7 +80,7 @@ void* getNextData(Iterator* it){
 	return list->base[it->position++];
 }
 
-Iterator getIterator(ArrayList* list){
+Iterator getIteratorArray(ArrayList* list){
 	Iterator it;
 	it.list = list;
 	it.position = 0;
@@ -90,7 +90,7 @@ Iterator getIterator(ArrayList* list){
 }
 
 int search(ArrayList list, void *data, Comparator *areEqual){
-	Iterator it = getIterator(&list);
+	Iterator it = getIteratorArray(&list);
 	void* currentData;
 	int result;
 	while(it.hasNext(&it)){
@@ -108,6 +108,6 @@ void iterate(ArrayList list, ForEach* forEach){
 	}
 }
 
-void dispose(ArrayList *list) {
+void disposeArray(ArrayList *list) {
 	free(list->base);
 }
