@@ -20,7 +20,11 @@ int getKey(void* key){
 
 void test_inserts_first_data_in_hash_map(){
 	Intern prateek = {12,"Prateek"};
-	int key = 12;
+	int key1 = 12;
+	Intern shweta = {15, "shweta"};
+	int key2 = 15;
 	HashMap hash = createHash(getKey, areInternsEqual);
-	ASSERT(put(&hash, &key, &prateek));
+	ASSERT(put(&hash, &key1, &prateek));
+	ASSERT(put(&hash, &key2, &shweta));
+	ASSERT(&prateek == HashMap_get(hash, &key1));
 }

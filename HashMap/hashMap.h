@@ -11,3 +11,4 @@ typedef struct{
 
 HashMap createHash(HashcodeGenerator* getHashCode, KeyComparator* areEqual);
 int put(HashMap* hash, void* key, void* value);
+void* HashMap_get(HashMap hash, void* key);

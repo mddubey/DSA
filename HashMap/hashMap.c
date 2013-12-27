@@ -48,5 +48,19 @@ int put(HashMap *hash, void *key, void *value){
 	Slot* slot = hash->bucket.base[bucket_index];
 	DoubleList *list = &slot->elements;
 	Hash_Element *elementToInsert = createHashElement(key, value);
+	// printf("%d\n", bucket_index);
 	return insert(list, list->length, elementToInsert);
+}
+
+void* HashMap_get(HashMap hash, void* key){
+	int key_value = hash.getHashCode(key);
+	int bucket_index = getSlotIndex(key_value, hash.bucket.capacity);
+	Slot* slot = hash.bucket.base[bucket_index];
+	DoubleList *list = &slot->elements;
+	Iterator it = getIterator(list);
+	Hash_Element *currentElement = NULL;
+	while(it.hasNext(&it)){
+		currentElement = it.next(&it);
+	}
+	return currentElement?currentElement->data:NULL;
 }
