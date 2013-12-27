@@ -5,15 +5,10 @@
 
 //create setup, tearDown, fixtureSetup, fixtureTearDown methods if needed
 
-typedef struct {
-	int accountNumber;
-	int balance;
-} Account;
-
 int compareAccountsByAccountNumber(void* first, void* second) {
 	Account* firstAccount = (Account*)first;
 	Account* secondAccount = (Account*)second;
-	return firstAccount->accountNumber - secondAccount->accountNumber;
+	return firstAccount->accNo - secondAccount->accNo;
 }
 
 int compareAccountsByBalance(void* first, void* second) {
@@ -51,7 +46,7 @@ int areArrayEqual(void** a,void** b, int length){
 
 void test_sorts_collections_of_Integers(){
 	int nums[5] = {5,10,12,20,25};
-	void* ptrs[5] = {(nums+4),(nums+3),(nums+2),(nums+1),(nums+0)};
+	void* ptrs[5] = {&nums[4],(nums+3),(nums+2),(nums+1),(nums+0)};
 	void* expected[5] = {(nums+0),(nums+1),(nums+2),(nums+3),(nums+4)};
 	isort(ptrs, 5, sizeof(int), compareInt);
 	ASSERT(areArrayEqual(ptrs, expected, 5));
