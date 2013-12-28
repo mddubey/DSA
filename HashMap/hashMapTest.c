@@ -112,7 +112,7 @@ void test_gives_iterator_that_tells_the_next_key_is_present_or_not(){
 	Iterator it;
 	HashMap hash = createHash(getKeyAsCode, areInternsKeyEqual);
 	put(&hash, &key1, &shweta);
-	it = getAllKeys(hash);
+	it = getAllKeys(&hash);
 	ASSERT(1 == it.hasNext(&it));
 }
 
@@ -122,13 +122,13 @@ void test_iterator_gives_the_key_of_next_element(){
 	Iterator it;
 	HashMap hash = createHash(getKeyAsCode, areInternsKeyEqual);
 	put(&hash, &key1, &shweta);
-	it = getAllKeys(hash);
+	it = getAllKeys(&hash);
 	ASSERT(&key1 == it.next(&it));
 }
 
 void test_iterotar_gives_null_when_the_next_data_is_not_present(){
 	HashMap hash = createHash(getKeyAsCode, areInternsKeyEqual);
-	Iterator it = getAllKeys(hash);
+	Iterator it = getAllKeys(&hash);
 	ASSERT(NULL == it.next(&it));
 }
 
@@ -142,7 +142,7 @@ void test_iterator_gives_the_itearator_to_get_all_keys_of_hash(){
 	put(&hash, &keys[2], &interns[2]);
 	put(&hash, &keys[3], &interns[3]);
 	put(&hash, &keys[4], &interns[4]);
-	it = getAllKeys(hash);
+	it = getAllKeys(&hash);
 	ASSERT(&keys[3] == it.next(&it));
 	ASSERT(&keys[4] == it.next(&it));
 	ASSERT(&keys[0] == it.next(&it));
@@ -160,7 +160,7 @@ void test_updates_the_value_of_key_if_is_already_present(){
 	ASSERT(&shweta == HashMap_getData(hash, &key1));
 	put(&hash, &key1, &shwetha);
 	ASSERT(&shwetha == HashMap_getData(hash, &key1));
-	it = getAllKeys(hash);
+	it = getAllKeys(&hash);
 	ASSERT(&key1 == it.next(&it));
 	ASSERT(0 == it.hasNext(&it));
 }
