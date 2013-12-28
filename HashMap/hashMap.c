@@ -23,7 +23,7 @@ HashMap createHash(HashcodeGenerator *getHashCode, KeyComparator *areEqual){
 	hash.getHashCode = getHashCode;
 	itArray = getIteratorArray(&hash.bucket);
 	while(i < hash.bucket.capacity){
-		insertInArray(&hash.bucket, hash.bucket.length, createSlot());
+		add(&hash.bucket, createSlot());
 		i++;
 	}
 	return hash;
@@ -31,6 +31,25 @@ HashMap createHash(HashcodeGenerator *getHashCode, KeyComparator *areEqual){
 
 int getSlotIndex(int key_val, int capacity){
 	return key_val % capacity;
+}
+
+void checkEachElement(DoubleList* list, Matched_Data* result, KeyComparator* areEqual, void* key){
+	Iterator it = getIterator(list);
+	Hash_Element* currentElement;
+	while(it.hasNext(&it)){
+		currentElement = it.next(&it);
+		if(areEqual(currentElement->key, key)){
+			result->data = currentElement->data;
+			result->index = it.position - 1;
+		}
+	}
+}
+
+Matched_Data doesKeyMatch(HashMap hash, void* key){
+	Matched_Data result = {NULL,-1};
+	DoubleList* list = getSlotList(hash, key);
+	checkEachElement(list, &result, hash.areEqual, key);
+	return result;
 }
 
 DoubleList* getSlotList(HashMap hash, void* key){
@@ -52,21 +71,6 @@ int put(HashMap *hash, void *key, void *value){
 	return insert(list, list->length, elementToInsert);
 }
 
-Matched_Data doesKeyMatch(HashMap hash, void* key){
-	Matched_Data result = {NULL,-1};
-	DoubleList* list = getSlotList(hash, key);
-	Iterator it = getIterator(list);
-	Hash_Element *currentElement = NULL;
-	while(it.hasNext(&it)){
-		currentElement = it.next(&it);
-		if(hash.areEqual(currentElement->key, key)){
-			result.data = currentElement->data;
-			result.index = it.position - 1;
-		}
-	}
-	return result;
-}
-
 void* HashMap_getData(HashMap hash, void* key){
 	Matched_Data elementFound = doesKeyMatch(hash, key);
 	return elementFound.data;
@@ -82,7 +86,7 @@ void* getNextKey(Iterator *it){
 	Iterator hashIterator = getIterator(it->list);
 	Hash_Element* element;
 	hashIterator.position = it->position;
-	element = hashIterator.next(&hashIterator);\
+	element = hashIterator.next(&hashIterator);
 	it->position++;
 	if(!element) return NULL;
 	return element->key;
@@ -94,6 +98,7 @@ Iterator getAllKeys(HashMap hash){
 	Iterator itLinkList;
 	Iterator hashIterator;
 	DoubleList keysList = create();
+	// collectAllKeys(&hash.bucket, &keysList);
 	while(itArrayList.hasNext(&itArrayList)){
 		slot = itArrayList.next(&itArrayList);
 		itLinkList = getIterator(&slot->elements);
