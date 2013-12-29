@@ -184,3 +184,23 @@ void test_hash_map_rearranged_after_a_limit(){
 	ASSERT(&keys[2] == it.next(&it));
 	ASSERT(&keys[1] == it.next(&it));
 }
+
+void test_perform_rehashing_if_needed(){
+	Intern interns[4] = {{4, "Prateek"},{18,"Manali"},{12,"Raaz"},{10,"Digs"}};
+	int keys[4] = {4,18,12,10};
+	HashMap hash = createHash(getKeyAsCode, areInternsKeyEqual, 2);
+	Iterator it;
+	put(&hash, &keys[0], &interns[0]);
+	put(&hash, &keys[1], &interns[1]);
+	put(&hash, &keys[2], &interns[2]);
+	it = getAllKeys(hash);
+	ASSERT(&keys[0] == it.next(&it));
+	ASSERT(&keys[1] == it.next(&it));
+	ASSERT(&keys[2] == it.next(&it));
+	put(&hash, &keys[3], &interns[3]);
+	it = getAllKeys(hash);
+	ASSERT(&keys[0] == it.next(&it));
+	ASSERT(&keys[2] == it.next(&it));
+	ASSERT(&keys[1] == it.next(&it));
+	ASSERT(&keys[3] == it.next(&it));
+}
