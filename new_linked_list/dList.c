@@ -93,6 +93,7 @@ int delete_node(DoubleList* list,int index){
 
 int hasNextInList(Iterator *it){
 	DoubleList dList;
+	// printf("%d\n", it->list);
 	if(NULL == it->list) return 0;
 	dList = *(DoubleList*)it->list;
 	if(it->position == dList.length) return 0;
@@ -122,7 +123,7 @@ Iterator getIterator(DoubleList *dList){
 
 void dispose(DoubleList *dList){
 	Node *temp;
-	if(dList->head == NULL)
+	if(!dList || dList->head == NULL)
 		return;
 	temp = dList->head;
 	dList->head = temp->next;
