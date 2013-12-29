@@ -179,26 +179,6 @@ void test_updates_the_value_of_key_if_is_already_present(){
 	disposeHash(&hash);
 }
 
-void test_hash_map_rearranged_after_a_limit(){
-	Intern interns[3] = {{4, "Prateek"},{19,"Manali"},{12,"Raaz"}};
-	int keys[3] = {4,19,12};
-	HashMap hash = createHash(getKeyAsCode, areInternsKeyEqual, 10);
-	Iterator it;
-	put(&hash, &keys[0], &interns[0]);
-	put(&hash, &keys[1], &interns[1]);
-	put(&hash, &keys[2], &interns[2]);
-	it = getAllKeys(hash);
-	ASSERT(&keys[2] == it.next(&it));
-	ASSERT(&keys[0] == it.next(&it));
-	ASSERT(&keys[1] == it.next(&it));
-	rehash(&hash);
-	it = getAllKeys(hash);
-	ASSERT(&keys[0] == it.next(&it));
-	ASSERT(&keys[2] == it.next(&it));
-	ASSERT(&keys[1] == it.next(&it));
-	disposeHash(&hash);
-}
-
 void test_perform_rehashing_if_needed(){
 	Intern interns[4] = {{4, "Prateek"},{18,"Manali"},{12,"Raaz"},{10,"Digs"}};
 	int keys[4] = {4,18,12,10};
@@ -207,10 +187,6 @@ void test_perform_rehashing_if_needed(){
 	put(&hash, &keys[0], &interns[0]);
 	put(&hash, &keys[1], &interns[1]);
 	put(&hash, &keys[2], &interns[2]);
-	it = getAllKeys(hash);
-	ASSERT(&keys[0] == it.next(&it));
-	ASSERT(&keys[1] == it.next(&it));
-	ASSERT(&keys[2] == it.next(&it));
 	put(&hash, &keys[3], &interns[3]);
 	it = getAllKeys(hash);
 	ASSERT(&keys[0] == it.next(&it));

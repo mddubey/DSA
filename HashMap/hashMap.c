@@ -40,24 +40,19 @@ DoubleList* getSlotList(HashMap hash, void* key){
     return list;
 };
 
-
-Matched_Data checkEachElement(DoubleList* list, KeyComparator* areEqual, void* key){
+Matched_Data doesKeyMatch(HashMap hash, void* key){
+    DoubleList* list = getSlotList(hash, key);
     Matched_Data result = {NULL,-1};
     Iterator it = getIterator(list);
     Hash_Element *currentElement;
     while(it.hasNext(&it)){
         currentElement = it.next(&it);
-        if(areEqual(currentElement->key, key)){
+        if(hash.areEqual(currentElement->key, key)){
             result.data = currentElement->data;
             result.index = it.position - 1;
         }
     }
     return result;
-}
-
-Matched_Data doesKeyMatch(HashMap hash, void* key){
-    DoubleList* list = getSlotList(hash, key);
-    return checkEachElement(list, hash.areEqual, key);
 }
 
 void rehashIfNeeded(HashMap* hash){
