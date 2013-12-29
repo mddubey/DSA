@@ -139,22 +139,29 @@ void resetHash(HashMap* hash, DoubleList* keyList){
     }
 }
 
-void rehash(HashMap* hash){
-    DoubleList *keysList = create();
-    Iterator itList, itArray;
-    Hash_Element* element;
+void increaseBucket(HashMap* hash){
     int i = 0;
     int capacity = hash->bucket.capacity;
-    collectAllKeys(hash, keysList);
-    resetHash(hash, keysList);
     while(i < capacity){
         add(&hash->bucket, createSlot());
         i++;
     }
-    itList = getIterator(keysList);
+}
+
+void reInsertEachElement(HashMap* hash, DoubleList* keysList){
+    Iterator itList = getIterator(keysList);
+    Hash_Element* element;
     while(itList.hasNext(&itList)){
         element = itList.next(&itList);
         put(hash, element->key, element->data);
     }
+}
+
+void rehash(HashMap* hash){
+    DoubleList *keysList = create();
+    collectAllKeys(hash, keysList);
+    resetHash(hash, keysList);
+    increaseBucket(hash);
+    reInsertEachElement(hash, keysList);
     dispose(keysList);
 }
