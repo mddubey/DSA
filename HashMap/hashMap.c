@@ -61,10 +61,10 @@ Matched_Data doesKeyMatch(HashMap hash, void* key){
 }
 
 void rehashIfNeeded(HashMap* hash){
-    Iterator itArray = getIteratorArray(&hash->bucket);
+    Iterator itBucket = getIteratorArray(&hash->bucket);
     Slot* slot;
-    while(itArray.hasNext(&itArray)){
-        slot = (Slot*)itArray.next(&itArray);
+    while(itBucket.hasNext(&itBucket)){
+        slot = (Slot*)itBucket.next(&itBucket);
         if(slot->elements->length > 3){
             rehash(hash);
             return;            
@@ -107,11 +107,11 @@ void* getNextKey(Iterator *it){
 }
 
 void collectAllKeys(HashMap* hash, DoubleList* keysList){
-    Iterator itArrayList = getIteratorArray(&hash->bucket);
+    Iterator itBucketList = getIteratorArray(&hash->bucket);
     Slot* slot;
     Iterator itLinkList;
-    while(itArrayList.hasNext(&itArrayList)){
-        slot = itArrayList.next(&itArrayList);
+    while(itBucketList.hasNext(&itBucketList)){
+        slot = itBucketList.next(&itBucketList);
         itLinkList = getIterator(slot->elements);
         while(itLinkList.hasNext(&itLinkList)){
             insert(keysList, keysList->length, itLinkList.next(&itLinkList));
@@ -164,4 +164,17 @@ void rehash(HashMap* hash){
     increaseBucket(hash);
     reInsertEachElement(hash, keysList);
     dispose(keysList);
+}
+
+void disposeHash(HashMap* hash){
+    ArrayList* bucket = &hash->bucket;
+    Slot* slot;
+    Iterator itBucket = getIteratorArray(bucket);
+    while(itBucket.hasNext(&itBucket)){
+        slot = itBucket.next(&itBucket);
+        dispose(slot->elements);
+        free(slot);
+    }
+    disposeArray(bucket);
+    dispose(hash->keyList);
 }

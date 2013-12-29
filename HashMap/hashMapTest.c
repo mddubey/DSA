@@ -44,6 +44,7 @@ void test_inserts_first_data_in_hash_map(){
 	HashMap hash = createHash(getKeyAsCode, areInternsKeyEqual, 10);
 	ASSERT(put(&hash, &key1, &prateek));
 	ASSERT(&prateek == HashMap_getData(hash, &key1));
+	disposeHash(&hash);
 }
 
 void test_inserts_multiple_data_in_hash_map(){
@@ -56,6 +57,7 @@ void test_inserts_multiple_data_in_hash_map(){
 	ASSERT(&prateek == HashMap_getData(hash, &key1));
 	ASSERT(put(&hash, &key2, &shweta));
 	ASSERT(&shweta == HashMap_getData(hash, &key2));
+	disposeHash(&hash);
 }
 
 void test_inserts_key_as_alphabet(){
@@ -64,6 +66,7 @@ void test_inserts_key_as_alphabet(){
 	HashMap hash = createHash(getAsciiTotal, areWordsEqual, 10);
 	ASSERT(put(&hash, &key, &rich));
 	ASSERT(&rich == HashMap_getData(hash, &key));
+	disposeHash(&hash);
 }
 
 void test_gives_the_data_with_matched_the_given_Key(){
@@ -72,12 +75,14 @@ void test_gives_the_data_with_matched_the_given_Key(){
 	HashMap hash = createHash(getKeyAsCode, areInternsKeyEqual, 10);
 	ASSERT(put(&hash, &key1, &shweta));
 	ASSERT(&shweta == HashMap_getData(hash, &key1));
+	disposeHash(&hash);
 }
 
 void test_gives_NULL_when_key_is_not_present(){
 	int key1 = 15;
 	HashMap hash = createHash(getKeyAsCode, areInternsKeyEqual, 10);
 	ASSERT(NULL == HashMap_getData(hash, &key1));
+	disposeHash(&hash);
 }
 
 void test_deletes_the_value_matched_to_given_key(){
@@ -87,6 +92,7 @@ void test_deletes_the_value_matched_to_given_key(){
 	ASSERT(put(&hash, &key1, &shweta));
 	ASSERT(HashMap_remove(&hash, &key1));
 	ASSERT(NULL == HashMap_getData(hash, &key1));	
+	disposeHash(&hash);
 }
 
 void test_deletion_failed_when_key_is_not_present(){
@@ -94,6 +100,7 @@ void test_deletion_failed_when_key_is_not_present(){
 	HashMap hash = createHash(getKeyAsCode, areInternsKeyEqual, 10);
 	ASSERT(0 == HashMap_remove(&hash, &key1));
 	ASSERT(NULL == HashMap_getData(hash, &key1));	
+	disposeHash(&hash);
 }
 
 void test_deletion_of_an_element_having_key_as_alphabet(){
@@ -103,6 +110,7 @@ void test_deletion_of_an_element_having_key_as_alphabet(){
 	ASSERT(put(&hash, &key, &rich));
 	ASSERT(HashMap_remove(&hash, &key));
 	ASSERT(NULL == HashMap_getData(hash, &key));
+	disposeHash(&hash);
 }
 
 void test_gives_iterator_that_tells_the_next_key_is_present_or_not(){
@@ -113,6 +121,7 @@ void test_gives_iterator_that_tells_the_next_key_is_present_or_not(){
 	put(&hash, &key1, &shweta);
 	it = getAllKeys(hash);
 	ASSERT(1 == it.hasNext(&it));
+	disposeHash(&hash);
 }
 
 void test_iterator_gives_the_key_of_next_element(){
@@ -123,6 +132,7 @@ void test_iterator_gives_the_key_of_next_element(){
 	put(&hash, &key1, &shweta);
 	it = getAllKeys(hash);
 	ASSERT(&key1 == it.next(&it));
+	disposeHash(&hash);
 }
 
 void test_iterotar_gives_null_when_the_next_data_is_not_present(){
@@ -131,6 +141,7 @@ void test_iterotar_gives_null_when_the_next_data_is_not_present(){
 	ASSERT(NULL == it.next(&it));
 	ASSERT(NULL == it.next(&it));
 	ASSERT(0 == it.hasNext(&it));
+	disposeHash(&hash);
 }
 
 void test_iterator_gives_the_itearator_to_get_all_keys_of_hash(){
@@ -149,6 +160,7 @@ void test_iterator_gives_the_itearator_to_get_all_keys_of_hash(){
 	ASSERT(&keys[0] == it.next(&it));
 	ASSERT(&keys[1] == it.next(&it));
 	ASSERT(&keys[2] == it.next(&it));
+	disposeHash(&hash);
 }
 
 void test_updates_the_value_of_key_if_is_already_present(){
@@ -164,6 +176,7 @@ void test_updates_the_value_of_key_if_is_already_present(){
 	it = getAllKeys(hash);
 	ASSERT(&key1 == it.next(&it));
 	ASSERT(0 == it.hasNext(&it));
+	disposeHash(&hash);
 }
 
 void test_hash_map_rearranged_after_a_limit(){
@@ -183,6 +196,7 @@ void test_hash_map_rearranged_after_a_limit(){
 	ASSERT(&keys[0] == it.next(&it));
 	ASSERT(&keys[2] == it.next(&it));
 	ASSERT(&keys[1] == it.next(&it));
+	disposeHash(&hash);
 }
 
 void test_perform_rehashing_if_needed(){
@@ -203,4 +217,5 @@ void test_perform_rehashing_if_needed(){
 	ASSERT(&keys[2] == it.next(&it));
 	ASSERT(&keys[1] == it.next(&it));
 	ASSERT(&keys[3] == it.next(&it));
+	disposeHash(&hash);
 }
