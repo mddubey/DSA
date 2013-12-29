@@ -6,12 +6,13 @@ typedef int HashcodeGenerator(void* key);
 
 typedef struct{
 	ArrayList bucket;
+	void* keyList;
 	KeyComparator* areEqual;
 	HashcodeGenerator* getHashCode;
 }HashMap;
 
+Iterator getAllKeys(HashMap hash);
 HashMap createHash(HashcodeGenerator* getHashCode, KeyComparator* areEqual);
 int put(HashMap* hash, void* key, void* value);
 void* HashMap_getData(HashMap hash, void* key);
 int HashMap_remove(HashMap* hash, void* key);
-Iterator getAllKeys(HashMap hash);

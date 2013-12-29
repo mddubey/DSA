@@ -2,7 +2,7 @@
 #include "hashMap.h"
 
 typedef struct{
-	DoubleList elements;
+	DoubleList* elements;
 }Slot;
 
 typedef struct{

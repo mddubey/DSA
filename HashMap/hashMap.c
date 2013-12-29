@@ -20,6 +20,7 @@ HashMap createHash(HashcodeGenerator *getHashCode, KeyComparator *areEqual){
     hash.bucket = create_array(10);
     hash.areEqual = areEqual;
     hash.getHashCode = getHashCode;
+    hash.keyList = (DoubleList*)create();
     itArray = getIteratorArray(&hash.bucket);
     while(i < hash.bucket.capacity){
         insertInArray(&hash.bucket, hash.bucket.length, createSlot());
@@ -36,7 +37,7 @@ DoubleList* getSlotList(HashMap hash, void* key){
     int key_value = hash.getHashCode(key);
     int bucket_index = getSlotIndex(key_value, hash.bucket.capacity);
     Slot* slot = hash.bucket.base[bucket_index];
-    DoubleList *list = &slot->elements;
+    DoubleList *list = slot->elements;
     return list;
 };
 
@@ -83,11 +84,7 @@ void* getNextKey(Iterator *it){
     hashIterator.position = it->position;
     element = hashIterator.next(&hashIterator);
     it->position++;
-    if(!element){
-        dispose(it->list);
-        it->list = NULL;
-        return NULL;  
-    } 
+    if(!element) return NULL;  
     return element->key;
 }
 
@@ -96,15 +93,17 @@ Iterator getAllKeys(HashMap hash){
     Slot* slot;
     Iterator itLinkList;
     Iterator hashIterator;
-    DoubleList keysList = create();
+    DoubleList* keysList = hash.keyList;
+    dispose(keysList);
+    keysList = create();
     while(itArrayList.hasNext(&itArrayList)){
         slot = itArrayList.next(&itArrayList);
-        itLinkList = getIterator(&slot->elements);
+        itLinkList = getIterator(slot->elements);
         while(itLinkList.hasNext(&itLinkList)){
-            insert(&keysList, keysList.length, itLinkList.next(&itLinkList));
+            insert(keysList, keysList->length, itLinkList.next(&itLinkList));
         }
     }
-    hashIterator = getIterator(&keysList);
+    hashIterator = getIterator(keysList);
     hashIterator.next = &getNextKey;
     return hashIterator;
 }
