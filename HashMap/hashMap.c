@@ -16,14 +16,13 @@ Hash_Element* createHashElement(void* key, void* dataToInsert){
 
 HashMap createHash(HashcodeGenerator *getHashCode, KeyComparator *areEqual){
     HashMap hash;
-    Iterator itArray;int i = 0;
+    int i = 0;
     hash.bucket = create_array(10);
     hash.areEqual = areEqual;
     hash.getHashCode = getHashCode;
     hash.keyList = (DoubleList*)create();
-    itArray = getIteratorArray(&hash.bucket);
     while(i < hash.bucket.capacity){
-        insertInArray(&hash.bucket, hash.bucket.length, createSlot());
+        add(&hash.bucket, createSlot());
         i++;
 	}
     return hash;
@@ -41,16 +40,6 @@ DoubleList* getSlotList(HashMap hash, void* key){
     return list;
 };
 
-int put(HashMap *hash, void *key, void *value){
-    Matched_Data dataFound = doesKeyMatch(*hash, key);
-    DoubleList* list;
-    Hash_Element *elementToInsert;
-    if(dataFound.index > -1)
-        HashMap_remove(hash, key);
-    list = getSlotList(*hash, key);
-    elementToInsert = createHashElement(key, value);
-    return insert(list, list->length, elementToInsert);
-}
 
 Matched_Data checkEachElement(DoubleList* list, KeyComparator* areEqual, void* key){
     Matched_Data result = {NULL,-1};
@@ -69,6 +58,17 @@ Matched_Data checkEachElement(DoubleList* list, KeyComparator* areEqual, void* k
 Matched_Data doesKeyMatch(HashMap hash, void* key){
     DoubleList* list = getSlotList(hash, key);
     return checkEachElement(list, hash.areEqual, key);
+}
+
+int put(HashMap *hash, void *key, void *value){
+    Matched_Data dataFound = doesKeyMatch(*hash, key);
+    DoubleList* list;
+    Hash_Element *elementToInsert;
+    if(dataFound.index > -1)
+        HashMap_remove(hash, key);
+    list = getSlotList(*hash, key);
+    elementToInsert = createHashElement(key, value);
+    return insert(list, list->length, elementToInsert);
 }
 
 void* HashMap_getData(HashMap hash, void* key){
@@ -116,10 +116,31 @@ Iterator getAllKeys(HashMap hash){
     return hashIterator;
 }
 
-// void rehash(HashMap* hash){
-//     Iterator hashIt = getAllKeys(*hash);
-//     Hash_Element* element;
-//     while(hashIt.hasNext(&hashIt)){
-//         element = hashIt.next(&hashIt);
-//     }
-// }
+void resetHash(HashMap* hash, DoubleList* keyList){
+    Iterator itList = getIterator(keyList);
+    Hash_Element* element;
+    while(itList.hasNext(&itList)){
+        element = itList.next(&itList);
+        HashMap_remove(hash, element->key);
+    }
+}
+
+void rehash(HashMap* hash){
+    DoubleList *keysList = create();
+    Iterator itList, itArray;
+    Hash_Element* element;
+    int i;
+    int capacity = hash->bucket.capacity;
+    collectAllKeys(hash, keysList);
+    resetHash(hash, keysList);
+    while(i < capacity){
+        add(&hash->bucket, createSlot());
+        i++;
+    }
+    itList = getIterator(keysList);
+    while(itList.hasNext(&itList)){
+        element = itList.next(&itList);
+        put(hash, element->key, element->data);
+    }
+    dispose(keysList);
+}
