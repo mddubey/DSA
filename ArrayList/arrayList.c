@@ -102,7 +102,7 @@ int search(ArrayList list, void *data, Comparator *areEqual){
 }
 
 void iterate(ArrayList list, ForEach* forEach){
-	int result,index;
+	int index;
 	for(index = 0;index < list.length ;index++){
 		forEach(list.base[index]);
 	}

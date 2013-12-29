@@ -158,13 +158,30 @@ void test_search_gives_minus_one_when_data_is_not_present(){
 	ASSERT(-1 == result);
 }
 
-void printId(void* data){
-	Intern intern = *(Intern*)data;
-	printf("%d\n", intern.id);
+typedef struct{
+	int AccNo;
+	int balance;
+}Account;
+
+void increaseBalance(void* data){
+	Account *pAcc = (Account*)data;
+	pAcc->balance += 1000;
 }
 
-void test_prints_data_of_each_element(){
-	add(internsPtr, &prateek);
-	add(internsPtr, &ji);
-	iterate(interns, printId);
+void test_increse_the_balance_in_each_account(){
+	ArrayList accountList = create_array(2);
+	Account accounts[] = {{12,2000},{14,5000},{14,10000}};
+	Iterator it;
+	Account *result;
+	add(&accountList, &accounts[0]);
+	add(&accountList, &accounts[1]);
+	add(&accountList, &accounts[2]);
+	iterate(accountList, increaseBalance);
+	it = getIteratorArray(&accountList);
+	result = it.next(&it);
+	ASSERT(3000 == result->balance);
+	result = it.next(&it);
+	ASSERT(6000 == result->balance);
+	result = it.next(&it);
+	ASSERT(11000 == result->balance);
 }
