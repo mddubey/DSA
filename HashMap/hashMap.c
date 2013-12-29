@@ -1,7 +1,6 @@
 #include <stdlib.h>
 #include "privateHash.h"
 
-
 Slot* createSlot(){
     Slot* slot = malloc(sizeof(Slot));
     slot->elements = create();
@@ -25,7 +24,7 @@ HashMap createHash(HashcodeGenerator *getHashCode, KeyComparator *areEqual){
     while(i < hash.bucket.capacity){
         insertInArray(&hash.bucket, hash.bucket.length, createSlot());
         i++;
-    }
+	}
     return hash;
 }
 
@@ -82,14 +81,18 @@ void* getNextKey(Iterator *it){
     Iterator hashIterator = getIterator(it->list);
     Hash_Element* element;
     hashIterator.position = it->position;
-    element = hashIterator.next(&hashIterator);\
+    element = hashIterator.next(&hashIterator);
     it->position++;
-    if(!element) return NULL;
+    if(!element){
+        dispose(it->list);
+        it->list = NULL;
+        return NULL;  
+    } 
     return element->key;
 }
 
-Iterator getAllKeys(HashMap* hash){
-    Iterator itArrayList = getIteratorArray(&hash->bucket);
+Iterator getAllKeys(HashMap hash){
+    Iterator itArrayList = getIteratorArray(&hash.bucket);
     Slot* slot;
     Iterator itLinkList;
     Iterator hashIterator;

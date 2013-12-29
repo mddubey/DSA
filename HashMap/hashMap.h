@@ -14,4 +14,4 @@ HashMap createHash(HashcodeGenerator* getHashCode, KeyComparator* areEqual);
 int put(HashMap* hash, void* key, void* value);
 void* HashMap_getData(HashMap hash, void* key);
 int HashMap_remove(HashMap* hash, void* key);
-Iterator getAllKeys(HashMap *hash);
+Iterator getAllKeys(HashMap hash);
