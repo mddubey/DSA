@@ -88,14 +88,10 @@ void* getNextKey(Iterator *it){
     return element->key;
 }
 
-Iterator getAllKeys(HashMap hash){
-    Iterator itArrayList = getIteratorArray(&hash.bucket);
+void collectAllKeys(HashMap* hash, DoubleList* keysList){
+    Iterator itArrayList = getIteratorArray(&hash->bucket);
     Slot* slot;
     Iterator itLinkList;
-    Iterator hashIterator;
-    DoubleList* keysList = hash.keyList;
-    dispose(keysList);
-    keysList = create();
     while(itArrayList.hasNext(&itArrayList)){
         slot = itArrayList.next(&itArrayList);
         itLinkList = getIterator(slot->elements);
@@ -103,6 +99,14 @@ Iterator getAllKeys(HashMap hash){
             insert(keysList, keysList->length, itLinkList.next(&itLinkList));
         }
     }
+}
+
+Iterator getAllKeys(HashMap hash){
+    Iterator hashIterator;
+    DoubleList* keysList = hash.keyList;
+    dispose(keysList);
+    keysList = create();
+    collectAllKeys(&hash, keysList);
     hashIterator = getIterator(keysList);
     hashIterator.next = &getNextKey;
     return hashIterator;
