@@ -52,19 +52,23 @@ int put(HashMap *hash, void *key, void *value){
     return insert(list, list->length, elementToInsert);
 }
 
-Matched_Data doesKeyMatch(HashMap hash, void* key){
+Matched_Data checkEachElement(DoubleList* list, KeyComparator* areEqual, void* key){
     Matched_Data result = {NULL,-1};
-    DoubleList* list = getSlotList(hash, key);
     Iterator it = getIterator(list);
-    Hash_Element *currentElement = NULL;
+    Hash_Element *currentElement;
     while(it.hasNext(&it)){
         currentElement = it.next(&it);
-        if(hash.areEqual(currentElement->key, key)){
+        if(areEqual(currentElement->key, key)){
             result.data = currentElement->data;
             result.index = it.position - 1;
         }
     }
     return result;
+}
+
+Matched_Data doesKeyMatch(HashMap hash, void* key){
+    DoubleList* list = getSlotList(hash, key);
+    return checkEachElement(list, hash.areEqual, key);
 }
 
 void* HashMap_getData(HashMap hash, void* key){
@@ -111,3 +115,11 @@ Iterator getAllKeys(HashMap hash){
     hashIterator.next = &getNextKey;
     return hashIterator;
 }
+
+// void rehash(HashMap* hash){
+//     Iterator hashIt = getAllKeys(*hash);
+//     Hash_Element* element;
+//     while(hashIt.hasNext(&hashIt)){
+//         element = hashIt.next(&hashIt);
+//     }
+// }

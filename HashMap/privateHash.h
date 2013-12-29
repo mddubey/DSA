@@ -20,4 +20,5 @@ Hash_Element* createHashElement(void* key, void* dataToInsert);
 int getSlotIndex(int key_val, int capacity);
 DoubleList* getSlotList(HashMap hash, void* key);
 Matched_Data doesKeyMatch(HashMap hash, void* key);
-void checkEachElement(DoubleList* list, Matched_Data* result, KeyComparator* areEqual, void* key);
+Matched_Data checkEachElement(DoubleList* list, KeyComparator* areEqual, void* key);
+void collectAllKeys(HashMap* hash, DoubleList* keysList);
