@@ -14,10 +14,10 @@ Hash_Element* createHashElement(void* key, void* dataToInsert){
     return element;
 }
 
-HashMap createHash(HashcodeGenerator *getHashCode, KeyComparator *areEqual){
+HashMap createHash(HashcodeGenerator *getHashCode, KeyComparator *areEqual, int capacity){
     HashMap hash;
     int i = 0;
-    hash.bucket = create_array(10);
+    hash.bucket = create_array(capacity);
     hash.areEqual = areEqual;
     hash.getHashCode = getHashCode;
     hash.keyList = (DoubleList*)create();

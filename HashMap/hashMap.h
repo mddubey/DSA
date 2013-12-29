@@ -12,7 +12,7 @@ typedef struct{
 }HashMap;
 
 Iterator getAllKeys(HashMap hash);
-HashMap createHash(HashcodeGenerator* getHashCode, KeyComparator* areEqual);
+HashMap createHash(HashcodeGenerator* getHashCode, KeyComparator* areEqual, int capacity);
 int put(HashMap* hash, void* key, void* value);
 void rehash(HashMap* hash);
 void* HashMap_getData(HashMap hash, void* key);

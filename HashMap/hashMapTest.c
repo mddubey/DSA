@@ -34,7 +34,6 @@ int getAsciiTotal(void* key){
 	return total;
 }
 
-
 int getKeyAsCode(void* key){
 	return *(int*)key;
 }
@@ -42,7 +41,7 @@ int getKeyAsCode(void* key){
 void test_inserts_first_data_in_hash_map(){
 	Intern prateek = {12,"Prateek"};
 	int key1 = 12;
-	HashMap hash = createHash(getKeyAsCode, areInternsKeyEqual);
+	HashMap hash = createHash(getKeyAsCode, areInternsKeyEqual, 10);
 	ASSERT(put(&hash, &key1, &prateek));
 	ASSERT(&prateek == HashMap_getData(hash, &key1));
 }
@@ -52,7 +51,7 @@ void test_inserts_multiple_data_in_hash_map(){
 	int key1 = 12;
 	Intern shweta = {15, "shweta"};
 	int key2 = 15;
-	HashMap hash = createHash(getKeyAsCode, areInternsKeyEqual);
+	HashMap hash = createHash(getKeyAsCode, areInternsKeyEqual, 10);
 	ASSERT(put(&hash, &key1, &prateek));
 	ASSERT(&prateek == HashMap_getData(hash, &key1));
 	ASSERT(put(&hash, &key2, &shweta));
@@ -62,7 +61,7 @@ void test_inserts_multiple_data_in_hash_map(){
 void test_inserts_key_as_alphabet(){
 	Word rich = {"Rich","Wealthy","Poor"};
 	String key = "Rich";
-	HashMap hash = createHash(getAsciiTotal, areWordsEqual);
+	HashMap hash = createHash(getAsciiTotal, areWordsEqual, 10);
 	ASSERT(put(&hash, &key, &rich));
 	ASSERT(&rich == HashMap_getData(hash, &key));
 }
@@ -70,21 +69,21 @@ void test_inserts_key_as_alphabet(){
 void test_gives_the_data_with_matched_the_given_Key(){
 	Intern shweta = {15, "shweta"};
 	int key1 = 15;
-	HashMap hash = createHash(getKeyAsCode, areInternsKeyEqual);
+	HashMap hash = createHash(getKeyAsCode, areInternsKeyEqual, 10);
 	ASSERT(put(&hash, &key1, &shweta));
 	ASSERT(&shweta == HashMap_getData(hash, &key1));
 }
 
 void test_gives_NULL_when_key_is_not_present(){
 	int key1 = 15;
-	HashMap hash = createHash(getKeyAsCode, areInternsKeyEqual);
+	HashMap hash = createHash(getKeyAsCode, areInternsKeyEqual, 10);
 	ASSERT(NULL == HashMap_getData(hash, &key1));
 }
 
 void test_deletes_the_value_matched_to_given_key(){
 	Intern shweta = {15, "shweta"};
 	int key1 = 15;
-	HashMap hash = createHash(getKeyAsCode, areInternsKeyEqual);
+	HashMap hash = createHash(getKeyAsCode, areInternsKeyEqual, 10);
 	ASSERT(put(&hash, &key1, &shweta));
 	ASSERT(HashMap_remove(&hash, &key1));
 	ASSERT(NULL == HashMap_getData(hash, &key1));	
@@ -92,7 +91,7 @@ void test_deletes_the_value_matched_to_given_key(){
 
 void test_deletion_failed_when_key_is_not_present(){
 	int key1 = 15;
-	HashMap hash = createHash(getKeyAsCode, areInternsKeyEqual);
+	HashMap hash = createHash(getKeyAsCode, areInternsKeyEqual, 10);
 	ASSERT(0 == HashMap_remove(&hash, &key1));
 	ASSERT(NULL == HashMap_getData(hash, &key1));	
 }
@@ -100,7 +99,7 @@ void test_deletion_failed_when_key_is_not_present(){
 void test_deletion_of_an_element_having_key_as_alphabet(){
 	Word rich = {"Rich","Wealthy","Poor"};
 	String key = "Rich";
-	HashMap hash = createHash(getAsciiTotal, areWordsEqual);
+	HashMap hash = createHash(getAsciiTotal, areWordsEqual, 10);
 	ASSERT(put(&hash, &key, &rich));
 	ASSERT(HashMap_remove(&hash, &key));
 	ASSERT(NULL == HashMap_getData(hash, &key));
@@ -110,7 +109,7 @@ void test_gives_iterator_that_tells_the_next_key_is_present_or_not(){
 	Intern shweta = {15, "shweta"};
 	int key1 = 15;
 	Iterator it;
-	HashMap hash = createHash(getKeyAsCode, areInternsKeyEqual);
+	HashMap hash = createHash(getKeyAsCode, areInternsKeyEqual, 10);
 	put(&hash, &key1, &shweta);
 	it = getAllKeys(hash);
 	ASSERT(1 == it.hasNext(&it));
@@ -120,14 +119,14 @@ void test_iterator_gives_the_key_of_next_element(){
 	Intern shweta = {15, "shweta"};
 	int key1 = 15;
 	Iterator it;
-	HashMap hash = createHash(getKeyAsCode, areInternsKeyEqual);
+	HashMap hash = createHash(getKeyAsCode, areInternsKeyEqual, 10);
 	put(&hash, &key1, &shweta);
 	it = getAllKeys(hash);
 	ASSERT(&key1 == it.next(&it));
 }
 
 void test_iterotar_gives_null_when_the_next_data_is_not_present(){
-	HashMap hash = createHash(getKeyAsCode, areInternsKeyEqual);
+	HashMap hash = createHash(getKeyAsCode, areInternsKeyEqual, 10);
 	Iterator it = getAllKeys(hash);
 	ASSERT(NULL == it.next(&it));
 	ASSERT(NULL == it.next(&it));
@@ -137,7 +136,7 @@ void test_iterotar_gives_null_when_the_next_data_is_not_present(){
 void test_iterator_gives_the_itearator_to_get_all_keys_of_hash(){
 	Intern interns[5] = {{14, "Prateek"},{15,"Manish"},{18,"Uday"},{20,"Manali"},{12,"Raaz"}};
 	int keys[5] = {14,15,18,20,12};
-	HashMap hash = createHash(getKeyAsCode, areInternsKeyEqual);
+	HashMap hash = createHash(getKeyAsCode, areInternsKeyEqual, 10);
 	Iterator it;
 	put(&hash, &keys[0], &interns[0]);
 	put(&hash, &keys[1], &interns[1]);
@@ -157,7 +156,7 @@ void test_updates_the_value_of_key_if_is_already_present(){
 	Intern shwetha = {15, "shwetha"};
 	int key1 = 15;
 	Iterator it;
-	HashMap hash = createHash(getKeyAsCode, areInternsKeyEqual);
+	HashMap hash = createHash(getKeyAsCode, areInternsKeyEqual, 10);
 	put(&hash, &key1, &shweta);
 	ASSERT(&shweta == HashMap_getData(hash, &key1));
 	put(&hash, &key1, &shwetha);
@@ -170,7 +169,7 @@ void test_updates_the_value_of_key_if_is_already_present(){
 void test_hash_map_rearranged_after_a_limit(){
 	Intern interns[3] = {{4, "Prateek"},{19,"Manali"},{12,"Raaz"}};
 	int keys[3] = {4,19,12};
-	HashMap hash = createHash(getKeyAsCode, areInternsKeyEqual);
+	HashMap hash = createHash(getKeyAsCode, areInternsKeyEqual, 10);
 	Iterator it;
 	put(&hash, &keys[0], &interns[0]);
 	put(&hash, &keys[1], &interns[1]);
