@@ -167,15 +167,21 @@ void test_updates_the_value_of_key_if_is_already_present(){
 	ASSERT(0 == it.hasNext(&it));
 }
 
-void test_rehashing(){
-	Intern interns[5] = {{14, "Prateek"},{15,"Manish"},{18,"Uday"},{20,"Manali"},{12,"Raaz"}};
-	int keys[5] = {14,15,18,20,12};
+void test_hash_map_rearranged_after_a_limit(){
+	Intern interns[3] = {{4, "Prateek"},{19,"Manali"},{12,"Raaz"}};
+	int keys[3] = {4,19,12};
 	HashMap hash = createHash(getKeyAsCode, areInternsKeyEqual);
 	Iterator it;
 	put(&hash, &keys[0], &interns[0]);
 	put(&hash, &keys[1], &interns[1]);
 	put(&hash, &keys[2], &interns[2]);
-	put(&hash, &keys[3], &interns[3]);
-	put(&hash, &keys[4], &interns[4]);
+	it = getAllKeys(hash);
+	ASSERT(&keys[2] == it.next(&it));
+	ASSERT(&keys[0] == it.next(&it));
+	ASSERT(&keys[1] == it.next(&it));
 	rehash(&hash);
+	it = getAllKeys(hash);
+	ASSERT(&keys[0] == it.next(&it));
+	ASSERT(&keys[2] == it.next(&it));
+	ASSERT(&keys[1] == it.next(&it));
 }

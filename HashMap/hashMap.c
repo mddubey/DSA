@@ -129,7 +129,7 @@ void rehash(HashMap* hash){
     DoubleList *keysList = create();
     Iterator itList, itArray;
     Hash_Element* element;
-    int i;
+    int i = 0;
     int capacity = hash->bucket.capacity;
     collectAllKeys(hash, keysList);
     resetHash(hash, keysList);
