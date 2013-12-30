@@ -91,3 +91,11 @@ void test_sorts_collection_of_Accounts_according_to_balance(){
     mergeSort(ptrs, 5, compareAccountsByBalance);
     ASSERT(areArrayEqual(ptrs, expected, 5));
 }
+
+void test_sorts_collections_of_Integers_even(){
+    int nums[4] = {4,10,12,20};
+    void* ptrs[4] = {&nums[3],&nums[2],&nums[1],&nums[0]};
+    void* expected[4] = {&nums[0],&nums[1],&nums[2],&nums[3]};
+    mergeSort(ptrs, 4, compareInt);
+    ASSERT(areArrayEqual(ptrs, expected, 4));
+}
