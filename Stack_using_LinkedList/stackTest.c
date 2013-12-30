@@ -10,16 +10,6 @@ void tearDown(){
 	disposeStack(stack);
 }
 
-typedef struct{
-	int accNo;
-	int balance;
-}Account;
-
-int areAccountsEqual(Account expected, Account actual){
-	return expected.accNo == actual.accNo && expected.balance == actual.balance;
-}
-
-
 void test_creates_an_stack(){
 	stack = createStack();
 	ASSERT(0 == stack->list->length);
