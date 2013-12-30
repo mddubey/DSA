@@ -9,8 +9,7 @@
 Queue* queue;
 
 void tearDown(){
-        free(queue->elements);
-        free(queue);
+        dispose_queue(queue);
 }
 
 int areEqual(Queue a, Queue b){
@@ -51,21 +50,6 @@ void test_4_creates_a_queue_for_Strings_elements_with_default_value_blank (){
         
 
 // //**************************************enqueue***********************************
-
-// void test_5_inserts_an_element_in_queue_at_rear_end_Integer(){
-//         int* _12 = malloc(4);
-//         double* _10 = malloc(8);
-//         char* name = malloc(20);
-//         name = "Raaz";
-//         *_12 = 12;*_10 = 10.0;
-//         queue = create(3);
-//         enqueue(queue,_12);
-//         ASSERT(12 == **(int**)getElement(queue, 0));
-//         enqueue(queue,_10);
-//         ASSERT(10.0 == **(double**)getElement(queue, 1));
-//         enqueue(queue,name);
-//         ASSERT("Raaz" == *(char**)getElement(queue, 2));
-// }
 
 void test_5_inserts_an_element_in_queue_at_rear_end_Integer(){
         int* nums = (int*)malloc(sizeof(int)*2);
@@ -125,15 +109,6 @@ void test_9_gives_error_if_stack_is_full(){
         free(nums);
 }
 
-typedef struct 
-{
-        int accNo;
-        int balance;
-}Account;
-
-int areAccountsEqual(Account expected,Account actual){
-        return expected.accNo == actual.accNo && expected.balance == actual.balance;
-}
 void test_10_inserts_an_element_in_queue_at_rear_end_Structure(){
         Account* account = malloc(sizeof(Account));
         Account expected = {100,5000};

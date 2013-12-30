@@ -43,3 +43,8 @@ int isFull(Queue* queue){
 int isEmpty(Queue* queue){
         return queue->info.rear==-1;
 }
+
+void dispose_queue(Queue *queue){
+        free(queue->elements);
+        free(queue);
+}
