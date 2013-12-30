@@ -13,3 +13,4 @@ void* dequeue(Queue* queue);
 void** getElement(Queue* queue, int index);
 int isFull(Queue* queue);
 int isEmpty(Queue* queue);
+void dispose_queue(Queue* queue);
