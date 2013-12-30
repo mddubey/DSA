@@ -50,3 +50,8 @@ int isFull(Stack* stack){
 		return 1;
 	return 0;
 }
+
+void disposeStack(Stack *stack){
+	free(stack->elements);
+	free(stack);
+}

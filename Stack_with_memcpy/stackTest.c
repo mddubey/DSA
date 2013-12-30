@@ -9,8 +9,7 @@
 Stack* stack;
 
 void tearDown(){
-	free(stack->elements);
-	free(stack);
+	disposeStack(stack);
 }
 
 int areEqual(Stack a, Stack b){

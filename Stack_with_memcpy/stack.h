@@ -12,3 +12,4 @@ void* pop(Stack* s);
 void* peek(Stack* s);
 int isEmpty(Stack* s);
 int isFull(Stack* s);
+void disposeStack(Stack* stack);
