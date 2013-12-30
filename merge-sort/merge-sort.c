@@ -4,7 +4,7 @@ void merge(void **destination,  void** leftBase, void** rightBase, size_t leftLe
 			 size_t rightLength, Comparator* cmp){
 	int i = 0,j = 0,k = 0;
 	for(; i < leftLength && j < rightLength;){
-		if(cmp(leftBase[i], rightBase[j])){
+		if(cmp(leftBase[i], rightBase[j]) < 0){
 			destination[k] = leftBase[i];
 			i++;
 		}
