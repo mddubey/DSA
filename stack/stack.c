@@ -8,10 +8,6 @@ typedef struct {
         int length;
 }Stack;
 
-// void** getElement(Stack* stack,int top){
-//         return stack->elements + top;
-// };
-
 void* create(int length){
         Stack* stack;
         stack = (Stack*)calloc(sizeof(Stack), 1);

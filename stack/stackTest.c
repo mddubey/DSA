@@ -12,15 +12,6 @@ void tearDown(){
         disposeStack(stack);
 }
 
-typedef struct {
-        int accNo;
-        int balance;
-}Account;
-
-int areAccountsEqual(Account expected,Account actual){
-        return expected.accNo == actual.accNo && expected.balance == actual.balance;
-}
-
 //**************************************push***********************************
 
 void test_adds_the_given_integer_at_the_top_of_the_stack(){
