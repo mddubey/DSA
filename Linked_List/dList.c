@@ -33,7 +33,7 @@ int insertBegening(DoubleList* list,Node* head,void* data){
 
 int insertAtSpecificPlace(DoubleList* list,Node* head,void* data){
 	Node* newNode = createNode(head, data, head->next);
-    if(head->next != NULL)
+    if(head->next != NULL)	//insert at last 
     	head->next->previous = newNode;
     head->next = newNode;
     newNode->data = data;
