@@ -6,4 +6,4 @@ typedef struct{
 
 void* getRootData(BS_Tree tree);
 BS_Tree createBSTree(CompareInTree* comp);
-int insertInBSTree(BS_Tree* ptree, void* parentData, void* dataToInsert);
+int insertInBSTree(BS_Tree* ptree, void* dataToInsert);

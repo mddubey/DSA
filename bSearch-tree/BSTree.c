@@ -1,22 +1,16 @@
-#include "BSTree.h"
+#include "privateBST.h"
 #include <stdlib.h>
 
-typedef struct BST_Node{
-	void* value;
-	struct BST_Node* leftChild;
-	struct BST_Node* rightChild;
-}BST_Node;
-
-BS_Tree createBSTree(CompareInTree *comp){
-	BS_Tree tree = {NULL, comp};
-	return tree;
-}
-
-BST_Node* createBTNode(BST_Node* parent, void* dataToInsert){
+BST_Node* createBTNode(void* dataToInsert){
 	BST_Node* ptNode = malloc(sizeof(BST_Node));
 	ptNode->leftChild = ptNode->rightChild = NULL;
 	ptNode->value = dataToInsert;
 	return ptNode;
+}
+
+BS_Tree createBSTree(CompareInTree *comp){
+	BS_Tree tree = {NULL, comp};
+	return tree;
 }
 
 void* getRootData(BS_Tree tree){
@@ -24,10 +18,35 @@ void* getRootData(BS_Tree tree){
 	return ptNode->value;
 }
 
-int insertInBSTree(BS_Tree *ptree, void *parentData, void *dataToInsert){
-	if(!ptree->root){
-		ptree->root = createBTNode(NULL, dataToInsert);
+int insertionInLeft(BST_Node* node, void* dataToInsert, CompareInTree* comp){
+	if(!node->leftChild){
+		node->leftChild = createBTNode(dataToInsert);
+		return 1;
 	}
-	return 1;
+	return insertAsChild(node->leftChild, dataToInsert, comp);
 }
 
+int insertionInRight(BST_Node* node, void* dataToInsert, CompareInTree* comp){
+	if(!node->rightChild){
+		node->rightChild = createBTNode(dataToInsert);
+		return 1;
+	}
+	return insertAsChild(node->rightChild, dataToInsert, comp);
+}
+
+int insertAsChild(BST_Node* node, void* dataToInsert, CompareInTree* comp){
+	int compResult = comp(node->value, dataToInsert);
+	if(compResult == 0)
+		return 0;
+	if(compResult > 1)
+		return insertionInLeft(node, dataToInsert, comp);	
+	return insertionInRight(node, dataToInsert, comp);
+}
+
+int insertInBSTree(BS_Tree *ptree, void *dataToInsert){
+	if(!ptree->root){
+		ptree->root = createBTNode(dataToInsert);
+		return 1;
+	}
+	return insertAsChild(ptree->root, dataToInsert, ptree->comp);
+}
