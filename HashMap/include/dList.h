@@ -6,6 +6,7 @@ typedef struct{
 } DoubleList;
 
 typedef int (*compare)(void *elementToCompare,void *element);
+typedef int ComparatorInList(void *first, void *second);
 
 DoubleList* create();
 int insert(DoubleList* dList,int index,void *element);
@@ -14,3 +15,4 @@ void dispose(DoubleList *dList);
 void* getNodeData(DoubleList list, int index);
 void sort(DoubleList dList, compare cmpFunc);
 Iterator getIterator(DoubleList *dList);
+int getIndexInList(DoubleList list, void* dataToFind, ComparatorInList* areEqual);
