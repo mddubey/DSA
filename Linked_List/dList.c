@@ -127,6 +127,18 @@ Iterator getIterator(DoubleList *dList){
 	return listIterator;
 }
 
+int getIndexInList(DoubleList list, void* dataToFind, ComparatorInList *areEqual){
+	Node* head = list.head;
+	int i = 0;
+	while(head!=NULL){
+		if(areEqual(head->data, dataToFind))
+			return i;
+		i++;
+		head = head->next; 
+	}
+	return -1;
+}
+
 void dispose(DoubleList *dList){
 	Node *temp;
 	if(!dList || dList->head == NULL)

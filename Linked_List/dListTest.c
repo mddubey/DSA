@@ -170,3 +170,31 @@ void test_gives_null_if_list_is_NULL(){
 	Iterator it = getIterator(NULL);
 	ASSERT(NULL == it.next(&it));
 }
+
+int areNodesEqual(void* first, void* second){
+	return *(int*)first == *(int*)second;
+}
+
+void test_gives_index_of_given_data_in_list(){
+	DoubleList* dList = create();
+	int number = 12;
+	insert(dList, 0, &number);
+	ASSERT(0 == getIndexInList(*dList, &number, areNodesEqual));
+}
+
+void test_gives_index_of_given_data_in_list_with_multiple(){
+	DoubleList* dList = create();
+	int numbers[4] = {12,14,15,16};
+	int i = 0;
+	while(i<4){
+		insert(dList, 0, &numbers[i]);
+		i++;
+	}
+	ASSERT(3 == getIndexInList(*dList, &numbers[0], areNodesEqual));
+}
+
+void test_gives_minus_1_when_data_is_not_in_list(){
+	DoubleList* dList = create();
+	int number = 12;
+	ASSERT(-1 == getIndexInList(*dList, &number, areNodesEqual));
+}
