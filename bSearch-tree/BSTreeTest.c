@@ -125,3 +125,31 @@ void test_searchs_the_given_data_in_tree_deeply(){
     }
     ASSERT(1 == searchInBSTree(tree, &number[6]));
 }
+
+void test_deletes_the_single_present_element_in_tree(){
+	BS_Tree tree = createBSTree(compareInetgerNodes);
+	int num = 10;
+	insertInBSTree(&tree, &num);
+	ASSERT(deleteFromBSTree(&tree, &num));
+	// ASSERT(0 == searchInBSTree(tree, &num));
+}
+
+void test_deletes_the_root_which_has_only_left_child(){
+	BS_Tree tree = createBSTree(compareInetgerNodes);
+	int num = 10;
+	int num2 = 5;
+	insertInBSTree(&tree, &num);
+	insertInBSTree(&tree, &num2);
+	ASSERT(deleteFromBSTree(&tree, &num));
+	ASSERT(0 == searchInBSTree(tree, &num));
+}
+
+void test_deletes_the_root_which_has_only_right_child(){
+	BS_Tree tree = createBSTree(compareInetgerNodes);
+	int num = 10;
+	int num2 = 15;
+	insertInBSTree(&tree, &num);
+	insertInBSTree(&tree, &num2);
+	ASSERT(deleteFromBSTree(&tree, &num));
+	ASSERT(0 == searchInBSTree(tree, &num));
+}

@@ -63,6 +63,7 @@ BST_Node* checkEachNode(BST_Node *node, void* data, CompareInTree* comp){
 
 BST_Node* getNode(BS_Tree tree, void* data){
 	BST_Node *root = (BST_Node*)(tree.root);
+	if(!root) return root;
 	return checkEachNode(root, data, tree.comp);
 }
 
@@ -79,4 +80,30 @@ Children_data getChildrenData(BS_Tree tree, void *parentData){
 
 int searchInBSTree(BS_Tree tree, void *nodeData){
 	return NULL != getNode(tree, nodeData);
+}
+
+int deleteFromBSTree(BS_Tree *tree, void *data){
+	BST_Node* nodeToDelete = getNode(*tree, data);
+	BST_Node* temp;
+	if(!nodeToDelete) return 0;
+	if(!nodeToDelete->leftChild && !nodeToDelete->rightChild){	//This is a leaf node
+		temp = nodeToDelete;
+		nodeToDelete = nodeToDelete->leftChild;	//still a problem
+		free(temp);
+		return 1;
+	}
+	if(!nodeToDelete->rightChild){		// delete when left sub-tree is present
+		temp = nodeToDelete;
+		nodeToDelete = nodeToDelete->leftChild;
+		free(temp);
+		return 1;
+	}
+	if(!nodeToDelete->leftChild){		// delete when right sub-tree is present
+		temp = nodeToDelete;
+		nodeToDelete = nodeToDelete->rightChild;
+		free(temp);
+		return 1;
+	}
+
+	return 0;
 }

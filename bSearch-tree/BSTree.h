@@ -11,6 +11,7 @@ typedef struct {
 
 void* getRootData(BS_Tree tree);
 BS_Tree createBSTree(CompareInTree* comp);
+int deleteFromBSTree(BS_Tree* tree, void* data);
 int searchInBSTree(BS_Tree tree, void* nodeData);
-Children_data getChildrenData(BS_Tree tree, void* parentData);
 int insertInBSTree(BS_Tree* ptree, void* dataToInsert);
+Children_data getChildrenData(BS_Tree tree, void* parentData);
