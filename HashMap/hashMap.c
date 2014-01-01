@@ -55,18 +55,6 @@ Matched_Data doesKeyMatch(HashMap hash, void* key){
     return result;
 }
 
-void rehashIfNeeded(HashMap* hash){
-    Iterator itBucket = getIteratorArray(&hash->bucket);
-    Slot* slot;
-    while(itBucket.hasNext(&itBucket)){
-        slot = (Slot*)itBucket.next(&itBucket);
-        if(slot->elements->length > 3){
-            rehash(hash);
-            return;            
-        }
-    }
-}
-
 int put(HashMap *hash, void *key, void *value){
     Matched_Data dataFound = doesKeyMatch(*hash, key);
     DoubleList* list;
@@ -76,7 +64,8 @@ int put(HashMap *hash, void *key, void *value){
     list = getSlotList(*hash, key);
     elementToInsert = createHashElement(key, value);
     insert(list, list->length, elementToInsert);
-    rehashIfNeeded(hash);
+    if(list->length > 3)
+        rehash(hash);
     return 1;
 }
 
