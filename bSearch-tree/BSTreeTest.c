@@ -83,3 +83,23 @@ void test_inserts_data_at_defferent_level(){
     ASSERT(&number[5] == result.right);
     ASSERT(NULL == result.left);
 }
+
+void test_gives_the_children_of_the_node_which_data_is_given(){
+	BS_Tree tree = createBSTree(compareDoubleNodes);
+	int i;double nums[5] = {9.0,10.0,4.0,8.0,2.0};
+	Children_data result;
+	for(i = 0;i<5;i++){
+		ASSERT(insertInBSTree(&tree, &nums[i]));
+	}
+	result = getChildrenData(tree, &nums[2]);
+	ASSERT(&nums[4] == result.left);
+	ASSERT(&nums[3] == result.right);
+}
+
+void test_gives_the_children_as_null_if_given_data_is_not_present(){
+	BS_Tree tree = createBSTree(compareInetgerNodes);
+	int num = 10;
+	Children_data result = getChildrenData(tree, &num);
+	ASSERT(NULL == result.left);
+	ASSERT(NULL == result.right);
+}
