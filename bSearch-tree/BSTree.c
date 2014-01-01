@@ -50,3 +50,18 @@ int insertInBSTree(BS_Tree *ptree, void *dataToInsert){
 	}
 	return insertAsChild(ptree->root, dataToInsert, ptree->comp);
 }
+
+BST_Node* checkEachNode(BST_Node *node, void* data, CompareInTree* comp){
+	int compResult;
+	if(!node) return node;
+	compResult = comp(node->value, data);
+	if(!compResult) return node;
+	if(compResult > 0)
+		return checkEachNode(node->leftChild, data, comp);
+	return checkEachNode(node->rightChild, data, comp);
+}
+
+BST_Node* getNode(BS_Tree tree, void* data){
+	BST_Node *root = (BST_Node*)(tree.root);
+	return checkEachNode(root, data, tree.comp);
+}
