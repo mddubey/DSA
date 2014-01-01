@@ -131,7 +131,6 @@ void test_deletes_the_single_present_element_in_tree(){
 	int num = 10;
 	insertInBSTree(&tree, &num);
 	ASSERT(deleteFromBSTree(&tree, &num));
-	ASSERT(0 == searchInBSTree(tree, &num));
 }
 
 void test_deletes_the_root_which_has_only_left_child(){
@@ -150,6 +149,18 @@ void test_deletes_the_root_which_has_only_right_child(){
 	int num2 = 15;
 	insertInBSTree(&tree, &num);
 	insertInBSTree(&tree, &num2);
+	ASSERT(deleteFromBSTree(&tree, &num));
+	ASSERT(0 == searchInBSTree(tree, &num));
+}
+
+void test_deletes_the_root_which_has_both_child(){
+	BS_Tree tree = createBSTree(compareInetgerNodes);
+	int num = 10;
+	int num2 = 15;
+	int num3 = 5;
+	insertInBSTree(&tree, &num);
+	insertInBSTree(&tree, &num2);
+	insertInBSTree(&tree, &num3);
 	ASSERT(deleteFromBSTree(&tree, &num));
 	ASSERT(0 == searchInBSTree(tree, &num));
 }

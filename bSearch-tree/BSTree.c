@@ -91,14 +91,18 @@ void updateParent(BST_Node* nodeToDelete, BST_Node* newNode){
 		parent->rightChild = newNode;
 }
 
-int deleteFromBSTree(BS_Tree *tree, void *data){
-	BST_Node* nodeToDelete = getNode(*tree, data);
-	BST_Node *temp, *parent;
-	if(!nodeToDelete) return 0;
+BST_Node* getMaxInLeftSubTree(BST_Node* node){
+	BST_Node* temp = node;
+	while(temp->leftChild)
+		temp = temp->leftChild;
+	return temp;
+}
+
+int deleteNode(BST_Node* nodeToDelete){
+	BST_Node *temp,*max_node;
 	if(!nodeToDelete->leftChild && !nodeToDelete->rightChild){	//This is a leaf node
 		if(!nodeToDelete->parent){			//root node
-			free(tree->root);
-			tree->root = NULL;
+			free(nodeToDelete);
 			return 1;
 		}									
 		updateParent(nodeToDelete, NULL);
@@ -106,21 +110,37 @@ int deleteFromBSTree(BS_Tree *tree, void *data){
 		return 1;
 	}
 	if(!nodeToDelete->rightChild){		// delete when left sub-tree is present
-		if(!nodeToDelete->parent)
-			tree->root = nodeToDelete->leftChild;
-		else
+		if(!nodeToDelete->parent){
+			temp = nodeToDelete;
+			nodeToDelete = nodeToDelete->leftChild;
+			free(temp);
+		}
+		else{
 			updateParent(nodeToDelete, nodeToDelete->leftChild);
-		free(nodeToDelete);
+			free(nodeToDelete);
+		}
 		return 1;
 	}
 	if(!nodeToDelete->leftChild){		// delete when right sub-tree is present
-		if(!nodeToDelete->parent)
-			tree->root = nodeToDelete->rightChild;
-		else
+		if(!nodeToDelete->parent){
+			temp = nodeToDelete;
+			nodeToDelete = nodeToDelete->rightChild;
+			free(temp);
+		}
+		else{
 			updateParent(nodeToDelete, nodeToDelete->rightChild);
-		free(nodeToDelete);
+			free(nodeToDelete);
+		}
 		return 1;
 	}
+	max_node = getMaxInLeftSubTree(nodeToDelete);
+	nodeToDelete->value = max_node->value;
+	return deleteNode(max_node);
+}
 
-	return 0;
+int deleteFromBSTree(BS_Tree *tree, void *data){
+	BST_Node* nodeToDelete = getNode(*tree, data);
+	BST_Node *max_node;
+	if(!nodeToDelete) return 0;
+	return deleteNode(nodeToDelete);
 }
