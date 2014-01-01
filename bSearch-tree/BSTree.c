@@ -1,10 +1,11 @@
 #include "privateBST.h"
 #include <stdlib.h>
 
-BST_Node* createBTNode(void* dataToInsert){
+BST_Node* createBTNode(void* dataToInsert, BST_Node* node){
 	BST_Node* ptNode = malloc(sizeof(BST_Node));
 	ptNode->leftChild = ptNode->rightChild = NULL;
 	ptNode->value = dataToInsert;
+	ptNode->parent = node;
 	return ptNode;
 }
 
@@ -20,7 +21,7 @@ void* getRootData(BS_Tree tree){
 
 int insertionInLeft(BST_Node* node, void* dataToInsert, CompareInTree* comp){
 	if(!node->leftChild){
-		node->leftChild = createBTNode(dataToInsert);
+		node->leftChild = createBTNode(dataToInsert, node);
 		return 1;
 	}
 	return insertAsChild(node->leftChild, dataToInsert, comp);
@@ -28,7 +29,7 @@ int insertionInLeft(BST_Node* node, void* dataToInsert, CompareInTree* comp){
 
 int insertionInRight(BST_Node* node, void* dataToInsert, CompareInTree* comp){
 	if(!node->rightChild){
-		node->rightChild = createBTNode(dataToInsert);
+		node->rightChild = createBTNode(dataToInsert, node);
 		return 1;
 	}
 	return insertAsChild(node->rightChild, dataToInsert, comp);
@@ -45,7 +46,7 @@ int insertAsChild(BST_Node* node, void* dataToInsert, CompareInTree* comp){
 
 int insertInBSTree(BS_Tree *ptree, void *dataToInsert){
 	if(!ptree->root){
-		ptree->root = createBTNode(dataToInsert);
+		ptree->root = createBTNode(dataToInsert, NULL);
 		return 1;
 	}
 	return insertAsChild(ptree->root, dataToInsert, ptree->comp);
@@ -82,26 +83,42 @@ int searchInBSTree(BS_Tree tree, void *nodeData){
 	return NULL != getNode(tree, nodeData);
 }
 
+void updateParent(BST_Node* nodeToDelete, BST_Node* newNode){
+	BST_Node* parent = nodeToDelete->parent;
+	if(parent->leftChild == nodeToDelete)
+		parent->leftChild = newNode;
+	else
+		parent->rightChild = newNode;
+}
+
 int deleteFromBSTree(BS_Tree *tree, void *data){
 	BST_Node* nodeToDelete = getNode(*tree, data);
-	BST_Node* temp;
+	BST_Node *temp, *parent;
 	if(!nodeToDelete) return 0;
 	if(!nodeToDelete->leftChild && !nodeToDelete->rightChild){	//This is a leaf node
-		temp = nodeToDelete;
-		nodeToDelete = nodeToDelete->leftChild;	//still a problem
-		free(temp);
+		if(!nodeToDelete->parent){			//root node
+			free(tree->root);
+			tree->root = NULL;
+			return 1;
+		}									
+		updateParent(nodeToDelete, NULL);
+		free(nodeToDelete);
 		return 1;
 	}
 	if(!nodeToDelete->rightChild){		// delete when left sub-tree is present
-		temp = nodeToDelete;
-		nodeToDelete = nodeToDelete->leftChild;
-		free(temp);
+		if(!nodeToDelete->parent)
+			tree->root = nodeToDelete->leftChild;
+		else
+			updateParent(nodeToDelete, nodeToDelete->leftChild);
+		free(nodeToDelete);
 		return 1;
 	}
 	if(!nodeToDelete->leftChild){		// delete when right sub-tree is present
-		temp = nodeToDelete;
-		nodeToDelete = nodeToDelete->rightChild;
-		free(temp);
+		if(!nodeToDelete->parent)
+			tree->root = nodeToDelete->rightChild;
+		else
+			updateParent(nodeToDelete, nodeToDelete->rightChild);
+		free(nodeToDelete);
 		return 1;
 	}
 

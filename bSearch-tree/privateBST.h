@@ -1,11 +1,12 @@
 #include "BSTree.h"
 typedef struct BST_Node{
 	void* value;
+	struct BST_Node* parent;
 	struct BST_Node* leftChild;
 	struct BST_Node* rightChild;
 }BST_Node;
 
-BST_Node* createBTNode(void* dataToInsert);
+BST_Node* createBTNode(void* dataToInsert, BST_Node* parent);
 BST_Node* getNode(BS_Tree tree, void* data);
 BST_Node* checkEachNode(BST_Node *node, void* data, CompareInTree* comp);
 int insertAsChild(BST_Node* node, void* dataToInsert, CompareInTree* comp);

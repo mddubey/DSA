@@ -131,7 +131,7 @@ void test_deletes_the_single_present_element_in_tree(){
 	int num = 10;
 	insertInBSTree(&tree, &num);
 	ASSERT(deleteFromBSTree(&tree, &num));
-	// ASSERT(0 == searchInBSTree(tree, &num));
+	ASSERT(0 == searchInBSTree(tree, &num));
 }
 
 void test_deletes_the_root_which_has_only_left_child(){
