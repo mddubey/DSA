@@ -76,3 +76,7 @@ Children_data getChildrenData(BS_Tree tree, void *parentData){
 		result.right = ptNode->rightChild->value;
 	return result;
 }
+
+int searchInBSTree(BS_Tree tree, void *nodeData){
+	return NULL != getNode(tree, nodeData);
+}

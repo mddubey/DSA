@@ -103,3 +103,25 @@ void test_gives_the_children_as_null_if_given_data_is_not_present(){
 	ASSERT(NULL == result.left);
 	ASSERT(NULL == result.right);
 }
+
+void test_tells_that_the_given_data_is_present_in_Tree(){
+	BS_Tree tree = createBSTree(compareStringNodes);
+	String name = "Mritunjay";
+	insertInBSTree(&tree, &name);
+	ASSERT(searchInBSTree(tree, &name));
+}
+
+void test_tells_that_the_given_data_is_not_present_in_Tree(){
+	BS_Tree tree = createBSTree(compareAccountNodes);
+	Account account = {14,15};
+	ASSERT(0 == searchInBSTree(tree, &account));
+}
+
+void test_searchs_the_given_data_in_tree_deeply(){
+    BS_Tree tree = createBSTree(compareInetgerNodes);
+    int i, number[8] = {22,24,20,6,30,40,50,12};
+    for(i = 0;i<8;i++){
+       insertInBSTree(&tree, &number[i]);
+    }
+    ASSERT(1 == searchInBSTree(tree, &number[6]));
+}
