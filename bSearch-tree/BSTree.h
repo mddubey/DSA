@@ -10,6 +10,8 @@ typedef struct {
 }Children_data;
 
 void* getRootData(BS_Tree tree);
+int isBSTBalanced(BS_Tree tree);
+void disposeBSTree(BS_Tree* tree);
 BS_Tree createBSTree(CompareInTree* comp);
 int deleteFromBSTree(BS_Tree* tree, void* data);
 int searchInBSTree(BS_Tree tree, void* nodeData);

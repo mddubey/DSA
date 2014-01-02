@@ -28,7 +28,8 @@ void test_inserts_first_data_as_root_of_the_tree(){
 	BS_Tree tree = createBSTree(compareInetgerNodes);
 	int number = 15;
 	ASSERT(insertInBSTree(&tree, &number));
-	ASSERT(&number == getRootData(tree));	
+	ASSERT(&number == getRootData(tree));
+	disposeBSTree(&tree);	
 }
 
 void test_inserts_children_of_root_data(){
@@ -38,6 +39,7 @@ void test_inserts_children_of_root_data(){
 	ASSERT(insertInBSTree(&tree, &number));
 	ASSERT(insertInBSTree(&tree, &num2));
 	ASSERT(&number == getRootData(tree));	
+	disposeBSTree(&tree);	
 }
 
 void test_insertion_failed_when_data_is_already_present(){
@@ -45,6 +47,7 @@ void test_insertion_failed_when_data_is_already_present(){
 	int num = 12;
 	ASSERT(insertInBSTree(&tree, &num));
 	ASSERT(0 == insertInBSTree(&tree, &num));
+	disposeBSTree(&tree);	
 }
 
 void test_inserts_left_child_when_given_data_is_less_than_node_data(){
@@ -56,6 +59,7 @@ void test_inserts_left_child_when_given_data_is_less_than_node_data(){
 	result = getChildrenData(tree, &names[1]);
 	ASSERT(&names[0] == result.left);
 	ASSERT(NULL == result.right);
+	// disposeBSTree(&tree);	
 }
 
 void test_inserts_right_child_when_given_data_is_greater_than_node_data(){
@@ -67,6 +71,7 @@ void test_inserts_right_child_when_given_data_is_greater_than_node_data(){
 	result = getChildrenData(tree, &accounts[0]);
 	ASSERT(NULL == result.left);
 	ASSERT(&accounts[1] == result.right);
+	disposeBSTree(&tree);	
 }
 
 void test_inserts_data_at_defferent_level(){
@@ -82,6 +87,7 @@ void test_inserts_data_at_defferent_level(){
     result = getChildrenData(tree, &number[4]);
     ASSERT(&number[5] == result.right);
     ASSERT(NULL == result.left);
+	// disposeBSTree(&tree);	
 }
 
 void test_gives_the_children_of_the_node_which_data_is_given(){
@@ -94,6 +100,7 @@ void test_gives_the_children_of_the_node_which_data_is_given(){
 	result = getChildrenData(tree, &nums[2]);
 	ASSERT(&nums[4] == result.left);
 	ASSERT(&nums[3] == result.right);
+	// disposeBSTree(&tree);	
 }
 
 void test_gives_the_children_as_null_if_given_data_is_not_present(){
@@ -102,6 +109,7 @@ void test_gives_the_children_as_null_if_given_data_is_not_present(){
 	Children_data result = getChildrenData(tree, &num);
 	ASSERT(NULL == result.left);
 	ASSERT(NULL == result.right);
+	disposeBSTree(&tree);	
 }
 
 void test_tells_that_the_given_data_is_present_in_Tree(){
@@ -109,12 +117,14 @@ void test_tells_that_the_given_data_is_present_in_Tree(){
 	String name = "Mritunjay";
 	insertInBSTree(&tree, &name);
 	ASSERT(searchInBSTree(tree, &name));
+	disposeBSTree(&tree);	
 }
 
 void test_tells_that_the_given_data_is_not_present_in_Tree(){
 	BS_Tree tree = createBSTree(compareAccountNodes);
 	Account account = {14,15};
 	ASSERT(0 == searchInBSTree(tree, &account));
+	disposeBSTree(&tree);	
 }
 
 void test_searchs_the_given_data_in_tree_deeply(){
@@ -124,6 +134,7 @@ void test_searchs_the_given_data_in_tree_deeply(){
        insertInBSTree(&tree, &number[i]);
     }
     ASSERT(1 == searchInBSTree(tree, &number[6]));
+	// disposeBSTree(&tree);	
 }
 
 void test_deletes_the_single_present_element_in_tree(){
@@ -131,6 +142,7 @@ void test_deletes_the_single_present_element_in_tree(){
 	int num = 10;
 	insertInBSTree(&tree, &num);
 	ASSERT(deleteFromBSTree(&tree, &num));
+	// disposeBSTree(&tree);	
 }
 
 void test_deletes_the_root_which_has_only_left_child(){
@@ -141,6 +153,7 @@ void test_deletes_the_root_which_has_only_left_child(){
 	insertInBSTree(&tree, &num2);
 	ASSERT(deleteFromBSTree(&tree, &num));
 	ASSERT(0 == searchInBSTree(tree, &num));
+	// disposeBSTree(&tree);	
 }
 
 void test_deletes_the_root_which_has_only_right_child(){
@@ -151,6 +164,7 @@ void test_deletes_the_root_which_has_only_right_child(){
 	insertInBSTree(&tree, &num2);
 	ASSERT(deleteFromBSTree(&tree, &num));
 	ASSERT(0 == searchInBSTree(tree, &num));
+	// disposeBSTree(&tree);	
 }
 
 void test_deletes_the_root_which_has_both_child(){
@@ -163,6 +177,7 @@ void test_deletes_the_root_which_has_both_child(){
 	insertInBSTree(&tree, &num3);
 	ASSERT(deleteFromBSTree(&tree, &num));
 	ASSERT(0 == searchInBSTree(tree, &num));
+	disposeBSTree(&tree);	
 }
 
 void test_deletes_node_with_no_children(){
@@ -212,4 +227,13 @@ void test_deletion_failed_when_data_is_not_present(){
 	BS_Tree tree = createBSTree(compareDoubleNodes);
 	int num = 10.0;
 	ASSERT(0 == deleteFromBSTree(&tree, &num));
+	disposeBSTree(&tree);	
 }
+
+// void test_tells_that_tree_is_not_balanced(){
+// 	BS_Tree tree = createBSTree(compareInetgerNodes);
+// 	int i; int nums[] = {1,2,3,4,5,6,7,8};
+// 	for( i = 0;i<8; i++)
+// 		insertInBSTree(&tree, &nums[i]);
+// 	ASSERT(0 == isBSTBalanced(tree));
+// }

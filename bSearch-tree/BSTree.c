@@ -141,3 +141,21 @@ int deleteFromBSTree(BS_Tree *tree, void *data){
 	if(!nodeToDelete) return 0;
 	return deleteNode(nodeToDelete);
 }
+
+void disposeEachNode(BST_Node* node){
+	if(node != NULL){
+		disposeEachNode(node->leftChild);
+		disposeEachNode(node->leftChild);
+		free(node);
+	}
+}
+
+void disposeBSTree(BS_Tree *tree){
+	disposeEachNode(tree->root);
+}
+
+// int isBSTBalanced(BS_Tree tree){
+// 	if(!tree.root)
+// 		return 1;
+// 	return 0;
+// }
