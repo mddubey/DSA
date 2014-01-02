@@ -98,41 +98,39 @@ BST_Node* getMaxInLeftSubTree(BST_Node* node){
 	return temp;
 }
 
-int deleteNode(BST_Node* nodeToDelete){
-	BST_Node *temp,*max_node;
-	if(!nodeToDelete->leftChild && !nodeToDelete->rightChild){	//This is a leaf node
-		if(!nodeToDelete->parent){			//root node
+int deleteLeaf(BST_Node* nodeToDelete){
+	if(!nodeToDelete->parent){			//root node
 			free(nodeToDelete);
 			return 1;
-		}									
-		updateParent(nodeToDelete, NULL);
+	}									
+	updateParent(nodeToDelete, NULL);
+	free(nodeToDelete);
+	return 1;
+}
+
+int deleteWhenOneChild(BST_Node* nodeToDelete, BST_Node* child){
+	BST_Node* temp;
+	if(!nodeToDelete->parent){
+			temp = nodeToDelete;
+			nodeToDelete = child;
+			free(temp);
+	}
+	else{
+		updateParent(nodeToDelete, child);
 		free(nodeToDelete);
-		return 1;
 	}
-	if(!nodeToDelete->rightChild){		// delete when left sub-tree is present
-		if(!nodeToDelete->parent){
-			temp = nodeToDelete;
-			nodeToDelete = nodeToDelete->leftChild;
-			free(temp);
-		}
-		else{
-			updateParent(nodeToDelete, nodeToDelete->leftChild);
-			free(nodeToDelete);
-		}
-		return 1;
-	}
-	if(!nodeToDelete->leftChild){		// delete when right sub-tree is present
-		if(!nodeToDelete->parent){
-			temp = nodeToDelete;
-			nodeToDelete = nodeToDelete->rightChild;
-			free(temp);
-		}
-		else{
-			updateParent(nodeToDelete, nodeToDelete->rightChild);
-			free(nodeToDelete);
-		}
-		return 1;
-	}
+	return 1;
+}
+
+int deleteNode(BST_Node* nodeToDelete){
+	BST_Node *temp,*max_node;
+	if(!nodeToDelete->leftChild && !nodeToDelete->rightChild)	//This is a leaf node
+		return deleteLeaf(nodeToDelete);
+	if(!nodeToDelete->rightChild)		// delete when left sub-tree is present
+		return deleteWhenOneChild(nodeToDelete, nodeToDelete->leftChild);
+	if(!nodeToDelete->leftChild)		// delete when right sub-tree is present
+		return deleteWhenOneChild(nodeToDelete, nodeToDelete->rightChild);
+	// delete when both child present
 	max_node = getMaxInLeftSubTree(nodeToDelete);
 	nodeToDelete->value = max_node->value;
 	return deleteNode(max_node);
