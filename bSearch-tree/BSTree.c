@@ -140,7 +140,6 @@ int deleteNode(BST_Node* nodeToDelete){
 
 int deleteFromBSTree(BS_Tree *tree, void *data){
 	BST_Node* nodeToDelete = getNode(*tree, data);
-	BST_Node *max_node;
 	if(!nodeToDelete) return 0;
 	return deleteNode(nodeToDelete);
 }

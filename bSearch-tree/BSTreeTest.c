@@ -164,3 +164,52 @@ void test_deletes_the_root_which_has_both_child(){
 	ASSERT(deleteFromBSTree(&tree, &num));
 	ASSERT(0 == searchInBSTree(tree, &num));
 }
+
+void test_deletes_node_with_no_children(){
+	BS_Tree tree = createBSTree(compareDoubleNodes);
+	double nums[5] = {23.0,15.0,17.0,14.0,24.0};
+	int i;
+	for(i = 0;i<5 ;i++)
+		insertInBSTree(&tree, &nums[i]);
+	ASSERT(searchInBSTree(tree, &nums[2]));
+	ASSERT(deleteFromBSTree(&tree, &nums[2]));
+	ASSERT(0 == searchInBSTree(tree, &nums[2]));
+}
+
+void test_deletes_node_with_only_left_children(){
+	BS_Tree tree = createBSTree(compareStringNodes);
+	String names[5] = {"Raaz","Shweta","Sayali","Manish","Shabrin"};
+	int i;
+	for(i = 0;i<5 ;i++)
+		insertInBSTree(&tree, &names[i]);
+	ASSERT(searchInBSTree(tree, &names[1]));
+	ASSERT(deleteFromBSTree(&tree, &names[1]));
+	ASSERT(0 == searchInBSTree(tree, &names[1]));
+}
+
+void test_deletes_node_with_only_right_children(){
+	BS_Tree tree = createBSTree(compareDoubleNodes);
+	Account accounts[5] = {{400,2000},{100,1000},{200,4000},{300,1000},{500,5000}};
+	int i;
+	for(i = 0;i<5 ;i++)
+		insertInBSTree(&tree, &accounts[i]);
+	ASSERT(searchInBSTree(tree, &accounts[1]));
+	ASSERT(deleteFromBSTree(&tree, &accounts[1]));
+	ASSERT(0 == searchInBSTree(tree, &accounts[1]));
+}
+
+void test_deletes_node_with_both_children(){
+	BS_Tree tree = createBSTree(compareInetgerNodes);
+    int i, number[8] = {22,24,20,6,30,40,50,12};
+    for(i = 0;i<8;i++)
+       insertInBSTree(&tree, &number[i]);
+    ASSERT(searchInBSTree(tree, &number[3]));
+    ASSERT(deleteFromBSTree(&tree, &number[3]));
+    ASSERT(0 == searchInBSTree(tree, &number[3]));
+}
+
+void test_deletion_failed_when_data_is_not_present(){
+	BS_Tree tree = createBSTree(compareDoubleNodes);
+	int num = 10.0;
+	ASSERT(0 == deleteFromBSTree(&tree, &num));
+}
