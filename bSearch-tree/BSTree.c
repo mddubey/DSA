@@ -1,5 +1,6 @@
-#include "privateBST.h"
 #include <stdlib.h>
+#include "privateBST.h"
+#include "include/dList.h"
 
 BST_Node* createBTNode(void* dataToInsert, BST_Node* node){
 	BST_Node* ptNode = malloc(sizeof(BST_Node));
@@ -100,8 +101,8 @@ BST_Node* getMaxInLeftSubTree(BST_Node* node){
 
 int deleteLeaf(BST_Node* nodeToDelete){
 	if(!nodeToDelete->parent){			//root node
-			free(nodeToDelete);
-			return 1;
+		free(nodeToDelete);
+		return 1;
 	}									
 	updateParent(nodeToDelete, NULL);
 	free(nodeToDelete);
@@ -111,9 +112,9 @@ int deleteLeaf(BST_Node* nodeToDelete){
 int deleteWhenOneChild(BST_Node* nodeToDelete, BST_Node* child){
 	BST_Node* temp;
 	if(!nodeToDelete->parent){
-			temp = nodeToDelete;
-			nodeToDelete = child;
-			free(temp);
+		temp = nodeToDelete;
+		nodeToDelete = child;
+		free(temp);
 	}
 	else{
 		updateParent(nodeToDelete, child);
@@ -155,8 +156,22 @@ void disposeBSTree(BS_Tree *tree){
 	disposeEachNode(tree->root);
 }
 
-// int isBSTBalanced(BS_Tree tree){
-// 	if(!tree.root)
-// 		return 1;
-// 	return 0;
-// }
+void getAllNodeData(BST_Node* root, DoubleList* list){
+	if(root == NULL)
+		return;
+	getAllNodeData(root->leftChild, list);
+	insert(list, list->length, root->value);
+	getAllNodeData(root->rightChild, list);	
+}
+
+void balanceBSTree(BS_Tree* tree){
+	BST_Node* node = (BST_Node*)tree->root;
+	DoubleList* list = create();
+	Iterator it;
+	getAllNodeData(node, list);
+	it = getIterator(list);
+	while(it.hasNext(&it)){
+		deleteFromBSTree(tree, it.next(&it));
+	}
+	tree->root = NULL;
+}

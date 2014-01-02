@@ -213,7 +213,6 @@ void test_deletes_node_with_only_right_children(){
 	ASSERT(searchInBSTree(tree, &accounts[1]));
 	ASSERT(deleteFromBSTree(&tree, &accounts[1]));
 	ASSERT(0 == searchInBSTree(tree, &accounts[1]));
-	// disposeBSTree(&tree);	
 }
 
 void test_deletes_node_with_both_children(){
@@ -234,10 +233,13 @@ void test_deletion_failed_when_data_is_not_present(){
 	disposeBSTree(&tree);	
 }
 
-// void test_tells_that_tree_is_not_balanced(){
-// 	BS_Tree tree = createBSTree(compareInetgerNodes);
-// 	int i; int nums[] = {1,2,3,4,5,6,7,8};
-// 	for( i = 0;i<8; i++)
-// 		insertInBSTree(&tree, &nums[i]);
-// 	ASSERT(0 == isBSTBalanced(tree));
-// }
+void test_tells_that_tree_is_not_balanced(){
+	BS_Tree tree = createBSTree(compareInetgerNodes);
+	int i; int nums[] = {1,2,3,4,5,6,7,8};
+	for( i = 0;i<8; i++)
+		insertInBSTree(&tree, &nums[i]);
+	ASSERT(&nums[0] == getRootData(tree));
+	balanceBSTree(&tree);
+	ASSERT(&nums[4] == getRootData(tree));
+	disposeBSTree(&tree);
+}
