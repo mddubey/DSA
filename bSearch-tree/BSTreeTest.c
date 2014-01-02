@@ -59,7 +59,7 @@ void test_inserts_left_child_when_given_data_is_less_than_node_data(){
 	result = getChildrenData(tree, &names[1]);
 	ASSERT(&names[0] == result.left);
 	ASSERT(NULL == result.right);
-	// disposeBSTree(&tree);	
+	disposeBSTree(&tree);	
 }
 
 void test_inserts_right_child_when_given_data_is_greater_than_node_data(){
@@ -87,7 +87,7 @@ void test_inserts_data_at_defferent_level(){
     result = getChildrenData(tree, &number[4]);
     ASSERT(&number[5] == result.right);
     ASSERT(NULL == result.left);
-	// disposeBSTree(&tree);	
+	disposeBSTree(&tree);	
 }
 
 void test_gives_the_children_of_the_node_which_data_is_given(){
@@ -100,7 +100,7 @@ void test_gives_the_children_of_the_node_which_data_is_given(){
 	result = getChildrenData(tree, &nums[2]);
 	ASSERT(&nums[4] == result.left);
 	ASSERT(&nums[3] == result.right);
-	// disposeBSTree(&tree);	
+	disposeBSTree(&tree);	
 }
 
 void test_gives_the_children_as_null_if_given_data_is_not_present(){
@@ -134,7 +134,7 @@ void test_searchs_the_given_data_in_tree_deeply(){
        insertInBSTree(&tree, &number[i]);
     }
     ASSERT(1 == searchInBSTree(tree, &number[6]));
-	// disposeBSTree(&tree);	
+	disposeBSTree(&tree);	
 }
 
 void test_deletes_the_single_present_element_in_tree(){
@@ -189,6 +189,7 @@ void test_deletes_node_with_no_children(){
 	ASSERT(searchInBSTree(tree, &nums[2]));
 	ASSERT(deleteFromBSTree(&tree, &nums[2]));
 	ASSERT(0 == searchInBSTree(tree, &nums[2]));
+	disposeBSTree(&tree);	
 }
 
 void test_deletes_node_with_only_left_children(){
@@ -200,6 +201,7 @@ void test_deletes_node_with_only_left_children(){
 	ASSERT(searchInBSTree(tree, &names[1]));
 	ASSERT(deleteFromBSTree(&tree, &names[1]));
 	ASSERT(0 == searchInBSTree(tree, &names[1]));
+	disposeBSTree(&tree);	
 }
 
 void test_deletes_node_with_only_right_children(){
@@ -211,6 +213,7 @@ void test_deletes_node_with_only_right_children(){
 	ASSERT(searchInBSTree(tree, &accounts[1]));
 	ASSERT(deleteFromBSTree(&tree, &accounts[1]));
 	ASSERT(0 == searchInBSTree(tree, &accounts[1]));
+	// disposeBSTree(&tree);	
 }
 
 void test_deletes_node_with_both_children(){
@@ -221,6 +224,7 @@ void test_deletes_node_with_both_children(){
     ASSERT(searchInBSTree(tree, &number[3]));
     ASSERT(deleteFromBSTree(&tree, &number[3]));
     ASSERT(0 == searchInBSTree(tree, &number[3]));
+	disposeBSTree(&tree);	
 }
 
 void test_deletion_failed_when_data_is_not_present(){

@@ -145,12 +145,13 @@ int deleteFromBSTree(BS_Tree *tree, void *data){
 void disposeEachNode(BST_Node* node){
 	if(node != NULL){
 		disposeEachNode(node->leftChild);
-		disposeEachNode(node->leftChild);
+		disposeEachNode(node->rightChild);
 		free(node);
 	}
 }
 
 void disposeBSTree(BS_Tree *tree){
+	if(!tree) return;
 	disposeEachNode(tree->root);
 }
 
